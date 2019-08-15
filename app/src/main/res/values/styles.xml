@@ -44,7 +44,7 @@
         <item name="android:inputType">number</item>
         <item name="android:background">@drawable/bg_rout</item>
         <item name="android:imeOptions">actionDone</item>
-        <item name="android:layout_marginBottom">100dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
     </style>
 
     <style name="mainactivity_tabLayout">

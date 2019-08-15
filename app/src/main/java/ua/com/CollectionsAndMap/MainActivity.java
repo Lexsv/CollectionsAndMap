@@ -1,8 +1,8 @@
 package ua.com.CollectionsAndMap;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -27,6 +27,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 
 
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 import ua.com.CollectionsAndMap.Fragment.PagerAdapt;
 import ua.com.CollectionsAndMap.Moduls.ArrayListElements;
 import ua.com.CollectionsAndMap.Moduls.CopyOnWriteListElements;
@@ -44,6 +47,36 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private int amountAddElementList;
     private int amountAddElementMap;
 
+    @BindView( R.id.arrayList_addBagin) TextView arrayListAddBegin ;
+    @BindView( R.id.arrayList_addMiddle) TextView arrayListAddMiddle ;
+    @BindView( R.id.arrayList_addEnd) TextView arrayListAddEnd ;
+    @BindView( R.id.arrayList_search) TextView arrayListSearch ;
+    @BindView( R.id.arrayList_removeBagin) TextView arrayListRemoveBegin ;
+    @BindView( R.id.arrayList_ramoveMidlle) TextView arrayListRemoveMiddle ;
+    @BindView( R.id.arrayList_removeEnd) TextView arrayListRemoveEnd ;
+    @BindView( R.id.linkedList_addBagin) TextView linkedListAddBegin ;
+    @BindView( R.id.linkedList_addMiddle) TextView linkedListAddMiddle ;
+    @BindView( R.id.linkedList_addEnd) TextView linkedListAddEnd ;
+    @BindView( R.id.linkedList_search) TextView linkedListSearch ;
+    @BindView( R.id.linkedList_removeBagin) TextView linkedListRemoveBegin ;
+    @BindView( R.id.linkedList_ramoveMidlle) TextView linkedListRemoveMiddle ;
+    @BindView( R.id.linkedList_removeEnd) TextView linkedListRemoveEnd ;
+    @BindView( R.id.copyOn_write_addBagin) TextView copyOnWriteAddBegin ;
+    @BindView( R.id.copyOn_write_addMiddle) TextView copyOnWriteAddMiddle ;
+    @BindView( R.id.copyOn_write_addEnd) TextView copyOnWriteAddEnd ;
+    @BindView( R.id.copyOn_write_search) TextView copyOnWriteSearch ;
+    @BindView( R.id.copyOn_write_removeBagin) TextView copyOnWriteRemoveBegin ;
+    @BindView( R.id.copyOn_write_ramoveMidlle) TextView copyOnWriteRemoveMiddle ;
+    @BindView( R.id.copyOn_write_removeEnd) TextView copyOnWriteRemoveEnd ;
+    @BindView( R.id.treeMap_add)  TextView treeMapAdd ;
+    @BindView( R.id.treeMap_SearchKey) TextView treeMapSearchKey ;
+    @BindView( R.id.treeMap_remove) TextView treeMapremove ;
+    @BindView( R.id.hashMap_add) TextView hashMapAdd ;
+    @BindView( R.id.hashMap_SearchKey) TextView hashMapSearchKey ;
+    @BindView( R.id.hashMap_remove) TextView hashMapRemove ;
+
+
+
 
     ArrayList<Integer> arrayList = new ArrayList<>();
     LinkedList<Integer> linkedList = new LinkedList<>();
@@ -56,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Toolbar toolbar = findViewById(R.id.mainActivity_toolbar);
         setSupportActionBar(toolbar);
@@ -70,61 +104,57 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         final PagerAdapt pagerAdapter = new PagerAdapt(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
+        if (savedInstanceState != null) initView(savedInstanceState);
 
         final EditText amountElements = findViewById(R.id.mainActivity_amount_element);
 
 
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
-        faButtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        faButtn.setOnClickListener(view -> {
 
-                if (amElemVisebl) {
-                    amountElements.setVisibility(View.VISIBLE);
-                    amElemVisebl = !amElemVisebl;
-                    showKeyBoard(amountElements);
-                } else {
-                    amountElements.setVisibility(View.INVISIBLE);
-                    amElemVisebl = !amElemVisebl;
-                }
-
+            if (amElemVisebl) {
+                amountElements.setVisibility(View.VISIBLE);
+                amElemVisebl = !amElemVisebl;
+                faButtn.setVisibility(View.GONE);
+                showKeyBoard(amountElements);
+            } else {
+                amountElements.setVisibility(View.INVISIBLE);
+                amElemVisebl = !amElemVisebl;
             }
+
         });
 
-        amountElements.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_DONE) {
-                    faButtn.performClick();
-                    hideKeyBoard(amountElements);
+        amountElements.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                faButtn.setVisibility(View.VISIBLE);
+                faButtn.performClick();
+                hideKeyBoard(amountElements);
 
 
-                    if (tabLayout.getSelectedTabPosition() == 0) {
-                        arrayList.clear();
-                        linkedList.clear();
-                        copyOnWriteArrayList.clear();
+                if (tabLayout.getSelectedTabPosition() == 0) {
+                    arrayList.clear();
+                    linkedList.clear();
+                    copyOnWriteArrayList.clear();
 
-                        amountAddElementList = amountElements.getText().toString().equals("") ? 0 : Integer.valueOf(amountElements.getText().toString());
-                        new Thread(() -> {
-                            fillList();
-                            runOnUiThread(addResultToViewList);
-                        }).start();
+                    amountAddElementList = amountElements.getText().toString().equals("") ? 0 : Integer.valueOf(amountElements.getText().toString());
+                    new Thread(() -> {
+                        fillList();
+                        runOnUiThread(addResultToViewList);
+                    }).start();
 
-                    }
-                    if (tabLayout.getSelectedTabPosition() == 1) {
-                        treeMap.clear();
-                        hashMap.clear();
-                        amountAddElementMap = amountElements.getText().toString().equals("") ? 0 : Integer.valueOf(amountElements.getText().toString());
-                        new Thread(() -> {
-                            fillMap();
-                            runOnUiThread(addResultToViewMap);
-                        }).start();
-
-                    }
                 }
-                return false;
+                if (tabLayout.getSelectedTabPosition() == 1) {
+                    treeMap.clear();
+                    hashMap.clear();
+                    amountAddElementMap = amountElements.getText().toString().equals("") ? 0 : Integer.valueOf(amountElements.getText().toString());
+                    new Thread(() -> {
+                        fillMap();
+                        runOnUiThread(addResultToViewMap);
+                    }).start();
+
+                }
             }
+            return false;
         });
 
     }
@@ -167,31 +197,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
 
     Runnable addResultToViewList = () -> {
-
-        TextView arrayListAddBegin = findViewById(R.id.arrayList_addBagin);
-        TextView arrayListAddMiddle = findViewById(R.id.arrayList_addMiddle);
-        TextView arrayListAddEnd = findViewById(R.id.arrayList_addEnd);
-        TextView arrayListSearch = findViewById(R.id.arrayList_search);
-        TextView arrayListRemoveBegin = findViewById(R.id.arrayList_removeBagin);
-        TextView arrayListRemoveMiddle = findViewById(R.id.arrayList_ramoveMidlle);
-        TextView arrayListRemoveEnd = findViewById(R.id.arrayList_removeEnd);
-
-        TextView linkedListAddBegin = findViewById(R.id.linkedList_addBagin);
-        TextView linkedListAddMiddle = findViewById(R.id.linkedList_addMiddle);
-        TextView linkedListAddEnd = findViewById(R.id.linkedList_addEnd);
-        TextView linkedListSearch = findViewById(R.id.linkedList_search);
-        TextView linkedListRemoveBegin = findViewById(R.id.linkedList_removeBagin);
-        TextView linkedListRemoveMiddle = findViewById(R.id.linkedList_ramoveMidlle);
-        TextView linkedListRemoveEnd = findViewById(R.id.linkedList_removeEnd);
-
-        TextView copyOnWriteAddBegin = findViewById(R.id.copyOn_write_addBagin);
-        TextView copyOnWriteAddMiddle = findViewById(R.id.copyOn_write_addMiddle);
-        TextView copyOnWriteAddEnd = findViewById(R.id.copyOn_write_addEnd);
-        TextView copyOnWriteSearch = findViewById(R.id.copyOn_write_search);
-        TextView copyOnWriteRemoveBegin = findViewById(R.id.copyOn_write_removeBagin);
-        TextView copyOnWriteRemoveMiddle = findViewById(R.id.copyOn_write_ramoveMidlle);
-        TextView copyOnWriteRemoveEnd = findViewById(R.id.copyOn_write_removeEnd);
-
+        ButterKnife.bind(this);
 
         arrayListAddBegin.setText(String.valueOf(FillView.speedAddBeginToList(arrayList)));
         linkedListAddBegin.setText(String.valueOf(FillView.speedAddBeginToList(linkedList)));
@@ -248,15 +254,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     Runnable addResultToViewMap = () -> {
-
-        TextView treeMapAdd = findViewById(R.id.treeMap_add);
-        TextView treeMapSearchKey = findViewById(R.id.treeMap_SearchKey);
-        TextView treeMapremove = findViewById(R.id.treeMap_remove);
-
-        TextView hashMapAdd = findViewById(R.id.hashMap_add);
-        TextView hashMapSearchKey = findViewById(R.id.hashMap_SearchKey);
-        TextView hashMapRemove = findViewById(R.id.hashMap_remove);
-
+        ButterKnife.bind(this);
         treeMapAdd.setText(String.valueOf(FillView.speedAddToMap(treeMap)));
         treeMapSearchKey.setText(String.valueOf(FillView.speedSearchInMap(treeMap)));
         treeMapremove.setText(String.valueOf(FillView.speedRemovInMap(treeMap)));
@@ -264,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         hashMapAdd.setText(String.valueOf(FillView.speedAddToMap(hashMap)));
         hashMapSearchKey.setText(String.valueOf(FillView.speedSearchInMap(hashMap)));
         hashMapRemove.setText(String.valueOf(FillView.speedRemovInMap(hashMap)));
-
 
     };
 
@@ -276,6 +273,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         amountElements.setVisibility(View.INVISIBLE);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(amountElements.getWindowToken(), 0);
+        FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
+        faButtn.setVisibility(View.VISIBLE);
 
     }
 
@@ -294,5 +293,75 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        outState.putString("treeMapAdd", treeMapAdd.getText().toString());
+        outState.putString("treeMapSearchKey", treeMapSearchKey.getText().toString());
+        outState.putString("treeMapremove", treeMapremove.getText().toString());
+        outState.putString("hashMapAdd", hashMapAdd.getText().toString());
+        outState.putString("hashMapSearchKey", hashMapSearchKey.getText().toString());
+        outState.putString("hashMapRemove", hashMapRemove.getText().toString());
+        outState.putString("arrayListAddBegin", arrayListAddBegin.getText().toString());
+        outState.putString("arrayListAddMiddle", arrayListAddMiddle.getText().toString());
+        outState.putString("arrayListAddEnd", arrayListAddEnd.getText().toString());
+        outState.putString("arrayListSearch", arrayListSearch.getText().toString());
+        outState.putString("arrayListRemoveBegin", arrayListRemoveBegin.getText().toString());
+        outState.putString("arrayListRemoveMiddle", arrayListRemoveMiddle.getText().toString());
+        outState.putString("arrayListRemoveEnd", arrayListRemoveEnd.getText().toString());
+        outState.putString("linkedListAddBegin", linkedListAddBegin.getText().toString());
+        outState.putString("linkedListAddMiddle", linkedListAddMiddle.getText().toString());
+        outState.putString("linkedListAddEnd", linkedListAddEnd.getText().toString());
+        outState.putString("linkedListSearch", linkedListSearch.getText().toString());
+        outState.putString("linkedListRemoveBegin", linkedListRemoveBegin.getText().toString());
+        outState.putString("linkedListRemoveMiddle", linkedListRemoveMiddle.getText().toString());
+        outState.putString("linkedListRemoveEnd", linkedListRemoveEnd.getText().toString());
+        outState.putString("copyOnWriteAddBegin", copyOnWriteAddBegin.getText().toString());
+        outState.putString("copyOnWriteAddMiddle", copyOnWriteAddMiddle.getText().toString());
+        outState.putString("copyOnWriteAddEnd", copyOnWriteAddEnd.getText().toString());
+        outState.putString("copyOnWriteSearch", copyOnWriteSearch.getText().toString());
+        outState.putString("copyOnWriteRemoveBegin", copyOnWriteRemoveBegin.getText().toString());
+        outState.putString("copyOnWriteRemoveMiddle", copyOnWriteRemoveMiddle.getText().toString());
+        outState.putString("copyOnWriteRemoveEnd", copyOnWriteRemoveEnd.getText().toString());
+
+    }
+
+    private void initView(Bundle savedInstanceState) {
+
+        if (savedInstanceState.containsKey("treeMapAdd")) {
+
+            treeMapAdd.setText(savedInstanceState.getString("treeMapAdd"));
+            treeMapSearchKey.setText(savedInstanceState.getString("treeMapSearchKey"));
+            treeMapremove.setText(savedInstanceState.getString("treeMapremove"));
+            hashMapAdd.setText(savedInstanceState.getString("hashMapAdd"));
+            hashMapSearchKey.setText(savedInstanceState.getString("hashMapSearchKey"));
+            hashMapRemove.setText(savedInstanceState.getString("hashMapRemove"));
+        }
+
+        if (savedInstanceState.containsKey("arrayListAddBegin")) {
+
+            arrayListAddBegin.setText(savedInstanceState.getString("arrayListAddBegin"));
+            arrayListAddMiddle.setText(savedInstanceState.getString("arrayListAddMiddle"));
+            arrayListAddEnd.setText(savedInstanceState.getString("arrayListAddEnd"));
+            arrayListSearch.setText(savedInstanceState.getString("arrayListSearch"));
+            arrayListRemoveBegin.setText(savedInstanceState.getString("arrayListRemoveBegin"));
+            arrayListRemoveMiddle.setText(savedInstanceState.getString("arrayListRemoveMiddle"));
+            arrayListRemoveEnd.setText(savedInstanceState.getString("arrayListRemoveEnd"));
+            linkedListAddBegin.setText(savedInstanceState.getString("linkedListAddBegin"));
+            linkedListAddMiddle.setText(savedInstanceState.getString("linkedListAddMiddle"));
+            linkedListAddEnd.setText(savedInstanceState.getString("linkedListAddEnd"));
+            linkedListSearch.setText(savedInstanceState.getString("linkedListSearch"));
+            linkedListRemoveBegin.setText(savedInstanceState.getString("linkedListRemoveBegin"));
+            linkedListRemoveMiddle.setText(savedInstanceState.getString("linkedListRemoveMiddle"));
+            linkedListRemoveEnd.setText(savedInstanceState.getString("linkedListRemoveEnd"));
+            copyOnWriteAddBegin.setText(savedInstanceState.getString("copyOnWriteAddBegin"));
+            copyOnWriteAddMiddle.setText(savedInstanceState.getString("copyOnWriteAddMiddle"));
+            copyOnWriteAddEnd.setText(savedInstanceState.getString("copyOnWriteAddEnd"));
+            copyOnWriteSearch.setText(savedInstanceState.getString("copyOnWriteSearch"));
+            copyOnWriteRemoveBegin.setText(savedInstanceState.getString("copyOnWriteRemoveBegin"));
+            copyOnWriteRemoveMiddle.setText(savedInstanceState.getString("copyOnWriteRemoveMiddle"));
+            copyOnWriteRemoveEnd.setText(savedInstanceState.getString("copyOnWriteRemoveEnd"));
+
+        }
+
+
     }
 }

@@ -194,14 +194,14 @@ public final class FillView {
 
     public static long speedSearchInMap(TreeMap treeMap) {
         long startTim = System.nanoTime();
-        treeMap.get(1);
+        treeMap.get(new Random().nextInt(treeMap.size()));
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
 
     public static long speedSearchInMap(HashMap hashMap) {
         long startTim = System.nanoTime();
-        hashMap.get(1);
+        hashMap.get(new Random().nextInt(hashMap.size()));
         long result = System.nanoTime() - startTim;
         return result / 1000;
 
