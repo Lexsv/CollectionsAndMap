@@ -1,0 +1,62 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#63385E</item>
+        <item name="colorPrimaryDark">#894180</item>
+        <item name="colorAccent">#D2ADD5</item>
+    </style>
+
+    <style name="collection_name">
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:background">@color/color_fuxia_simple</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="collection_event_name">
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:background">@color/color_fuxia_simple</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="collection_event">
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:background">@color/color_accent</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Et_amont_elements">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:background">@drawable/bg_rout</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:layout_marginBottom">100dp</item>
+    </style>
+
+    <style name="mainactivity_tabLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/color_primary</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <style name="progressBar">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+</resources>

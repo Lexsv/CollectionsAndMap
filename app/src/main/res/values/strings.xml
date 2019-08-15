@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">CollectionsAndMap</string>
+    <string name="copy_on_write">CopyOn\nWrite</string>
+    <string name="linked_list">Linked\nList</string>
+    <string name="array_list">Array\nList</string>
+    <string name="remove_end">remove\nend</string>
+    <string name="remove_middle">remove\nmiddle</string>
+    <string name="remove_begin">remove\nbagin</string>
+    <string name="search_value">search\nvalue</string>
+    <string name="add_end">add\nend</string>
+    <string name="add_middle">add\nmiddle</string>
+    <string name="add_begin">add\nbagin</string>
+    <string name="tree_map">Tree\nMap</string>
+    <string name="hash_map">Hash\nMap</string>
+    <string name="search_key">search\nkey</string>
+    <string name="add_new">add\nnew</string>
+    <string name="remove">remove</string>
+    <string name="amount_of_elements">amount elements</string>
+</resources>

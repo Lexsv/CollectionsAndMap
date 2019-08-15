@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:gravity="center">
+
+
+        <TextView
+            style="@style/collection_event_name"
+            android:layout_column="1"
+            android:text="@string/add_new" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/search_key" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/remove" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tableRow_marginTop_20"
+        android:gravity="center">
+
+        <TextView
+            style="@style/collection_name"
+            android:text="@string/tree_map" />
+
+        <TextView
+            android:id="@+id/treeMap_add"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/treeMap_SearchKey"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/treeMap_remove"
+            style="@style/collection_event" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tableRow_marginTop_20"
+        android:gravity="center">
+
+        <TextView
+            style="@style/collection_name"
+            android:text="@string/hash_map" />
+
+        <TextView
+            android:id="@+id/hashMap_add"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/hashMap_SearchKey"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/hashMap_remove"
+            style="@style/collection_event" />
+
+
+
+    </TableRow>
+
+
+</TableLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#63385E</color>
+    <color name="color_primary_dark">#894180</color>
+    <color name="color_accent">#DDD5DF</color>
+    <color name="color_line_tol">#a99ea9</color>
+    <color name="color_fuxia_dark">#1D0A35</color>
+    <color name="color_fuxia_midle">#321854</color>
+    <color name="color_fuxia_lite">#694893</color>
+    <color name="color_fuxia_simple">#D39BCB</color>
+</resources>

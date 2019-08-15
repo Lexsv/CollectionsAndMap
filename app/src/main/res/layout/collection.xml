@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:gravity="center">
+
+
+        <TextView
+            style="@style/collection_event_name"
+            android:layout_column="1"
+            android:text="@string/add_begin" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/add_middle" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/add_end" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/search_value" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/remove_begin" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/remove_middle" />
+
+        <TextView
+            style="@style/collection_event_name"
+            android:text="@string/remove_end" />
+
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tableRow_marginTop_20"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/et_arrayList_name_row"
+            style="@style/collection_name"
+            android:text="@string/array_list" />
+
+        <TextView
+            android:id="@+id/arrayList_addBagin"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/arrayList_addMiddle"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/arrayList_addEnd"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/arrayList_search"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/arrayList_removeBagin"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/arrayList_ramoveMidlle"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/arrayList_removeEnd"
+            style="@style/collection_event" />
+
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tableRow_marginTop_20"
+        android:gravity="center">
+
+        <TextView
+            style="@style/collection_name"
+            android:text="@string/linked_list" />
+
+        <TextView
+            android:id="@+id/linkedList_addBagin"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/linkedList_addMiddle"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/linkedList_addEnd"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/linkedList_search"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/linkedList_removeBagin"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/linkedList_ramoveMidlle"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/linkedList_removeEnd"
+            style="@style/collection_event" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tableRow_marginTop_20"
+        android:gravity="center">
+
+        <TextView
+            style="@style/collection_name"
+            android:text="@string/copy_on_write" />
+
+        <TextView
+            android:id="@+id/copyOn_write_addBagin"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/copyOn_write_addMiddle"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/copyOn_write_addEnd"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/copyOn_write_search"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/copyOn_write_removeBagin"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/copyOn_write_ramoveMidlle"
+            style="@style/collection_event" />
+
+        <TextView
+            android:id="@+id/copyOn_write_removeEnd"
+            style="@style/collection_event" />
+
+    </TableRow>
+</TableLayout>
