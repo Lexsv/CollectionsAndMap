@@ -16,4 +16,5 @@
     <string name="add_new">add\nnew</string>
     <string name="remove">remove</string>
     <string name="amount_of_elements">amount elements</string>
+    <string name="please_wait">Please wait...</string>
 </resources>

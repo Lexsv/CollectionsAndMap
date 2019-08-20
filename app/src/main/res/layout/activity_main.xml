@@ -4,45 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Domain.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/mainActivity_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary"
-        android:minHeight="?attr/actionBarSize"
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mainActivity_tabsLayout"
+        style="@style/mainactivity_tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/cardview_light_background" />
-
-    <com.google.android.material.tabs.TabLayout
-        style="@style/mainactivity_tabLayout"
-        android:id="@+id/mainActivity_tabsLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivity_toolbar"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/color_line_tol"
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabRippleColor="@color/color_primary_dark"
-        app:tabTextColor="@color/cardview_light_background"         />
-
-    <ProgressBar
-        android:id="@+id/progressBar_List"
-        style="@style/progressBar"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/mainActivity_tabsLayout"
-        app:layout_constraintTop_toTopOf="@+id/mainActivity_tabsLayout" />
-
-    <ProgressBar
-        android:id="@+id/progressBar_Map"
-        android:visibility="invisible"
-        style="@style/progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/mainActivity_tabsLayout"
-        app:layout_constraintTop_toTopOf="@id/mainActivity_tabsLayout" />
+        app:tabTextColor="@color/cardview_light_background" />
 
 
     <androidx.viewpager.widget.ViewPager
@@ -63,13 +39,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/mainActivity_amount_element"
-        style="@style/Et_amont_elements"
-        android:hint="@string/amount_of_elements"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
