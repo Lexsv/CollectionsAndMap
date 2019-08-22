@@ -1,12 +1,15 @@
-package ua.com.CollectionsAndMap.Domain;
+package ua.com.CollectionsAndMap.domain;
 
+import android.app.Instrumentation;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import android.view.inputmethod.InputMethodManager;
-
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,16 +21,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
-import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.Ui.fragment.PagerAdapt;
-import ua.com.CollectionsAndMap.Ui.presentation.Present;
+import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
+import ua.com.CollectionsAndMap.ui.presentation.Present;
 
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
-    private TabLayout tabLayout;
+
     private ViewPager viewPager;
+    private PagerAdapt pagerAdapter;
+    private TabLayout tabLayout;
+    private Present present = new Present();
+    private int amoutElements;
 
 
 
@@ -35,8 +41,16 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initTab();
+        present.setViewPager(viewPager);
+        FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
+        faButtn.setOnClickListener(view -> {
+            addAlertDialog();
+        });
 
+    }
 
+    private void initTab() {
         tabLayout = findViewById(R.id.mainActivity_tabsLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Collections"));
         tabLayout.addTab(tabLayout.newTab().setText("Map"));
@@ -44,33 +58,38 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         tabLayout.addOnTabSelectedListener(this);
 
         viewPager = findViewById(R.id.mainActivity_pager);
-        final PagerAdapt pagerAdapter = new PagerAdapt(getSupportFragmentManager(), tabLayout.getTabCount());
+        pagerAdapter = new PagerAdapt(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        Present present = new Present();
-        present.setPagerAdapt(pagerAdapter);
-
-
-        FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
-        faButtn.setOnClickListener(view -> {
-
-            AlertDialog.Builder ratingdialog = new AlertDialog.Builder(this);
-            ratingdialog.setPositiveButton("Готово", (dialog, which) -> {
-                dialog.dismiss();
-
-            })
-                    .setNegativeButton("Отмена",
-                            (dialog, id) -> dialog.cancel());
-            ratingdialog.setTitle("Add Element");
-            ratingdialog.setView(R.layout.loader_view);
-            ratingdialog.setIcon(R.drawable.database);
-            ratingdialog.create();
-            ratingdialog.show();
-        });
-
     }
 
+    private void addAlertDialog() {
+        AlertDialog.Builder addElementAlert = new AlertDialog.Builder(this);
+        addElementAlert.setTitle("Add Element");
+        addElementAlert.setView(R.layout.loader_view);
+        addElementAlert.setIcon(R.drawable.database);
+        addElementAlert.setPositiveButton("Добавить", (dialog, which) -> {
+            EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
+            amoutElements = (Integer.valueOf(editTextInLoad.getText().toString()));
+            showProgress();
+            new Thread(()->{
+                present.setAmoutElement(amoutElements);
+                runOnUiThread(()-> {
+                    present.showDataView();
+                    // Событие закрытия AlertDialog.Builder showProgress
+                });
+            }).start();
+        });
+        addElementAlert.create();
+        addElementAlert.show();
+    }
+
+    private void showProgress() {
+        AlertDialog.Builder showProgress = new AlertDialog.Builder(this);
+        showProgress.setView(R.layout.loader_view_progress);
+        showProgress.create();
+        showProgress.show();
+    }
 
     private void showKeyBoard(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -86,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         viewPager.setCurrentItem(tab.getPosition());
-
 
     }
 

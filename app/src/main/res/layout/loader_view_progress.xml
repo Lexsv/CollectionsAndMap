@@ -5,14 +5,17 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-
-    <EditText
-        android:id="@+id/loaderView_amount_elements"
+    <TextView
+        android:id="@+id/loaderView_message_process_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/amount_of_elements"
-        android:inputType="number"
-        android:imeOptions="actionDone"/>
+        android:text="@string/please_wait"
+        />
 
+    <ProgressBar
+        android:id="@+id/loaderView_process_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       />
 
 </LinearLayout>

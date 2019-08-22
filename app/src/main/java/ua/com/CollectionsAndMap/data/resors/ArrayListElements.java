@@ -1,11 +1,12 @@
-package ua.com.CollectionsAndMap.Data.resors;
+package ua.com.CollectionsAndMap.data.resors;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayListElements  {
 
     private int amountElements;
-    private ArrayList arrayList = new ArrayList(amountElements);
+    private List<Integer> arrayList = new ArrayList<>(amountElements);
 
 
     public ArrayListElements(int amountElements) {
@@ -15,7 +16,7 @@ public class ArrayListElements  {
         }
     }
 
-    public ArrayList getArrayList() {
-        return arrayList;
+    public ArrayList<Integer> getArrayList() {
+        return (ArrayList<Integer>) arrayList;
     }
 }
