@@ -1,5 +1,6 @@
 package ua.com.CollectionsAndMap.domain;
 
+import android.app.DatePickerDialog;
 import android.app.Instrumentation;
 import android.content.Context;
 
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
-    private Present present = new Present();
+    private Present present ;
     private int amoutElements;
 
 
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTab();
-        present.setViewPager(viewPager);
+        present = new Present(viewPager);
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> {
             addAlertDialog();
@@ -68,28 +70,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setTitle("Add Element");
         addElementAlert.setView(R.layout.loader_view);
         addElementAlert.setIcon(R.drawable.database);
-        addElementAlert.setPositiveButton("Добавить", (dialog, which) -> {
+        addElementAlert.setPositiveButton("Добавить",(dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
             amoutElements = (Integer.valueOf(editTextInLoad.getText().toString()));
-            showProgress();
-            new Thread(()->{
-                present.setAmoutElement(amoutElements);
-                runOnUiThread(()-> {
-                    present.showDataView();
-                    // Событие закрытия AlertDialog.Builder showProgress
-                });
-            }).start();
+            present.showDataView(amoutElements);
+            dialog.cancel();
         });
         addElementAlert.create();
         addElementAlert.show();
+
     }
 
-    private void showProgress() {
-        AlertDialog.Builder showProgress = new AlertDialog.Builder(this);
-        showProgress.setView(R.layout.loader_view_progress);
-        showProgress.create();
-        showProgress.show();
-    }
+
 
     private void showKeyBoard(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
