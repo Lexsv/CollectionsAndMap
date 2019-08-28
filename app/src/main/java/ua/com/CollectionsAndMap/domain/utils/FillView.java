@@ -1,4 +1,4 @@
-package ua.com.CollectionsAndMap.utils;
+package ua.com.CollectionsAndMap.domain.utils;
 
 
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedAddBeginToList(LinkedList<Integer> linkedList) {
+    public static long speedAddBeginToList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
-        linkedList.addFirst(1);
+        linkedList.addFirst((byte) 1);
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
@@ -44,9 +44,9 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedAddMiddleToList(LinkedList<Integer> linkedList) {
+    public static long speedAddMiddleToList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
-        linkedList.add(linkedList.size() / 2, 1);
+        linkedList.add(linkedList.size() / 2, (byte) 1);
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
@@ -68,9 +68,9 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedAddEndToList(LinkedList<Integer> linkedList) {
+    public static long speedAddEndToList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
-        linkedList.addLast(1);
+        linkedList.addLast((byte) 1);
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
@@ -91,7 +91,7 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedSearchInList(LinkedList<Integer> linkedList) {
+    public static long speedSearchInList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
         linkedList.get(new Random().nextInt(linkedList.size()));
         long result = System.nanoTime() - startTim;
@@ -114,7 +114,7 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedRemoveBeginToList(LinkedList<Integer> linkedList) {
+    public static long speedRemoveBeginToList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
         linkedList.removeFirst();
         long result = System.nanoTime() - startTim;
@@ -137,7 +137,7 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedRemoveMiddleToList(LinkedList<Integer> linkedList) {
+    public static long speedRemoveMiddleToList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
         linkedList.remove(linkedList.size() / 2);
         long result = System.nanoTime() - startTim;
@@ -160,7 +160,7 @@ public final class FillView {
         return result / 1000;
     }
 
-    public static long speedRemoveEndToList(LinkedList<Integer> linkedList) {
+    public static long speedRemoveEndToList(LinkedList<Byte> linkedList) {
         long startTim = System.nanoTime();
         linkedList.removeLast();
         long result = System.nanoTime() - startTim;
@@ -176,16 +176,20 @@ public final class FillView {
 
     //Map
     //ADD
-    public static long speedAddToMap(TreeMap<Integer,Integer> treeMap) {
+    public static long speedAddToMap(TreeMap<Byte,Byte> treeMap) {
+        Byte b = 0;
+        Byte key = 1;
         long startTim = System.nanoTime();
-        treeMap.put(1, 1);
+        treeMap.put(key, b);
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
 
-    public static long speedAddToMap(HashMap<Integer,Integer> hashMap) {
+    public static long speedAddToMap(HashMap<Byte,Byte> hashMap) {
+        Byte b = 0;
+        Byte key = 1;
         long startTim = System.nanoTime();
-        hashMap.put(1, 1);
+        hashMap.put(key, b );
         long result = System.nanoTime() - startTim;
         return result / 1000;
 
@@ -193,16 +197,18 @@ public final class FillView {
     //Map
     //Search
 
-    public static long speedSearchInMap(TreeMap<Integer,Integer> treeMap) {
+    public static long speedSearchInMap(TreeMap<Byte,Byte> treeMap) {
+        Byte key = 1;
         long startTim = System.nanoTime();
-        treeMap.get(new Random().nextInt(treeMap.size()));
+        treeMap.get(key);
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
 
-    public static long speedSearchInMap(HashMap<Integer,Integer> hashMap) {
+    public static long speedSearchInMap(HashMap< Byte ,Byte> hashMap) {
+        Byte key = 1;
         long startTim = System.nanoTime();
-        hashMap.get(new Random().nextInt(hashMap.size()));
+        hashMap.get(key);
         long result = System.nanoTime() - startTim;
         return result / 1000;
 
@@ -210,16 +216,18 @@ public final class FillView {
 
     //Map
     //Remov
-    public static long speedRemovInMap(TreeMap<Integer,Integer> treeMap) {
+    public static long speedRemovInMap(TreeMap<Byte,Byte> treeMap) {
+        Byte key = 0;
         long startTim = System.nanoTime();
-        treeMap.remove(0);
+        treeMap.remove(key);
         long result = System.nanoTime() - startTim;
         return result / 1000;
     }
 
-    public static long speedRemovInMap(HashMap<Integer,Integer> hashMap) {
+    public static long speedRemovInMap(HashMap<Byte,Byte> hashMap) {
+        Byte key = 0;
         long startTim = System.nanoTime();
-        hashMap.remove(0);
+        hashMap.remove(key);
         long result = System.nanoTime() - startTim;
         return result / 1000;
 

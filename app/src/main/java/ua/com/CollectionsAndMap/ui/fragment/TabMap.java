@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,21 +16,14 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ua.com.CollectionsAndMap.data.resors.HashMapElements;
-import ua.com.CollectionsAndMap.data.resors.TreeMapElements;
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.utils.FillView;
+import ua.com.CollectionsAndMap.domain.utils.FillView;
+
+import static java.lang.String.*;
 
 public class TabMap extends Fragment {
 
     private Unbinder unbinder;
-    private int amountElements  = 0;
-
-    public TabMap() {}
-
-    public TabMap(int amountElements) {
-        this.amountElements = amountElements;
-    }
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -46,7 +37,6 @@ public class TabMap extends Fragment {
     TextView hashMapSearchKey;
     @BindView(R.id.hashMap_remove)
     TextView hashMapRemove;
-
 
 
     @Nullable
@@ -96,5 +86,18 @@ public class TabMap extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void fillResult(HashMap<Byte, Byte> list) {
+        treeMapAdd.setText(valueOf(FillView.speedAddToMap(list)));
+        treeMapSearchKey.setText(valueOf(FillView.speedSearchInMap(list)));
+        treeMapRemov.setText(valueOf(FillView.speedRemovInMap(list)));
+    }
+
+    public void fillResult(TreeMap<Byte, Byte> list) {
+        hashMapAdd.setText(String.valueOf(FillView.speedAddToMap(list)));
+        hashMapSearchKey.setText(String.valueOf(FillView.speedSearchInMap(list)));
+        hashMapRemove.setText(String.valueOf(FillView.speedRemovInMap(list)));
+
     }
 }

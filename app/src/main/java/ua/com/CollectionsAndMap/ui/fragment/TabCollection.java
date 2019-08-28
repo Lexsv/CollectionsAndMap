@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,20 +19,13 @@ import butterknife.BindView;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ua.com.CollectionsAndMap.data.resors.ArrayListElements;
-import ua.com.CollectionsAndMap.data.resors.CopyOnWriteListElements;
-import ua.com.CollectionsAndMap.data.resors.LinkedListElements;
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.utils.FillView;
+import ua.com.CollectionsAndMap.domain.utils.FillView;
+
+import static java.lang.String.*;
 
 public class TabCollection extends Fragment {
     private Unbinder unbinder;
-    private int amountElements = 0;
-
-    public TabCollection() { }
-    public TabCollection(int amountElements) {
-        this.amountElements = amountElements;
-    }
 
     @BindView(R.id.arrayList_addBagin)
     TextView arrayListAddBegin;
@@ -82,14 +72,12 @@ public class TabCollection extends Fragment {
 
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.collection, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
-
     }
 
     @Override
@@ -155,7 +143,38 @@ public class TabCollection extends Fragment {
         copyOnWriteRemoveEnd.setText(savedInstanceState.getString("copyOnWriteRemoveEnd"));
     }
 
+    public  void fillResult ( ArrayList <Integer>list){
 
+            arrayListAddBegin.setText(valueOf(FillView.speedAddBeginToList(list)));
+            arrayListAddMiddle.setText(valueOf(FillView.speedAddMiddleToList(list)));
+            arrayListAddEnd.setText(valueOf(FillView.speedAddEndToList(list)));
+            arrayListSearch.setText(valueOf(FillView.speedSearchInList(list)));
+            arrayListRemoveBegin.setText(valueOf(FillView.speedRemoveBeginToList(list)));
+            arrayListRemoveMiddle.setText(valueOf(FillView.speedRemoveMiddleToList(list)));
+            arrayListRemoveEnd.setText(valueOf(FillView.speedRemoveEndToList(list)));
+
+    }
+
+    public void fillResult (LinkedList<Byte> list){
+
+        linkedListAddBegin.setText(valueOf(FillView.speedAddBeginToList(list)));
+        linkedListAddMiddle.setText(valueOf(FillView.speedAddMiddleToList(list)));
+        linkedListAddEnd.setText(valueOf(FillView.speedAddEndToList(list)));
+        linkedListSearch.setText(valueOf(FillView.speedSearchInList(list)));
+        linkedListRemoveBegin.setText(valueOf(FillView.speedRemoveBeginToList(list)));
+        linkedListRemoveMiddle.setText(valueOf(FillView.speedRemoveMiddleToList(list)));
+        linkedListRemoveEnd.setText(valueOf(FillView.speedRemoveEndToList(list)));
+    }
+
+    public void fillResult (CopyOnWriteArrayList<Integer> list){
+        copyOnWriteAddBegin.setText(valueOf(FillView.speedAddBeginToList(list)));
+        copyOnWriteAddMiddle.setText(valueOf(FillView.speedAddMiddleToList(list)));
+        copyOnWriteAddEnd.setText(valueOf(FillView.speedAddEndToList(list)));
+        copyOnWriteSearch.setText(valueOf(FillView.speedSearchInList(list)));
+        copyOnWriteRemoveBegin.setText(valueOf(FillView.speedRemoveBeginToList(list)));
+        copyOnWriteRemoveMiddle.setText(valueOf(FillView.speedRemoveMiddleToList(list)));
+        copyOnWriteRemoveEnd.setText(valueOf(FillView.speedRemoveEndToList(list)));
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

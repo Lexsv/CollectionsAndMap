@@ -1,31 +1,32 @@
-package ua.com.CollectionsAndMap.domain;
+package ua.com.CollectionsAndMap.ui;
 
-import android.app.DatePickerDialog;
-import android.app.Instrumentation;
-import android.content.Context;
-
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
 
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.TreeMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import ua.com.CollectionsAndMap.R;
+import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
+import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
+import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 import ua.com.CollectionsAndMap.ui.presentation.Present;
+
+import static java.lang.Integer.valueOf;
 
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
@@ -34,8 +35,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
-    private Present present ;
+    private Present present;
     private int amoutElements;
+    private AlertDialog showProgress;
 
 
 
@@ -44,11 +46,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTab();
-        present = new Present(viewPager);
+        present = new Present(this, viewPager);
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> {
             addAlertDialog();
         });
+
 
     }
 
@@ -72,25 +75,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setIcon(R.drawable.database);
         addElementAlert.setPositiveButton("Добавить",(dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
-            amoutElements = (Integer.valueOf(editTextInLoad.getText().toString()));
+            amoutElements = (valueOf(editTextInLoad.getText().toString()));
             present.showDataView(amoutElements);
             dialog.cancel();
         });
         addElementAlert.create();
         addElementAlert.show();
 
-    }
-
-
-
-    private void showKeyBoard(View v) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
-    }
-
-    private void hideKeyBoard(View v) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
 
@@ -112,4 +103,40 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
 
+    public void shoeProgress() {
+        showProgress = new AlertDialog.Builder(viewPager.getContext())
+                .setView(R.layout.loader_view_progress)
+                .setCancelable(false)
+                .create();
+        showProgress.show();
+    }
+
+    public  void fillViewToFragment (ArrayList<Integer> list){
+       TabCollection fragment = (TabCollection) pagerAdapter.getItem(viewPager.getCurrentItem());
+       fragment.fillResult(list);
+    }
+    public  void fillViewToFragment (HashMap<Byte, Byte> list){
+        TabMap fragment = (TabMap) pagerAdapter.getItem(viewPager.getCurrentItem());
+        fragment.fillResult(list);
+    }
+    public  void fillViewToFragment (TreeMap<Byte, Byte> list){
+        TabMap fragment = (TabMap) pagerAdapter.getItem(viewPager.getCurrentItem());
+        fragment.fillResult(list);
+    }
+
+    public  void fillViewToFragment (LinkedList<Byte> list){
+        TabCollection fragment = (TabCollection) pagerAdapter.getItem(viewPager.getCurrentItem());
+        fragment.fillResult(list);
+    }
+    public  void fillViewToFragment (CopyOnWriteArrayList<Integer> list){
+        TabCollection fragment = (TabCollection) pagerAdapter.getItem(viewPager.getCurrentItem());
+        fragment.fillResult(list);
+    }
+    public void hidProgress() {showProgress.cancel();}
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        present.onDestroy();
+    }
 }
