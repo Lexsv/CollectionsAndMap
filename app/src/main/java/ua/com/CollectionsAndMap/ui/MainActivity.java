@@ -19,12 +19,15 @@ import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.inject.Inject;
+
+
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 import ua.com.CollectionsAndMap.ui.presentation.Present;
+
 
 import static java.lang.Integer.valueOf;
 
@@ -32,10 +35,10 @@ import static java.lang.Integer.valueOf;
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
 
-    private ViewPager viewPager;
+    private   ViewPager viewPager;
+     private   Present present;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
-    private Present present;
     private int amoutElements;
     private AlertDialog showProgress;
 
@@ -45,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        present = new Present(this,viewPager);
         initTab();
-        present = new Present(this, viewPager);
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> {
             addAlertDialog();

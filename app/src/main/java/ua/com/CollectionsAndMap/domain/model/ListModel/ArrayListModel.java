@@ -3,6 +3,8 @@ package ua.com.CollectionsAndMap.domain.model.ListModel;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import ua.com.CollectionsAndMap.ui.presentation.Present;
 
@@ -17,11 +19,7 @@ public class ArrayListModel extends AsyncTask <Void,Void, ArrayList<Integer>> {
     }
     @Override
     protected ArrayList<Integer> doInBackground(Void... voids) {
-        ArrayList<Integer> arrayList = new ArrayList<>(amountElements);
-        for (int i = 0; i <amountElements - 1 ; i++) {
-            arrayList.add(i);
-        }
-        return arrayList;
+        return new ArrayList<>(Collections.nCopies(amountElements,1));
     }
 
     @Override

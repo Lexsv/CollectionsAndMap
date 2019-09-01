@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.inject.Inject;
+
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
@@ -22,7 +24,6 @@ public class Present {
     private MainActivity activity;
     private int queue = 0;
     private int amountElements;
-
 
     public Present(MainActivity activity, ViewPager viewPager) {
         this.viewPager = viewPager;

@@ -2,6 +2,8 @@ package ua.com.CollectionsAndMap.domain.model.ListModel;
 
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 
@@ -19,11 +21,7 @@ public class LinkedListModel extends AsyncTask<Void,Void, LinkedList<Byte>> {
     @Override
     protected LinkedList<Byte> doInBackground(Void... voids) {
         byte b = 1;
-        LinkedList<Byte> linkedList = new LinkedList<>();
-        for (int i = 0; i <amountElements - 1 ; i++) {
-            linkedList.add(b);
-        }
-        return linkedList;
+        return new LinkedList<>(Collections.nCopies(amountElements,b));
     }
 
     @Override
