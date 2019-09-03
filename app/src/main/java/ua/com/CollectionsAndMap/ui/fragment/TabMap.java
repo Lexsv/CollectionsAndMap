@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
@@ -18,12 +19,15 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
+import ua.com.CollectionsAndMap.ui.presentation.ProgressBar;
 
 import static java.lang.String.*;
+import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
-public class TabMap extends Fragment {
+public class TabMap extends Fragment implements ProgressBar {
 
     private Unbinder unbinder;
+    private AlertDialog showProgress;
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -81,6 +85,19 @@ public class TabMap extends Fragment {
         hashMapRemove.setText(savedInstanceState.getString("hashMapRemove"));
     }
 
+    @Override
+    public void shoeProgress() {
+        showProgress = new AlertDialog.Builder(this.getContext())
+                .setView(R.layout.loader_view_progress)
+                .setCancelable(false)
+                .create();
+        showProgress.show();
+    }
+
+    @Override
+    public void hidProgress() {
+        showProgress.cancel();
+    }
 
     @Override
     public void onDestroyView() {
@@ -89,15 +106,15 @@ public class TabMap extends Fragment {
     }
 
     public void fillResult(HashMap<Byte, Byte> list) {
-        treeMapAdd.setText(valueOf(FillView.speedAddToMap(list)));
-        treeMapSearchKey.setText(valueOf(FillView.speedSearchInMap(list)));
-        treeMapRemov.setText(valueOf(FillView.speedRemovInMap(list)));
+        treeMapAdd.setText(valueOf(speedMap(list, FillView.ActionFill.ADDMAP)));
+        treeMapSearchKey.setText(valueOf(speedMap(list, FillView.ActionFill.SEARCHMAP)));
+        treeMapRemov.setText(valueOf(speedMap(list, FillView.ActionFill.REMOVEMAP)));
     }
 
     public void fillResult(TreeMap<Byte, Byte> list) {
-        hashMapAdd.setText(String.valueOf(FillView.speedAddToMap(list)));
-        hashMapSearchKey.setText(String.valueOf(FillView.speedSearchInMap(list)));
-        hashMapRemove.setText(String.valueOf(FillView.speedRemovInMap(list)));
+        hashMapAdd.setText(String.valueOf(speedMap(list, FillView.ActionFill.ADDMAP)));
+        hashMapSearchKey.setText(String.valueOf(speedMap(list, FillView.ActionFill.SEARCHMAP)));
+        hashMapRemove.setText(String.valueOf(speedMap(list, FillView.ActionFill.REMOVEMAP)));
 
     }
 }

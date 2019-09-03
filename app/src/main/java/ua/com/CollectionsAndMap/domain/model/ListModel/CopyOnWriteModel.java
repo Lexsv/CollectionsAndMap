@@ -1,32 +1,27 @@
 package ua.com.CollectionsAndMap.domain.model.ListModel;
 
-import android.os.AsyncTask;
-
 import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
-import ua.com.CollectionsAndMap.ui.presentation.Present;
-
-public class CopyOnWriteModel extends AsyncTask<Void,Void, CopyOnWriteArrayList<Integer>> {
+public class CopyOnWriteModel{
 
     private int amountElements;
-    private Present present;
+    private PresentForList present;
 
 
-    public CopyOnWriteModel(int amountElements, Present present) {
+    public CopyOnWriteModel(int amountElements, PresentForList present) {
         this.amountElements = amountElements;
         this.present = present;}
 
-    @Override
-    protected CopyOnWriteArrayList<Integer> doInBackground(Void... voids) {
-        return new CopyOnWriteArrayList<>(Collections.nCopies(amountElements,1));
+    public void start() {
+        Flowable.fromCallable(() -> new CopyOnWriteArrayList<>(Collections.nCopies(amountElements,1))
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+            System.out.println("*******************CopyOnWritList Fill******************* ");
+            present.callbackFromListModel(list);
+            present.startNextList();
+        });
     }
-    @Override
-    protected void onPostExecute(CopyOnWriteArrayList<Integer> list) {
-        super.onPostExecute(list);
-        System.out.println("*******************CopyOnWritList Fill******************* ");
-        present.callbackFromListModel(list);
-        present.startNextList();
-    }
-
 }

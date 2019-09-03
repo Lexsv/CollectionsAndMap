@@ -1,32 +1,29 @@
 package ua.com.CollectionsAndMap.domain.model.ListModel;
 
-import android.os.AsyncTask;
+
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
-import ua.com.CollectionsAndMap.ui.presentation.Present;
-
-public class ArrayListModel extends AsyncTask <Void,Void, ArrayList<Integer>> {
+public class ArrayListModel {
 
     private int amountElements;
-    private Present present;
+    private PresentForList present;
 
-    public ArrayListModel(int amountElements, Present present) {
+    public ArrayListModel(int amountElements, PresentForList present) {
         this.amountElements = amountElements;
         this.present = present;
     }
-    @Override
-    protected ArrayList<Integer> doInBackground(Void... voids) {
-        return new ArrayList<>(Collections.nCopies(amountElements,1));
+    public void start() {
+        Flowable.fromCallable(() -> new ArrayList<>(Collections.nCopies(amountElements, 1))
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+            System.out.println("*******************ArrayList Fill******************* ");
+            present.callbackFromListModel(list);
+            present.startNextList();
+        });
     }
 
-    @Override
-    protected void onPostExecute(ArrayList<Integer> list) {
-        super.onPostExecute(list);
-        System.out.println("*******************ArrayList Fill******************* ");
-        present.callbackFromListModel(list);
-        present.startNextList();
-    }
 }

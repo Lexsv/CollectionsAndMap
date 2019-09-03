@@ -8,11 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import butterknife.BindView;
@@ -21,11 +21,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
+import ua.com.CollectionsAndMap.ui.presentation.ProgressBar;
 
 import static java.lang.String.*;
+import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
 
-public class TabCollection extends Fragment {
+public class TabCollection extends Fragment  implements ProgressBar {
     private Unbinder unbinder;
+    private AlertDialog showProgress;
 
     @BindView(R.id.arrayList_addBagin)
     TextView arrayListAddBegin;
@@ -145,36 +148,51 @@ public class TabCollection extends Fragment {
 
     public  void fillResult ( ArrayList <Integer>list){
 
-            arrayListAddBegin.setText(valueOf(FillView.speedAddBeginToList(list)));
-            arrayListAddMiddle.setText(valueOf(FillView.speedAddMiddleToList(list)));
-            arrayListAddEnd.setText(valueOf(FillView.speedAddEndToList(list)));
-            arrayListSearch.setText(valueOf(FillView.speedSearchInList(list)));
-            arrayListRemoveBegin.setText(valueOf(FillView.speedRemoveBeginToList(list)));
-            arrayListRemoveMiddle.setText(valueOf(FillView.speedRemoveMiddleToList(list)));
-            arrayListRemoveEnd.setText(valueOf(FillView.speedRemoveEndToList(list)));
+            arrayListAddBegin.setText(valueOf(speedList(list, FillView.ActionFill.ADDBEGIN)));
+            arrayListAddMiddle.setText(valueOf(speedList(list, FillView.ActionFill.ADDMIDDL)));
+            arrayListAddEnd.setText(valueOf(speedList(list, FillView.ActionFill.ADDEND)));
+            arrayListSearch.setText(valueOf(speedList(list, FillView.ActionFill.SEARCHLIST)));
+            arrayListRemoveBegin.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
+            arrayListRemoveMiddle.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
+            arrayListRemoveEnd.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
 
     }
 
-    public void fillResult (LinkedList<Byte> list){
+    public void fillResult (LinkedList<Integer> list){
 
-        linkedListAddBegin.setText(valueOf(FillView.speedAddBeginToList(list)));
-        linkedListAddMiddle.setText(valueOf(FillView.speedAddMiddleToList(list)));
-        linkedListAddEnd.setText(valueOf(FillView.speedAddEndToList(list)));
-        linkedListSearch.setText(valueOf(FillView.speedSearchInList(list)));
-        linkedListRemoveBegin.setText(valueOf(FillView.speedRemoveBeginToList(list)));
-        linkedListRemoveMiddle.setText(valueOf(FillView.speedRemoveMiddleToList(list)));
-        linkedListRemoveEnd.setText(valueOf(FillView.speedRemoveEndToList(list)));
+        linkedListAddBegin.setText(valueOf(speedList(list, FillView.ActionFill.ADDBEGIN)));
+        linkedListAddMiddle.setText(valueOf(speedList(list, FillView.ActionFill.ADDMIDDL)));
+        linkedListAddEnd.setText(valueOf(speedList(list, FillView.ActionFill.ADDEND)));
+        linkedListSearch.setText(valueOf(speedList(list, FillView.ActionFill.SEARCHLIST)));
+        linkedListRemoveBegin.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
+        linkedListRemoveMiddle.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
+        linkedListRemoveEnd.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
     }
 
     public void fillResult (CopyOnWriteArrayList<Integer> list){
-        copyOnWriteAddBegin.setText(valueOf(FillView.speedAddBeginToList(list)));
-        copyOnWriteAddMiddle.setText(valueOf(FillView.speedAddMiddleToList(list)));
-        copyOnWriteAddEnd.setText(valueOf(FillView.speedAddEndToList(list)));
-        copyOnWriteSearch.setText(valueOf(FillView.speedSearchInList(list)));
-        copyOnWriteRemoveBegin.setText(valueOf(FillView.speedRemoveBeginToList(list)));
-        copyOnWriteRemoveMiddle.setText(valueOf(FillView.speedRemoveMiddleToList(list)));
-        copyOnWriteRemoveEnd.setText(valueOf(FillView.speedRemoveEndToList(list)));
+        copyOnWriteAddBegin.setText(valueOf(speedList(list, FillView.ActionFill.ADDBEGIN)));
+        copyOnWriteAddMiddle.setText(valueOf(speedList(list, FillView.ActionFill.ADDMIDDL)));
+        copyOnWriteAddEnd.setText(valueOf(speedList(list, FillView.ActionFill.ADDEND)));
+        copyOnWriteSearch.setText(valueOf(speedList(list, FillView.ActionFill.SEARCHLIST)));
+        copyOnWriteRemoveBegin.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
+        copyOnWriteRemoveMiddle.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
+        copyOnWriteRemoveEnd.setText(valueOf(speedList(list, FillView.ActionFill.REMOVEBEGIN)));
     }
+
+    @Override
+    public void shoeProgress() {
+        showProgress = new AlertDialog.Builder(this.getContext())
+                .setView(R.layout.loader_view_progress)
+                .setCancelable(false)
+                .create();
+        showProgress.show();
+    }
+
+    @Override
+    public void hidProgress() {
+        showProgress.cancel();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

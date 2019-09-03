@@ -1,34 +1,26 @@
 package ua.com.CollectionsAndMap.domain.model.ListModel;
 
-import android.os.AsyncTask;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
-
-import ua.com.CollectionsAndMap.ui.presentation.Present;
-
-public class LinkedListModel extends AsyncTask<Void,Void, LinkedList<Byte>> {
+public class LinkedListModel {
 
     private int amountElements;
-    private Present present;
+    private PresentForList present;
 
-    public LinkedListModel(int amountElements, Present present) {
+    public LinkedListModel(int amountElements, PresentForList present) {
         this.amountElements = amountElements;
         this.present = present;
     }
-    @Override
-    protected LinkedList<Byte> doInBackground(Void... voids) {
-        byte b = 1;
-        return new LinkedList<>(Collections.nCopies(amountElements,b));
-    }
-
-    @Override
-    protected void onPostExecute(LinkedList<Byte> list) {
-        super.onPostExecute(list);
-        System.out.println("*******************LinkedList Fill******************* ");
-        present.callbackFromListModel(list);
-        present.startNextList();
+    public void start() {
+        Flowable.fromCallable(() -> new LinkedList<>(Collections.nCopies(amountElements,1))
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+            System.out.println("*******************LinkedList Fill******************* ");
+            present.callbackFromListModel(list);
+            present.startNextList();
+        });
     }
 }

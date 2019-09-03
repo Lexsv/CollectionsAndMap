@@ -7,55 +7,45 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.TreeMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-
-
-
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
-import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
-import ua.com.CollectionsAndMap.ui.fragment.TabMap;
-import ua.com.CollectionsAndMap.ui.presentation.Present;
 
+import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 
 import static java.lang.Integer.valueOf;
 
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
+    public interface ClickCalculation {
+         void onClickCalculation();
+    }
 
-    private   ViewPager viewPager;
-     private   Present present;
+    private ClickCalculation clickcalculation;
+    private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
     private int amoutElements;
     private AlertDialog showProgress;
-
+    private MainPresent mainPresent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        present = new Present(this,viewPager);
         initTab();
+        mainPresent = new MainPresent(this);
+        clickcalculation = mainPresent;
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
-        faButtn.setOnClickListener(view -> {
-            addAlertDialog();
-        });
-
-
+        faButtn.setOnClickListener(view -> addAlertDialog());
     }
 
     private void initTab() {
@@ -79,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setPositiveButton("Добавить",(dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
             amoutElements = (valueOf(editTextInLoad.getText().toString()));
-            present.showDataView(amoutElements);
+            clickcalculation.onClickCalculation();
             dialog.cancel();
         });
         addElementAlert.create();
@@ -102,44 +92,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
-
     }
 
-    public void shoeProgress() {
-        showProgress = new AlertDialog.Builder(viewPager.getContext())
-                .setView(R.layout.loader_view_progress)
-                .setCancelable(false)
-                .create();
-        showProgress.show();
+    public ViewPager getViewPager(){
+        return viewPager;
     }
-
-    public  void fillViewToFragment (ArrayList<Integer> list){
-       TabCollection fragment = (TabCollection) pagerAdapter.getItem(viewPager.getCurrentItem());
-       fragment.fillResult(list);
+    public int getAmoutElements() {
+        return amoutElements;
     }
-    public  void fillViewToFragment (HashMap<Byte, Byte> list){
-        TabMap fragment = (TabMap) pagerAdapter.getItem(viewPager.getCurrentItem());
-        fragment.fillResult(list);
-    }
-    public  void fillViewToFragment (TreeMap<Byte, Byte> list){
-        TabMap fragment = (TabMap) pagerAdapter.getItem(viewPager.getCurrentItem());
-        fragment.fillResult(list);
-    }
-
-    public  void fillViewToFragment (LinkedList<Byte> list){
-        TabCollection fragment = (TabCollection) pagerAdapter.getItem(viewPager.getCurrentItem());
-        fragment.fillResult(list);
-    }
-    public  void fillViewToFragment (CopyOnWriteArrayList<Integer> list){
-        TabCollection fragment = (TabCollection) pagerAdapter.getItem(viewPager.getCurrentItem());
-        fragment.fillResult(list);
-    }
-    public void hidProgress() {showProgress.cancel();}
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        present.onDestroy();
+        mainPresent.onDestroy();
     }
 }
