@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
 public class LinkedListModel {
@@ -16,11 +17,12 @@ public class LinkedListModel {
         this.present = present;
     }
     public void start() {
-        Flowable.fromCallable(() -> new LinkedList<>(Collections.nCopies(amountElements,1))
-        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+        Flowable.fromCallable(() -> new LinkedList<>(Collections.nCopies(amountElements,1)))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************LinkedList Fill******************* ");
             present.callbackFromListModel(list);
-            present.startNextList();
+            present.startNext();
         });
     }
 }

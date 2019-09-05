@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
 public class CopyOnWriteModel{
@@ -17,11 +18,12 @@ public class CopyOnWriteModel{
         this.present = present;}
 
     public void start() {
-        Flowable.fromCallable(() -> new CopyOnWriteArrayList<>(Collections.nCopies(amountElements,1))
-        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+        Flowable.fromCallable(() -> new CopyOnWriteArrayList<>(Collections.nCopies(amountElements,1)))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************CopyOnWritList Fill******************* ");
             present.callbackFromListModel(list);
-            present.startNextList();
+            present.startNext();
         });
     }
 }

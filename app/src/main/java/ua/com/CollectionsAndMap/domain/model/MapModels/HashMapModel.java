@@ -1,8 +1,10 @@
 package ua.com.CollectionsAndMap.domain.model.MapModels;
 
 import java.util.HashMap;
+
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 public class HashMapModel {
@@ -25,11 +27,12 @@ public class HashMapModel {
                         hashMap.put(key, b);
                     }
                     return hashMap;
-                }
-        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************HashMap Fill******************* ");
             present.callbackFromMapModel(list);
-            present.startNextMap();
+            present.startNext();
         });
     }
 

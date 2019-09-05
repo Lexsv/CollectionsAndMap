@@ -5,7 +5,9 @@ package ua.com.CollectionsAndMap.domain.model.ListModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import io.reactivex.Flowable;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
 public class ArrayListModel {
@@ -18,11 +20,12 @@ public class ArrayListModel {
         this.present = present;
     }
     public void start() {
-        Flowable.fromCallable(() -> new ArrayList<>(Collections.nCopies(amountElements, 1))
-        ).observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
+         Flowable.fromCallable(() -> new ArrayList<>(Collections.nCopies(amountElements, 1)))
+                 .subscribeOn(Schedulers.newThread())
+                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************ArrayList Fill******************* ");
             present.callbackFromListModel(list);
-            present.startNextList();
+            present.startNext();
         });
     }
 
