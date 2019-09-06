@@ -23,11 +23,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
-import ua.com.CollectionsAndMap.ui.presentation.Interface.DataView;
-import ua.com.CollectionsAndMap.ui.presentation.Interface.ProgressBar;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.DataView;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
 
 import static java.lang.String.*;
-import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
 public class TabMap extends Fragment implements ProgressBar, DataView {
@@ -35,7 +34,7 @@ public class TabMap extends Fragment implements ProgressBar, DataView {
     private Unbinder unbinder;
     private AlertDialog showProgress;
 
-    private Map<TextView, String> saveData = new HashMap<>();
+    private Map<Integer, String> saveData = new HashMap<>();
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -60,38 +59,76 @@ public class TabMap extends Fragment implements ProgressBar, DataView {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("treeMapAdd", treeMapAdd.getText().toString());
-        outState.putString("treeMapSearchKey", treeMapSearchKey.getText().toString());
-        outState.putString("treeMapremove", treeMapRemov.getText().toString());
-        outState.putString("hashMapAdd", hashMapAdd.getText().toString());
-        outState.putString("hashMapSearchKey", hashMapSearchKey.getText().toString());
-        outState.putString("hashMapRemove", hashMapRemove.getText().toString());
+    public void onRecycle(Map<Integer, String> list) {
 
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-        if (savedInstanceState != null && savedInstanceState.containsKey("treeMapAdd")) {
-            initView(savedInstanceState);
+        for (Integer textView : list.keySet()) {
+            System.out.println(" ******** onRecycleView ********* ");
+            //textView.setText(list.get(textView));
+            System.out.println("Key: " + textView + " **** Value: " + list.get(textView));
         }
-
-
     }
 
 
-    private void initView(Bundle savedInstanceState) {
-        treeMapAdd.setText(savedInstanceState.getString("treeMapAdd"));
-        treeMapSearchKey.setText(savedInstanceState.getString("treeMapSearchKey"));
-        treeMapRemov.setText(savedInstanceState.getString("treeMapremove"));
-        hashMapAdd.setText(savedInstanceState.getString("hashMapAdd"));
-        hashMapSearchKey.setText(savedInstanceState.getString("hashMapSearchKey"));
-        hashMapRemove.setText(savedInstanceState.getString("hashMapRemove"));
+    public void fillResult(HashMap<Byte, Byte> list) {
+
+        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
+                .subscribeOn(Schedulers.newThread())
+                .map((m) -> valueOf(m))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((s -> {
+                    treeMapAdd.setText(s);
+                    saveData.put(R.id.treeMap_add, s);
+                }));
+
+        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
+                .subscribeOn(Schedulers.newThread())
+                .map((m) -> valueOf(m))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((s -> {
+                    treeMapSearchKey.setText(s);
+                    saveData.put(R.id.treeMap_SearchKey, s);
+                }));
+        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
+                .subscribeOn(Schedulers.newThread())
+                .map((m) -> valueOf(m))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((s -> {
+                    treeMapRemov.setText(s);
+                    saveData.put(R.id.treeMap_remove, s);
+                }));
+
     }
+
+    public void fillResult(TreeMap<Byte, Byte> list) {
+
+        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
+                .subscribeOn(Schedulers.newThread())
+                .map((m) -> valueOf(m))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((s -> {
+                    hashMapAdd.setText(s);
+                    saveData.put(R.id.hashMap_add, s);
+                }));
+
+        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
+                .subscribeOn(Schedulers.newThread())
+                .map((m) -> valueOf(m))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((s -> {
+                    hashMapSearchKey.setText(s);
+                    saveData.put(R.id.hashMap_SearchKey, s);
+                }));
+        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
+                .subscribeOn(Schedulers.newThread())
+                .map((m) -> valueOf(m))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((s -> {
+                    hashMapRemove.setText(s);
+                    saveData.put(R.id.hashMap_remove, s);
+                }));
+
+    }
+
 
     @Override
     public void shoeProgress() {
@@ -113,70 +150,4 @@ public class TabMap extends Fragment implements ProgressBar, DataView {
         unbinder.unbind();
     }
 
-    public void fillResult(HashMap<Byte, Byte> list) {
-
-        Single.fromCallable(()->speedMap(list, FillView.ActionFill.ADDBEGIN))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s ->{
-                    treeMapAdd.setText(s);
-                    saveData.put(treeMapAdd, s );
-                }));
-
-        Single.fromCallable(()->speedMap(list, FillView.ActionFill.ADDMIDDL))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s ->{
-                    treeMapSearchKey.setText(s);
-                    saveData.put(treeMapSearchKey, s );
-                }));
-        Single.fromCallable(()->speedMap(list, FillView.ActionFill.ADDEND))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s ->{
-                    treeMapRemov.setText(s);
-                    saveData.put(treeMapRemov, s );
-                }));
-
-    }
-
-    public void fillResult(TreeMap<Byte, Byte> list) {
-
-        Single.fromCallable(()->speedMap(list, FillView.ActionFill.ADDBEGIN))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s ->{
-                    hashMapAdd.setText(s);
-                    saveData.put(hashMapAdd, s );
-                }));
-
-        Single.fromCallable(()->speedMap(list, FillView.ActionFill.ADDMIDDL))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s ->{
-                    hashMapSearchKey.setText(s);
-                    saveData.put(hashMapSearchKey, s );
-                }));
-        Single.fromCallable(()->speedMap(list, FillView.ActionFill.ADDEND))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s ->{
-                    hashMapRemove.setText(s);
-                    saveData.put(hashMapRemove, s );
-                }));
-
-    }
-
-    @Override
-    public void onRecycle(Map<TextView, String> list) {
-        for ( TextView textView : list.keySet()){
-            textView.setText(list.get(textView));
-        }
-    }
 }

@@ -6,9 +6,10 @@ import java.util.TreeMap;
 import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.domain.model.MapModels.TreeMapModel;
 import ua.com.CollectionsAndMap.ui.fragment.TabMap;
-import ua.com.CollectionsAndMap.ui.presentation.Interface.ProgressBar;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.Presenter;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
 
-public class PresentForMap  {
+public class PresentForMap implements Presenter {
     private TabMap tabMap;
     private int queue = 0;
     private int amountElements;
@@ -21,7 +22,7 @@ public class PresentForMap  {
 
     }
 
-
+    @Override
     public void showDataView(int amountElements) {
         this.amountElements = amountElements;
         progressBar.shoeProgress();
@@ -30,7 +31,7 @@ public class PresentForMap  {
     }
 
 
-
+    @Override
     public void startNext() {
         if (queue == 0) {
 
@@ -55,5 +56,8 @@ public class PresentForMap  {
         tabMap.fillResult(list);
     }
 
-
+    @Override
+    public void fillDataView (){
+        //dataView.onRecycleView(saveView);
+    }
 }

@@ -1,4 +1,4 @@
-package ua.com.CollectionsAndMap.ui.presentation.Interface;
+package ua.com.CollectionsAndMap.ui.presentation.interfaceExpand;
 
 public interface ProgressBar {
     void shoeProgress();

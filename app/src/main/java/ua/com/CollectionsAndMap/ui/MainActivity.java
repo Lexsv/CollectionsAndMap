@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                                      .appModul(new AppModul(this))
                                       .presentModule(new PresentModule()).build();
         appComponent.inject(this);
-        initTab();
         clickcalculation = mainPresent;
         if (savedInstanceState != null) {
             mainPresent.setViewPager(viewPager);
             clickcalculation.upData();
         }
+        initTab();
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> addAlertDialog());
     }

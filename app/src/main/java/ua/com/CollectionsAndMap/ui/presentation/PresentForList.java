@@ -17,18 +17,15 @@ import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
 
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
-import ua.com.CollectionsAndMap.ui.presentation.Interface.DataView;
-import ua.com.CollectionsAndMap.ui.presentation.Interface.ProgressBar;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.Presenter;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
 
-public class PresentForList  {
+public class PresentForList implements Presenter {
 
     private TabCollection tabCollection;
     private int queue = 0;
     private int amountElements;
     private ProgressBar progressBar;
-    private DataView dataView;
-
-
     private Map<TextView,String> saveView =   new HashMap<>();
 
 
@@ -36,18 +33,15 @@ public class PresentForList  {
         this.tabCollection = tabCollection;
         this.amountElements = amountElements;
         this.progressBar = tabCollection;
-        this.dataView = tabCollection;
-
-
     }
-
+    @Override
     public void showDataView(int amountElements) {
         progressBar.shoeProgress();
         this.amountElements = amountElements;
             queue = 2;
             startNext();
     }
-
+    @Override
     public void startNext() {
 
         if (queue == 0) {
@@ -78,9 +72,9 @@ public class PresentForList  {
     public void callbackFromListModel(CopyOnWriteArrayList<Integer> list) {
         tabCollection.fillResult(list);
     }
-
+    @Override
     public void fillDataView (){
-        dataView.onRecycle(saveView);
+       tabCollection.onRecycleView(saveView);
     }
 
 }
