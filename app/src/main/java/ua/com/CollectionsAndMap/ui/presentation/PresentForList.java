@@ -15,6 +15,7 @@ import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
 
+import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.Presenter;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
@@ -24,17 +25,12 @@ public class PresentForList implements Presenter {
     private TabCollection tabCollection;
     private int queue = 0;
     private int amountElements;
-    private ProgressBar progressBar;
     private Map<TextView,String> saveView = new HashMap<>();
 
 
-    public PresentForList(TabCollection tabCollection) {
-        this.tabCollection = tabCollection;
-        this.progressBar = tabCollection;
-    }
     @Override
     public void showDataView(int amountElements) {
-        progressBar.shoeProgress();
+        ((MainActivity) tabCollection.getContext()).shoeProgress();
         this.amountElements = amountElements;
             queue = 2;
             startNext();
@@ -53,7 +49,7 @@ public class PresentForList implements Presenter {
             new ArrayListModel(amountElements, this).start();
         }
         if (queue < 0) {
-            progressBar.hidProgress();
+            ((MainActivity) tabCollection.getContext()).hidProgress();
             saveView = tabCollection.getSaveData();
         }
         queue--;
@@ -76,4 +72,7 @@ public class PresentForList implements Presenter {
         tabCollection.onRecycleView(saveView);
     }
 
+    public void setTabCollection(TabCollection tabCollection) {
+        this.tabCollection = tabCollection;
+    }
 }

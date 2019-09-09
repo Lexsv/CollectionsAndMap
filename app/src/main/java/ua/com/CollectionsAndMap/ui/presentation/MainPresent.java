@@ -21,8 +21,10 @@ public final class MainPresent implements MainActivity.DataCalculation {
         this.activity = (MainActivity)activity;
     }
     public void build (){
-        presentForList = new PresentForList((TabCollection) activity.getFragment(0));
-        presentForMap = new PresentForMap((TabMap) activity.getFragment(1));
+        if (presentForList == null){presentForList = new PresentForList();}
+        if (presentForMap == null) {presentForMap = new PresentForMap();}
+        presentForList.setTabCollection((TabCollection) activity.getFragment(0));
+        presentForMap.setTabMap((TabMap) activity.getFragment(1));
     }
 
     @Override

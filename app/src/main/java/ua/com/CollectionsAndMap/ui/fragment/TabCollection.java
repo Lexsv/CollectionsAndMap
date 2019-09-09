@@ -36,9 +36,8 @@ import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
 
-public class TabCollection extends Fragment implements ProgressBar {
+public class TabCollection extends Fragment{
     private Unbinder unbinder;
-    private AlertDialog showProgress;
     private Map<TextView, String> saveData = new HashMap<>();
 
 
@@ -96,6 +95,7 @@ public class TabCollection extends Fragment implements ProgressBar {
 
 
     public void onRecycleView(Map<TextView, String> list) {
+        System.out.println(list.values());
         System.out.println("****** onRecycleView ***** ");
         copyOnWriteRemoveEnd.setText("000");
     }
@@ -294,19 +294,6 @@ public class TabCollection extends Fragment implements ProgressBar {
 
     }
 
-    @Override
-    public void shoeProgress() {
-        showProgress = new AlertDialog.Builder(this.getContext())
-                .setView(R.layout.loader_view_progress)
-                .setCancelable(false)
-                .create();
-        showProgress.show();
-    }
-
-    @Override
-    public void hidProgress() {
-        showProgress.cancel();
-    }
 
     @Override
     public void onDestroyView() {

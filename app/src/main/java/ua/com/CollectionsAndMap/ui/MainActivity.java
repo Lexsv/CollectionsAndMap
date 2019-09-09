@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
     private int amoutElements;
+    private AlertDialog showProgress;
     @Inject
     MainPresent mainPresent;
 
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setTitle("Add Element");
         addElementAlert.setView(R.layout.loader_view);
         addElementAlert.setIcon(R.drawable.database);
-        addElementAlert.setPositiveButton("Добавить", (dialog, which) -> {
+        addElementAlert.setPositiveButton("Посчитать", (dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
             amoutElements = (valueOf(editTextInLoad.getText().toString()));
             datacalculation.onClickCalculation(viewPager.getCurrentItem());
@@ -109,6 +110,20 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     public Fragment getFragment(int position){
         return pagerAdapter.getItem(position);
+    }
+
+
+    public void shoeProgress() {
+        showProgress = new AlertDialog.Builder(this)
+                .setView(R.layout.loader_view_progress)
+                .setCancelable(false)
+                .create();
+        showProgress.show();
+    }
+
+
+    public void hidProgress() {
+        showProgress.cancel();
     }
 
     @Override

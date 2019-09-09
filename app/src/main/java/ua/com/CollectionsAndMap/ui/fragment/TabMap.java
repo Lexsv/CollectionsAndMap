@@ -29,11 +29,9 @@ import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
-public class TabMap extends Fragment implements ProgressBar, DataView {
+public class TabMap extends Fragment implements DataView {
 
     private Unbinder unbinder;
-    private AlertDialog showProgress;
-
     private Map<Integer, String> saveData = new HashMap<>();
 
     @BindView(R.id.treeMap_add)
@@ -129,20 +127,6 @@ public class TabMap extends Fragment implements ProgressBar, DataView {
 
     }
 
-
-    @Override
-    public void shoeProgress() {
-        showProgress = new AlertDialog.Builder(this.getContext())
-                .setView(R.layout.loader_view_progress)
-                .setCancelable(false)
-                .create();
-        showProgress.show();
-    }
-
-    @Override
-    public void hidProgress() {
-        showProgress.cancel();
-    }
 
     @Override
     public void onDestroyView() {
