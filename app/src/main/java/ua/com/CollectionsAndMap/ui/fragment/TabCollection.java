@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -27,6 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
+import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.DataView;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
@@ -38,6 +40,7 @@ public class TabCollection extends Fragment implements ProgressBar {
     private Unbinder unbinder;
     private AlertDialog showProgress;
     private Map<TextView, String> saveData = new HashMap<>();
+
 
     @BindView(R.id.arrayList_addBagin)
     TextView arrayListAddBegin;
@@ -83,22 +86,18 @@ public class TabCollection extends Fragment implements ProgressBar {
     TextView copyOnWriteRemoveEnd;
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.collection, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         return view;
     }
 
-    public void onRecycleView(Map<TextView, String> list) {
-        for (TextView textView : list.keySet()) {
-            TextView timeTV= getView().findViewById(textView.getId());
-            timeTV.setText(list.get(textView));
-        }
 
+    public void onRecycleView(Map<TextView, String> list) {
+        System.out.println("****** onRecycleView ***** ");
+        copyOnWriteRemoveEnd.setText("000");
     }
 
 

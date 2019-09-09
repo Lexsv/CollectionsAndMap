@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -22,12 +23,12 @@ import static java.lang.Integer.valueOf;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
-    public interface ClickCalculation {
-        void onClickCalculation();
+    public interface DataCalculation {
+        void onClickCalculation(int position);
         void upData();
     }
 
-    private ClickCalculation clickcalculation;
+    private DataCalculation datacalculation;
     private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
@@ -40,16 +41,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppComponent appComponent = DaggerAppComponent.builder()
-                                     .appModul(new AppModul(this))
-                                      .presentModule(new PresentModule()).build();
-        appComponent.inject(this);
-        clickcalculation = mainPresent;
-        if (savedInstanceState != null) {
-            mainPresent.setViewPager(viewPager);
-            clickcalculation.upData();
-        }
         initTab();
+        addDaggerDepend();
+        mainPresent.build();
+        datacalculation = mainPresent;
+        if (savedInstanceState != null) {
+            datacalculation.upData();
+        }
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> addAlertDialog());
     }
@@ -61,8 +59,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.addOnTabSelectedListener(this);
 
-        viewPager = findViewById(R.id.mainActivity_pager);
         pagerAdapter = new PagerAdapt(getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager = findViewById(R.id.mainActivity_pager);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setPositiveButton("Добавить", (dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
             amoutElements = (valueOf(editTextInLoad.getText().toString()));
-            clickcalculation.onClickCalculation();
+            datacalculation.onClickCalculation(viewPager.getCurrentItem());
             dialog.cancel();
         });
         addElementAlert.create();
@@ -97,12 +96,19 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabReselected(TabLayout.Tab tab) {
     }
 
-    public ViewPager getViewPager() {
-        return viewPager;
-    }
 
     public int getAmoutElements() {
         return amoutElements;
+    }
+    private void addDaggerDepend (){
+        AppComponent appComponent = DaggerAppComponent.builder()
+                .appModul(new AppModul(this))
+                .presentModule(new PresentModule()).build();
+        appComponent.inject(this);
+    }
+
+    public Fragment getFragment(int position){
+        return pagerAdapter.getItem(position);
     }
 
     @Override

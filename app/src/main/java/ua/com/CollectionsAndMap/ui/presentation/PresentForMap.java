@@ -15,11 +15,9 @@ public class PresentForMap implements Presenter {
     private int amountElements;
     ProgressBar progressBar;
 
-    public PresentForMap (int amountElements, TabMap tabMap) {
+    public PresentForMap (TabMap tabMap) {
         this.tabMap = tabMap;
-        this.amountElements = amountElements;
         this.progressBar = tabMap;
-
     }
 
     @Override

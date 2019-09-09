@@ -11,7 +11,6 @@ import java.util.LinkedList;
 
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
@@ -26,12 +25,11 @@ public class PresentForList implements Presenter {
     private int queue = 0;
     private int amountElements;
     private ProgressBar progressBar;
-    private Map<TextView,String> saveView =   new HashMap<>();
+    private Map<TextView,String> saveView = new HashMap<>();
 
 
-    public PresentForList(int amountElements, TabCollection tabCollection) {
+    public PresentForList(TabCollection tabCollection) {
         this.tabCollection = tabCollection;
-        this.amountElements = amountElements;
         this.progressBar = tabCollection;
     }
     @Override
@@ -72,9 +70,10 @@ public class PresentForList implements Presenter {
     public void callbackFromListModel(CopyOnWriteArrayList<Integer> list) {
         tabCollection.fillResult(list);
     }
+
     @Override
     public void fillDataView (){
-       tabCollection.onRecycleView(saveView);
+        tabCollection.onRecycleView(saveView);
     }
 
 }
