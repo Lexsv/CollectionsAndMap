@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     public interface DataCalculation {
         void onClickCalculation(int position);
-        void upData();
     }
 
     private DataCalculation datacalculation;
@@ -46,9 +45,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addDaggerDepend();
         mainPresent.build();
         datacalculation = mainPresent;
-        if (savedInstanceState != null) {
-            datacalculation.upData();
-        }
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> addAlertDialog());
     }
@@ -114,15 +110,15 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
 
     public void shoeProgress() {
-        showProgress = new AlertDialog.Builder(this)
-                .setView(R.layout.loader_view_progress)
+        showProgress = new AlertDialog.Builder(this).
+                setView(R.layout.loader_view_progress)
                 .setCancelable(false)
-                .create();
+                .create();;
         showProgress.show();
     }
 
 
-    public void hidProgress() {
+    public    void hidProgress() {
         showProgress.cancel();
     }
 
@@ -130,5 +126,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onDestroy() {
         super.onDestroy();
         mainPresent.onDestroy();
+
     }
 }

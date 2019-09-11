@@ -2,6 +2,7 @@ package ua.com.CollectionsAndMap.ui.presentation;
 
 
 
+import android.content.Context;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,25 +19,36 @@ import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.Presenter;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
+
+
+
 
 public class PresentForList implements Presenter {
 
     private TabCollection tabCollection;
     private int queue = 0;
     private int amountElements;
-    private Map<TextView,String> saveView = new HashMap<>();
+    private MainPresent mainPresent;
+
+    public PresentForList(MainPresent mainPresent) {
+        this.mainPresent = mainPresent;
+    }
+
+    private static Map<Integer,String> saveView = new HashMap<>();
+
+    public static Map<Integer, String> getSaveView() {
+        return saveView;
+    }
 
 
-    @Override
     public void showDataView(int amountElements) {
-        ((MainActivity) tabCollection.getContext()).shoeProgress();
         this.amountElements = amountElements;
             queue = 2;
             startNext();
     }
-    @Override
+
     public void startNext() {
+
 
         if (queue == 0) {
             new CopyOnWriteModel(amountElements, this).start();
@@ -49,7 +61,8 @@ public class PresentForList implements Presenter {
             new ArrayListModel(amountElements, this).start();
         }
         if (queue < 0) {
-            ((MainActivity) tabCollection.getContext()).hidProgress();
+
+            mainPresent.hidProgress();
             saveView = tabCollection.getSaveData();
         }
         queue--;
@@ -67,12 +80,10 @@ public class PresentForList implements Presenter {
         tabCollection.fillResult(list);
     }
 
-    @Override
-    public void fillDataView (){
-        tabCollection.onRecycleView(saveView);
-    }
-
     public void setTabCollection(TabCollection tabCollection) {
         this.tabCollection = tabCollection;
+
     }
+
+
 }

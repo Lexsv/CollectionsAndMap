@@ -1,6 +1,5 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Scheduler;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,15 +27,14 @@ import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.DataView;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
 
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
 
-public class TabCollection extends Fragment{
+public class TabCollection extends Fragment {
     private Unbinder unbinder;
-    private Map<TextView, String> saveData = new HashMap<>();
+    private Map<Integer, String> saveData = new HashMap<>();
+
 
 
     @BindView(R.id.arrayList_addBagin)
@@ -90,18 +86,15 @@ public class TabCollection extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.collection, container, false);
         unbinder = ButterKnife.bind(this, view);
+        System.out.println("********** onCreateView *********");
+        onRecycle(savedInstanceState);
         return view;
     }
 
 
-    public void onRecycleView(Map<TextView, String> list) {
-        System.out.println(list.values());
-        System.out.println("****** onRecycleView ***** ");
-        copyOnWriteRemoveEnd.setText("000");
-    }
-
 
     public void fillResult(ArrayList<Integer> list) {
+        System.out.println("******** ArrayList fillResult ******");
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
                 .subscribeOn(Schedulers.newThread())
@@ -109,7 +102,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListAddBegin.setText(s);
-                    saveData.put(arrayListAddBegin, s);
+                    saveData.put(R.id.arrayList_addBagin, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
@@ -118,7 +111,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListAddMiddle.setText(s);
-                    saveData.put(arrayListAddMiddle, s);
+                    saveData.put(R.id.arrayList_addMiddle, s);
                 }));
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDEND))
                 .subscribeOn(Schedulers.newThread())
@@ -126,7 +119,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListAddEnd.setText(s);
-                    saveData.put(arrayListAddEnd, s);
+                    saveData.put(R.id.arrayList_addEnd, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
@@ -135,7 +128,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListSearch.setText(s);
-                    saveData.put(arrayListSearch, s);
+                    saveData.put(R.id.arrayList_search, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
@@ -144,7 +137,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListRemoveBegin.setText(s);
-                    saveData.put(arrayListRemoveBegin, s);
+                    saveData.put(R.id.arrayList_removeBagin, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
@@ -153,7 +146,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListRemoveMiddle.setText(s);
-                    saveData.put(arrayListRemoveMiddle, s);
+                    saveData.put(R.id.arrayList_ramoveMidlle, s);
                 }));
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEND))
                 .subscribeOn(Schedulers.newThread())
@@ -161,7 +154,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     arrayListRemoveEnd.setText(s);
-                    saveData.put(arrayListRemoveEnd, s);
+                    saveData.put(R.id.arrayList_removeEnd, s);
                 }));
     }
 
@@ -174,7 +167,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListAddBegin.setText(s);
-                    saveData.put(linkedListAddBegin, s);
+                    saveData.put(R.id.linkedList_addBagin, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
@@ -183,7 +176,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListAddMiddle.setText(s);
-                    saveData.put(linkedListAddMiddle, s);
+                    saveData.put(R.id.linkedList_addMiddle, s);
                 }));
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDEND))
                 .subscribeOn(Schedulers.newThread())
@@ -191,7 +184,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListAddEnd.setText(s);
-                    saveData.put(linkedListAddEnd, s);
+                    saveData.put(R.id.linkedList_addEnd, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
@@ -200,7 +193,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListSearch.setText(s);
-                    saveData.put(linkedListSearch, s);
+                    saveData.put(R.id.linkedList_search, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
@@ -209,7 +202,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListRemoveBegin.setText(s);
-                    saveData.put(linkedListRemoveBegin, s);
+                    saveData.put(R.id.linkedList_removeBagin, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
@@ -218,7 +211,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListRemoveMiddle.setText(s);
-                    saveData.put(linkedListRemoveMiddle, s);
+                    saveData.put(R.id.linkedList_ramoveMidlle, s);
                 }));
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEND))
                 .subscribeOn(Schedulers.newThread())
@@ -226,11 +219,12 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     linkedListRemoveEnd.setText(s);
-                    saveData.put(linkedListRemoveEnd, s);
+                    saveData.put(R.id.linkedList_removeEnd, s);
                 }));
     }
 
     public void fillResult(CopyOnWriteArrayList<Integer> list) {
+
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
                 .subscribeOn(Schedulers.newThread())
@@ -238,7 +232,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteAddBegin.setText(s);
-                    saveData.put(copyOnWriteAddBegin, s);
+                    saveData.put(R.id.copyOn_write_addBagin, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
@@ -247,7 +241,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteAddMiddle.setText(s);
-                    saveData.put(copyOnWriteAddMiddle, s);
+                    saveData.put(R.id.copyOn_write_addMiddle, s);
                 }));
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDEND))
                 .subscribeOn(Schedulers.newThread())
@@ -255,7 +249,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteAddEnd.setText(s);
-                    saveData.put(copyOnWriteAddEnd, s);
+                    saveData.put(R.id.copyOn_write_addEnd, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
@@ -264,7 +258,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteSearch.setText(s);
-                    saveData.put(copyOnWriteSearch, s);
+                    saveData.put(R.id.copyOn_write_search, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
@@ -273,7 +267,7 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteRemoveBegin.setText(s);
-                    saveData.put(copyOnWriteRemoveBegin, s);
+                    saveData.put(R.id.copyOn_write_removeBagin, s);
                 }));
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
@@ -282,14 +276,14 @@ public class TabCollection extends Fragment{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteRemoveMiddle.setText(s);
-                    saveData.put(copyOnWriteRemoveMiddle, s);
+                    saveData.put(R.id.copyOn_write_ramoveMidlle, s);
                 }));
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEND))
                 .map((m) -> valueOf(m))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s -> {
                     copyOnWriteRemoveEnd.setText(s);
-                    saveData.put(copyOnWriteRemoveEnd, s);
+                    saveData.put(R.id.copyOn_write_removeEnd, s);
                 }));
 
     }
@@ -301,9 +295,41 @@ public class TabCollection extends Fragment{
         unbinder.unbind();
     }
 
-    public Map<TextView, String> getSaveData() {
+    public Map<Integer, String> getSaveData() {
         return saveData;
     }
 
 
+
+
+    public void onRecycle( Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            saveData = PresentForList.getSaveView();
+            for (Integer integer : saveData.keySet()){
+                if (arrayListAddBegin.getId() == integer){arrayListAddBegin.setText(saveData.get(integer));}
+                if (arrayListAddMiddle.getId() == integer){arrayListAddMiddle.setText(saveData.get(integer));}
+                if (arrayListAddEnd.getId() == integer){arrayListAddEnd.setText(saveData.get(integer));}
+                if (arrayListSearch.getId() == integer){arrayListSearch.setText(saveData.get(integer));}
+                if (arrayListRemoveBegin.getId() == integer){arrayListRemoveBegin.setText(saveData.get(integer));}
+                if (arrayListRemoveMiddle.getId() == integer){arrayListRemoveMiddle.setText(saveData.get(integer));}
+                if (arrayListRemoveEnd.getId() == integer){arrayListRemoveEnd.setText(saveData.get(integer));}
+                if (linkedListAddBegin.getId() == integer){linkedListAddBegin.setText(saveData.get(integer));}
+                if (linkedListAddMiddle.getId() == integer){linkedListAddMiddle.setText(saveData.get(integer));}
+                if (linkedListAddEnd.getId() == integer){linkedListAddEnd.setText(saveData.get(integer));}
+                if (linkedListSearch.getId() == integer){linkedListSearch.setText(saveData.get(integer));}
+                if (linkedListRemoveBegin.getId() == integer){linkedListRemoveBegin.setText(saveData.get(integer));}
+                if (linkedListRemoveMiddle.getId() == integer){linkedListRemoveMiddle.setText(saveData.get(integer));}
+                if (linkedListRemoveEnd.getId() == integer){linkedListRemoveEnd.setText(saveData.get(integer));}
+                if (copyOnWriteAddBegin.getId() == integer){copyOnWriteAddBegin.setText(saveData.get(integer));}
+                if (copyOnWriteAddMiddle.getId() == integer){copyOnWriteAddMiddle.setText(saveData.get(integer));}
+                if (copyOnWriteAddEnd.getId() == integer){copyOnWriteAddEnd.setText(saveData.get(integer));}
+                if (copyOnWriteSearch.getId() == integer){copyOnWriteSearch.setText(saveData.get(integer));}
+                if (copyOnWriteRemoveBegin.getId() == integer){copyOnWriteRemoveBegin.setText(saveData.get(integer));}
+                if (copyOnWriteRemoveMiddle.getId() == integer){copyOnWriteRemoveMiddle.setText(saveData.get(integer));}
+                if (copyOnWriteRemoveEnd.getId() == integer){copyOnWriteRemoveEnd.setText(saveData.get(integer));}
+
+            }
+        }
+
+    }
 }

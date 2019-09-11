@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
@@ -23,13 +22,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.DataView;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.ProgressBar;
+import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
-public class TabMap extends Fragment implements DataView {
+public class TabMap extends Fragment  {
 
     private Unbinder unbinder;
     private Map<Integer, String> saveData = new HashMap<>();
@@ -53,17 +51,25 @@ public class TabMap extends Fragment implements DataView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.map, container, false);
         unbinder = ButterKnife.bind(this, view);
+        onRecycle(savedInstanceState);
         return view;
     }
 
-    @Override
-    public void onRecycle(Map<Integer, String> list) {
 
-        for (Integer textView : list.keySet()) {
-            System.out.println(" ******** onRecycleView ********* ");
-            //textView.setText(list.get(textView));
-            System.out.println("Key: " + textView + " **** Value: " + list.get(textView));
+    public void onRecycle(Bundle savedInstanceState) {
+        if (savedInstanceState !=null){
+            saveData = PresentForMap.getSaveView();
+            for (Integer integer : saveData.keySet()) {
+                if (treeMapAdd.getId() == integer){treeMapAdd.setText(saveData.get(integer));}
+                if (treeMapSearchKey.getId() == integer){treeMapSearchKey.setText(saveData.get(integer));}
+                if (treeMapRemov.getId() == integer){treeMapRemov.setText(saveData.get(integer));}
+                if (hashMapAdd.getId() == integer){hashMapAdd.setText(saveData.get(integer));}
+                if (hashMapSearchKey.getId() == integer){hashMapSearchKey.setText(saveData.get(integer));}
+                if (hashMapRemove.getId() == integer){hashMapRemove.setText(saveData.get(integer));}
+
+            }
         }
+
     }
 
 
@@ -125,6 +131,9 @@ public class TabMap extends Fragment implements DataView {
                     saveData.put(R.id.hashMap_remove, s);
                 }));
 
+    }
+    public Map<Integer, String> getSaveData() {
+        return saveData;
     }
 
 
