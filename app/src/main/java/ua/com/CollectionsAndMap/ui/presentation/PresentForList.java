@@ -40,13 +40,13 @@ public class PresentForList implements Presenter {
         return saveView;
     }
 
-
+    @Override
     public void showDataView(int amountElements) {
         this.amountElements = amountElements;
             queue = 2;
             startNext();
     }
-
+    @Override
     public void startNext() {
 
 

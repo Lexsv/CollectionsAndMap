@@ -332,4 +332,5 @@ public class TabCollection extends Fragment {
         }
 
     }
+
 }

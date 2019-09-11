@@ -27,7 +27,7 @@ public class PresentForMap implements Presenter {
         return saveView;
     }
 
-
+    @Override
     public void showDataView(int amountElements) {
         this.amountElements = amountElements;
             queue = 1;
@@ -35,7 +35,7 @@ public class PresentForMap implements Presenter {
     }
 
 
-
+    @Override
     public void startNext() {
         if (queue == 0) {
 
