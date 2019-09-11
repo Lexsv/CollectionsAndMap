@@ -1,5 +1,6 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,7 @@ public class TabCollection extends Fragment {
 
 
 
+    @SuppressLint("CheckResult")
     public void fillResult(ArrayList<Integer> list) {
         System.out.println("******** ArrayList fillResult ******");
 

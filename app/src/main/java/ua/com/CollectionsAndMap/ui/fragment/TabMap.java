@@ -1,5 +1,6 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +74,7 @@ public class TabMap extends Fragment  {
     }
 
 
+    @SuppressLint("CheckResult")
     public void fillResult(HashMap<Byte, Byte> list) {
 
         Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
