@@ -159,7 +159,7 @@ public class TabCollection extends Fragment {
                     saveData.put(R.id.arrayList_removeEnd, s);
                 }));
     }
-
+    @SuppressLint("CheckResult")
     public void fillResult(LinkedList<Integer> list) {
 
 
@@ -224,7 +224,7 @@ public class TabCollection extends Fragment {
                     saveData.put(R.id.linkedList_removeEnd, s);
                 }));
     }
-
+    @SuppressLint("CheckResult")
     public void fillResult(CopyOnWriteArrayList<Integer> list) {
 
 

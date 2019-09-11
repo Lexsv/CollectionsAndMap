@@ -104,7 +104,7 @@ public class TabMap extends Fragment  {
                 }));
 
     }
-
+    @SuppressLint("CheckResult")
     public void fillResult(TreeMap<Byte, Byte> list) {
 
         Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
