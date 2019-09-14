@@ -1,26 +1,17 @@
 package ua.com.CollectionsAndMap.ui.presentation;
 
-
-
-import android.content.Context;
-import android.widget.TextView;
-
 import java.util.ArrayList;
-
-import java.util.HashMap;
 import java.util.LinkedList;
-
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import ua.com.CollectionsAndMap.data.DataSave;
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
-
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.Presenter;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceExpand.Presenter;
-
-
 
 
 public class PresentForList implements Presenter {
@@ -28,27 +19,26 @@ public class PresentForList implements Presenter {
     private TabCollection tabCollection;
     private int queue = 0;
     private int amountElements;
-    private MainPresent mainPresent;
+    private DataSave listSave;
+    private MainActivity activity;
 
-    public PresentForList(MainPresent mainPresent) {
-        this.mainPresent = mainPresent;
+
+    public PresentForList(MainActivity activity, TabCollection tabCollection) {
+        this.tabCollection = tabCollection;
+        this.activity = activity;
+        this.listSave = DataSave.getDataSave();
     }
 
-    private static Map<Integer,String> saveView = new HashMap<>();
-
-    public static Map<Integer, String> getSaveView() {
-        return saveView;
-    }
 
     @Override
-    public void showDataView(int amountElements) {
-        this.amountElements = amountElements;
-            queue = 2;
-            startNext();
+    public void onCalculation(int amauntElemants) {
+        this.amountElements = amauntElemants;
+        queue = 2;
+        startNext();
     }
-    @Override
+
+
     public void startNext() {
-
 
         if (queue == 0) {
             new CopyOnWriteModel(amountElements, this).start();
@@ -61,28 +51,20 @@ public class PresentForList implements Presenter {
             new ArrayListModel(amountElements, this).start();
         }
         if (queue < 0) {
-
-            mainPresent.hidProgress();
-            saveView = tabCollection.getSaveData();
+            activity.hidProgress();
+            listSave.setDataList(tabCollection.getSaveData());
         }
         queue--;
     }
 
-    public void callbackFromListModel(ArrayList<Integer> list) {
-        tabCollection.fillResult(list);
+    public Map<Integer, String> getData() {
+        return listSave.getDataList();
     }
 
-    public void callbackFromListModel(LinkedList<Integer> list) {
-        tabCollection.fillResult(list);
-    }
-
-    public void callbackFromListModel(CopyOnWriteArrayList<Integer> list) {
-        tabCollection.fillResult(list);
-    }
-
-    public void setTabCollection(TabCollection tabCollection) {
-        this.tabCollection = tabCollection;
-
+    public void callbackFromListModel(List<Integer> list, FlagList flag) {
+       if (flag == FlagList.ARREY){tabCollection.fillResult((ArrayList<Integer>) list);}
+       if (flag == FlagList.LINKED){tabCollection.fillResult((LinkedList<Integer>) list);}
+       if (flag == FlagList.COPYONWRITE){tabCollection.fillResult((CopyOnWriteArrayList<Integer>) list);}
     }
 
 

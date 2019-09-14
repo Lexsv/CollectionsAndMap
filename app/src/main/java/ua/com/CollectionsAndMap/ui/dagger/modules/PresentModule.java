@@ -12,7 +12,6 @@ import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 @Module
 public class PresentModule {
     @Provides
-    @Singleton
     public MainPresent getMainPresent(Context context){
         return new MainPresent(context);
     }

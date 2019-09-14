@@ -20,7 +20,7 @@ public class PagerAdapt extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         if (position == 0) {
-            if (fragments[position] != null){return fragments[position];}
+           if (fragments[position] != null){return fragments[position];}
             TabCollection tabCollection = new TabCollection();
             fragments[position] = tabCollection;
             return tabCollection;

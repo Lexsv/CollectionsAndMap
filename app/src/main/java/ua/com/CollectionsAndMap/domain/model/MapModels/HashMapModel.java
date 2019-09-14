@@ -1,10 +1,13 @@
 package ua.com.CollectionsAndMap.domain.model.MapModels;
 
+import android.annotation.SuppressLint;
+
 import java.util.HashMap;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ua.com.CollectionsAndMap.ui.presentation.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 public class HashMapModel {
@@ -17,7 +20,7 @@ public class HashMapModel {
         this.amountElements = amountElements;
         this.present = present;
     }
-
+    @SuppressLint("CheckResult")
     public void start() {
         Flowable.fromCallable(() -> {
                     Byte b = 0;
@@ -31,7 +34,7 @@ public class HashMapModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************HashMap Fill******************* ");
-            present.callbackFromMapModel(list);
+            present.callbackFromMapModel(list, FlagMap.HASH);
             present.startNext();
         });
     }

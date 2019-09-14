@@ -1,22 +1,18 @@
 package ua.com.CollectionsAndMap.ui.presentation;
 
 import android.content.Context;
-
-import androidx.viewpager.widget.ViewPager;
-
 import javax.inject.Inject;
-
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainPresenter;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.Presenter;
 import ua.com.CollectionsAndMap.ui.MainActivity;
-import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 
 
-public  class MainPresent implements MainActivity.DataCalculation {
+public  class MainPresent implements MainPresenter {
 
     private MainActivity activity;
-    private  PresentForList presentForList;
-    private  PresentForMap presentForMap;
+
 
 
     @Inject
@@ -24,29 +20,20 @@ public  class MainPresent implements MainActivity.DataCalculation {
         this.activity = (MainActivity) activity;
     }
 
-    public void build() {
-        presentForList = new PresentForList(this);
-        presentForList.setTabCollection((TabCollection) activity.getFragment(0));
-        presentForMap = new PresentForMap(this);
-        presentForMap.setTabMap((TabMap) activity.getFragment(1));
-
-    }
-
     @Override
-    public void onClickCalculation(int position) {
-        activity.shoeProgress();
+    public void onCalculation(int position,int amauntElemant) {
         if (position == 0) {
-            presentForList.showDataView(activity.getAmoutElements());
+            activity.shoeProgress();
+            Presenter presenterForList = TabCollection.getPresent();
+            presenterForList.onCalculation(amauntElemant);}
 
-        }
-        if (position == 1) {
-            presentForMap.showDataView(activity.getAmoutElements());
+        if (position == 1){
+            activity.shoeProgress();
+            Presenter presenterForMap =  TabMap.getPresent();
+            presenterForMap.onCalculation(amauntElemant);
         }
     }
 
-    public  void hidProgress(){
-      activity.hidProgress();
-    }
 
     public void onDestroy() {
         activity = null;

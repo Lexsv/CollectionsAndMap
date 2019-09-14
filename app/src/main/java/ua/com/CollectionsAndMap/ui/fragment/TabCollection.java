@@ -1,6 +1,7 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
+import ua.com.CollectionsAndMap.data.DataSave;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
@@ -35,6 +36,9 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
 public class TabCollection extends Fragment {
     private Unbinder unbinder;
     private Map<Integer, String> saveData = new HashMap<>();
+    private static PresentForList present;
+    private MainActivity activity;
+
 
 
 
@@ -82,21 +86,32 @@ public class TabCollection extends Fragment {
     TextView copyOnWriteRemoveEnd;
 
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity = (MainActivity) context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.collection, container, false);
         unbinder = ButterKnife.bind(this, view);
+        this.present = new PresentForList(activity,this);
         System.out.println("********** onCreateView *********");
-        onRecycle(savedInstanceState);
         return view;
     }
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+       onRecycle(savedInstanceState);
+    }
 
     @SuppressLint("CheckResult")
     public void fillResult(ArrayList<Integer> list) {
-        System.out.println("******** ArrayList fillResult ******");
+
 
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
                 .subscribeOn(Schedulers.newThread())
@@ -290,6 +305,9 @@ public class TabCollection extends Fragment {
 
     }
 
+    public static PresentForList getPresent() {
+        return present;
+    }
 
     @Override
     public void onDestroyView() {
@@ -302,11 +320,9 @@ public class TabCollection extends Fragment {
     }
 
 
-
-
-    public void onRecycle( Bundle savedInstanceState) {
-        if (savedInstanceState != null){
-            saveData = PresentForList.getSaveView();
+    public void onRecycle(Bundle savedInstanceState) {
+        if (savedInstanceState != null && present.getData() != null ){
+          saveData = present.getData();
             for (Integer integer : saveData.keySet()){
                 if (arrayListAddBegin.getId() == integer){arrayListAddBegin.setText(saveData.get(integer));}
                 if (arrayListAddMiddle.getId() == integer){arrayListAddMiddle.setText(saveData.get(integer));}
@@ -334,5 +350,7 @@ public class TabCollection extends Fragment {
         }
 
     }
+
+
 
 }

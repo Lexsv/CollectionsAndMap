@@ -1,6 +1,7 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
+import ua.com.CollectionsAndMap.ui.MainActivity;
+import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 import static java.lang.String.*;
@@ -32,6 +35,8 @@ public class TabMap extends Fragment  {
 
     private Unbinder unbinder;
     private Map<Integer, String> saveData = new HashMap<>();
+    private static PresentForMap present;
+    private MainActivity activity;
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -46,20 +51,30 @@ public class TabMap extends Fragment  {
     @BindView(R.id.hashMap_remove)
     TextView hashMapRemove;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity = (MainActivity)context;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.map, container, false);
         unbinder = ButterKnife.bind(this, view);
-        onRecycle(savedInstanceState);
+        present = new PresentForMap(activity,this);
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        onRecycle(savedInstanceState);
+    }
 
     public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState !=null){
-            saveData = PresentForMap.getSaveView();
+        if (savedInstanceState !=null && present.getData() != null){
+            saveData = present.getData();
             for (Integer integer : saveData.keySet()) {
                 if (treeMapAdd.getId() == integer){treeMapAdd.setText(saveData.get(integer));}
                 if (treeMapSearchKey.getId() == integer){treeMapSearchKey.setText(saveData.get(integer));}
@@ -138,6 +153,9 @@ public class TabMap extends Fragment  {
         return saveData;
     }
 
+    public static PresentForMap getPresent(){
+        return present;
+    }
 
     @Override
     public void onDestroyView() {
