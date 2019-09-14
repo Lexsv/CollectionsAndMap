@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
-    private int amoutElements;
+    private int amoutElements = 0;
     private AlertDialog showProgress;
     @Inject
     MainPresent mainPresent;
@@ -69,9 +69,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setIcon(R.drawable.database);
         addElementAlert.setPositiveButton("Посчитать", (dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
-            if (editTextInLoad.getText().toString() == "") {
-                amoutElements = 0;
-            } else amoutElements = (valueOf(editTextInLoad.getText().toString()));
+            if (!editTextInLoad.getText().toString().isEmpty()){amoutElements = (valueOf(editTextInLoad.getText().toString()));}
             presenter.onCalculation(viewPager.getCurrentItem(), amoutElements);
             dialog.cancel();
         });

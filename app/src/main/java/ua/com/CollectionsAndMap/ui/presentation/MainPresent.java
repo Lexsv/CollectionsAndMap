@@ -22,12 +22,12 @@ public  class MainPresent implements MainPresenter {
 
     @Override
     public void onCalculation(int position,int amauntElemant) {
-        if (position == 0) {
+        if (position == 0 && amauntElemant > 0) {
             activity.shoeProgress();
             Presenter presenterForList = TabCollection.getPresent();
             presenterForList.onCalculation(amauntElemant);}
 
-        if (position == 1){
+        if (position == 1 && amauntElemant > 0){
             activity.shoeProgress();
             Presenter presenterForMap =  TabMap.getPresent();
             presenterForMap.onCalculation(amauntElemant);

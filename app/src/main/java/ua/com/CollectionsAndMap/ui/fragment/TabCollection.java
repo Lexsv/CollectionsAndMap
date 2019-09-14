@@ -99,20 +99,17 @@ public class TabCollection extends Fragment {
         View view = inflater.inflate(R.layout.collection, container, false);
         unbinder = ButterKnife.bind(this, view);
         this.present = new PresentForList(activity,this);
-        System.out.println("********** onCreateView *********");
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       onRecycle(savedInstanceState);
+        onRecycle(savedInstanceState);
     }
 
     @SuppressLint("CheckResult")
     public void fillResult(ArrayList<Integer> list) {
-
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -121,7 +118,6 @@ public class TabCollection extends Fragment {
                     arrayListAddBegin.setText(s);
                     saveData.put(R.id.arrayList_addBagin, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -138,7 +134,6 @@ public class TabCollection extends Fragment {
                     arrayListAddEnd.setText(s);
                     saveData.put(R.id.arrayList_addEnd, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -147,7 +142,6 @@ public class TabCollection extends Fragment {
                     arrayListSearch.setText(s);
                     saveData.put(R.id.arrayList_search, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -156,7 +150,6 @@ public class TabCollection extends Fragment {
                     arrayListRemoveBegin.setText(s);
                     saveData.put(R.id.arrayList_removeBagin, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -174,10 +167,9 @@ public class TabCollection extends Fragment {
                     saveData.put(R.id.arrayList_removeEnd, s);
                 }));
     }
+
     @SuppressLint("CheckResult")
     public void fillResult(LinkedList<Integer> list) {
-
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -186,7 +178,6 @@ public class TabCollection extends Fragment {
                     linkedListAddBegin.setText(s);
                     saveData.put(R.id.linkedList_addBagin, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -203,7 +194,6 @@ public class TabCollection extends Fragment {
                     linkedListAddEnd.setText(s);
                     saveData.put(R.id.linkedList_addEnd, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -212,7 +202,6 @@ public class TabCollection extends Fragment {
                     linkedListSearch.setText(s);
                     saveData.put(R.id.linkedList_search, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -221,7 +210,6 @@ public class TabCollection extends Fragment {
                     linkedListRemoveBegin.setText(s);
                     saveData.put(R.id.linkedList_removeBagin, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -239,10 +227,9 @@ public class TabCollection extends Fragment {
                     saveData.put(R.id.linkedList_removeEnd, s);
                 }));
     }
+
     @SuppressLint("CheckResult")
     public void fillResult(CopyOnWriteArrayList<Integer> list) {
-
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -251,7 +238,6 @@ public class TabCollection extends Fragment {
                     copyOnWriteAddBegin.setText(s);
                     saveData.put(R.id.copyOn_write_addBagin, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -268,7 +254,6 @@ public class TabCollection extends Fragment {
                     copyOnWriteAddEnd.setText(s);
                     saveData.put(R.id.copyOn_write_addEnd, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -277,7 +262,6 @@ public class TabCollection extends Fragment {
                     copyOnWriteSearch.setText(s);
                     saveData.put(R.id.copyOn_write_search, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -286,7 +270,6 @@ public class TabCollection extends Fragment {
                     copyOnWriteRemoveBegin.setText(s);
                     saveData.put(R.id.copyOn_write_removeBagin, s);
                 }));
-
         Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
                 .subscribeOn(Schedulers.newThread())
                 .map((m) -> valueOf(m))
@@ -302,12 +285,9 @@ public class TabCollection extends Fragment {
                     copyOnWriteRemoveEnd.setText(s);
                     saveData.put(R.id.copyOn_write_removeEnd, s);
                 }));
-
     }
 
-    public static PresentForList getPresent() {
-        return present;
-    }
+    public static PresentForList getPresent() {return present;}
 
     @Override
     public void onDestroyView() {
