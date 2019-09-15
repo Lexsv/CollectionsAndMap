@@ -25,13 +25,15 @@ import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
 import ua.com.CollectionsAndMap.ui.MainActivity;
-import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
+
+import ua.com.CollectionsAndMap.ui.presentation.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
-public class TabMap extends Fragment  {
+
+public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.FillView {
 
     private Unbinder unbinder;
     private Map<Integer, String> saveData = new HashMap<>();
@@ -90,65 +92,66 @@ public class TabMap extends Fragment  {
 
 
     @SuppressLint("CheckResult")
-    public void fillResult(HashMap<Byte, Byte> list) {
+    @Override
+    public void fillResult(Map<Byte, Byte> list, FlagMap flag) {
 
-        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s -> {
-                    treeMapAdd.setText(s);
-                    saveData.put(R.id.treeMap_add, s);
-                }));
+        if (flag == FlagMap.HASH) {
+            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
+                    .subscribeOn(Schedulers.newThread())
+                    .map((m) -> valueOf(m))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((s -> {
+                        treeMapAdd.setText(s);
+                        saveData.put(R.id.treeMap_add, s);
+                    }));
 
-        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s -> {
-                    treeMapSearchKey.setText(s);
-                    saveData.put(R.id.treeMap_SearchKey, s);
-                }));
-        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s -> {
-                    treeMapRemov.setText(s);
-                    saveData.put(R.id.treeMap_remove, s);
-                }));
+            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
+                    .subscribeOn(Schedulers.newThread())
+                    .map((m) -> valueOf(m))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((s -> {
+                        treeMapSearchKey.setText(s);
+                        saveData.put(R.id.treeMap_SearchKey, s);
+                    }));
+            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
+                    .subscribeOn(Schedulers.newThread())
+                    .map((m) -> valueOf(m))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((s -> {
+                        treeMapRemov.setText(s);
+                        saveData.put(R.id.treeMap_remove, s);
+                    }));
+        }
+        if (flag == FlagMap.TREE){
+            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
+                    .subscribeOn(Schedulers.newThread())
+                    .map((m) -> valueOf(m))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((s -> {
+                        hashMapAdd.setText(s);
+                        saveData.put(R.id.hashMap_add, s);
+                    }));
+
+            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
+                    .subscribeOn(Schedulers.newThread())
+                    .map((m) -> valueOf(m))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((s -> {
+                        hashMapSearchKey.setText(s);
+                        saveData.put(R.id.hashMap_SearchKey, s);
+                    }));
+            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
+                    .subscribeOn(Schedulers.newThread())
+                    .map((m) -> valueOf(m))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((s -> {
+                        hashMapRemove.setText(s);
+                        saveData.put(R.id.hashMap_remove, s);
+                    }));
+        }
 
     }
-    @SuppressLint("CheckResult")
-    public void fillResult(TreeMap<Byte, Byte> list) {
-
-        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s -> {
-                    hashMapAdd.setText(s);
-                    saveData.put(R.id.hashMap_add, s);
-                }));
-
-        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s -> {
-                    hashMapSearchKey.setText(s);
-                    saveData.put(R.id.hashMap_SearchKey, s);
-                }));
-        Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
-                .subscribeOn(Schedulers.newThread())
-                .map((m) -> valueOf(m))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((s -> {
-                    hashMapRemove.setText(s);
-                    saveData.put(R.id.hashMap_remove, s);
-                }));
-
-    }
+    @Override
     public Map<Integer, String> getSaveData() {
         return saveData;
     }

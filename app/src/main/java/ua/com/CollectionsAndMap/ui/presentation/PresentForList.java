@@ -9,23 +9,24 @@ import ua.com.CollectionsAndMap.data.DataSave;
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.Presenter;
+import ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.FillView;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 
 
-public class PresentForList implements Presenter {
+public class PresentForList implements MainContract.Presenter {
 
-    private TabCollection tabCollection;
+    private FillView fillView;
     private int queue = 0;
     private int amountElements;
     private DataSave listSave;
-    private MainActivity activity;
+    private MainContract.View hidProgress;
 
 
     public PresentForList(MainActivity activity, TabCollection tabCollection) {
-        this.tabCollection = tabCollection;
-        this.activity = activity;
+        this.fillView =  tabCollection;
+        this.hidProgress = activity;
         this.listSave = DataSave.getDataSave();
     }
 
@@ -51,8 +52,8 @@ public class PresentForList implements Presenter {
             new ArrayListModel(amountElements, this).start();
         }
         if (queue < 0) {
-            activity.hidProgress();
-            listSave.setDataList(tabCollection.getSaveData());
+            hidProgress.hidProgress();
+            listSave.setDataList(fillView.getSaveData());
         }
         queue--;
     }
@@ -62,9 +63,9 @@ public class PresentForList implements Presenter {
     }
 
     public void callbackFromListModel(List<Integer> list, FlagList flag) {
-       if (flag == FlagList.ARREY){tabCollection.fillResult((ArrayList<Integer>) list);}
-       if (flag == FlagList.LINKED){tabCollection.fillResult((LinkedList<Integer>) list);}
-       if (flag == FlagList.COPYONWRITE){tabCollection.fillResult((CopyOnWriteArrayList<Integer>) list);}
+       if (flag == FlagList.ARREY){fillView.fillResult(list,flag);}
+       if (flag == FlagList.LINKED){fillView.fillResult(list,flag);}
+       if (flag == FlagList.COPYONWRITE){fillView.fillResult(list,flag);}
     }
 
 

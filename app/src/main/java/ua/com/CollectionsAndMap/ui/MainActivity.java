@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 import javax.inject.Inject;
 
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainPresenter;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 import ua.com.CollectionsAndMap.ui.dagger.component.AppComponent;
 import ua.com.CollectionsAndMap.ui.dagger.component.DaggerAppComponent;
 import ua.com.CollectionsAndMap.ui.dagger.modules.AppModul;
@@ -24,10 +24,10 @@ import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 import static java.lang.Integer.valueOf;
 
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,MainContract.View {
 
 
-    private MainPresenter presenter;
+    private MainContract.MainPrisenter presenter;
     private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 .presentModule(new PresentModule()).build();
         appComponent.inject(this);
     }
-
+    @Override
     public void shoeProgress() {
         showProgress = new AlertDialog.Builder(this).
                 setView(R.layout.loader_view_progress)
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 .create();
         showProgress.show();
     }
+    @Override
     public void hidProgress() {
         showProgress.cancel();
     }
@@ -111,6 +112,5 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainPresent.onDestroy();
     }
 }

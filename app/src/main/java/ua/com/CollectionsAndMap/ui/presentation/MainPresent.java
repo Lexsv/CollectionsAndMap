@@ -2,41 +2,34 @@ package ua.com.CollectionsAndMap.ui.presentation;
 
 import android.content.Context;
 import javax.inject.Inject;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainPresenter;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.Presenter;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 
 
-public  class MainPresent implements MainPresenter {
+public  class MainPresent implements MainContract.MainPrisenter {
 
-    private MainActivity activity;
-
-
+    private MainContract.View progress;
 
     @Inject
     public MainPresent(Context activity) {
-        this.activity = (MainActivity) activity;
+        this.progress =(MainActivity) activity;
     }
+
 
     @Override
     public void onCalculation(int position,int amauntElemant) {
         if (position == 0 && amauntElemant > 0) {
-            activity.shoeProgress();
-            Presenter presenterForList = TabCollection.getPresent();
+            progress.shoeProgress();
+            MainContract.Presenter presenterForList = TabCollection.getPresent();
             presenterForList.onCalculation(amauntElemant);}
 
         if (position == 1 && amauntElemant > 0){
-            activity.shoeProgress();
-            Presenter presenterForMap =  TabMap.getPresent();
+            progress.shoeProgress();
+            MainContract.Presenter presenterForMap = TabMap.getPresent();
             presenterForMap.onCalculation(amauntElemant);
         }
-    }
-
-
-    public void onDestroy() {
-        activity = null;
     }
 
 }
