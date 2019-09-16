@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +25,7 @@ import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 
+import ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.SaveDataSharedPreference;
 import ua.com.CollectionsAndMap.ui.presentation.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
@@ -39,6 +39,7 @@ public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.frag
     private Map<Integer, String> saveData = new HashMap<>();
     private static PresentForMap present;
     private MainActivity activity;
+    private SaveDataSharedPreference saveDataInterfas;
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -65,6 +66,7 @@ public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.frag
         View view = inflater.inflate(R.layout.map, container, false);
         unbinder = ButterKnife.bind(this, view);
         present = new PresentForMap(activity,this);
+        saveDataInterfas = present;
         return view;
     }
 
@@ -151,10 +153,7 @@ public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.frag
         }
 
     }
-    @Override
-    public Map<Integer, String> getSaveData() {
-        return saveData;
-    }
+
 
     public static PresentForMap getPresent(){
         return present;
@@ -164,6 +163,13 @@ public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.frag
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        saveDataInterfas.saveData(saveData);
+
     }
 
 }

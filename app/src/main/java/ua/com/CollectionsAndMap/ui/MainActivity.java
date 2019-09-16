@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
         addElementAlert.create();
         addElementAlert.show();
+
     }
 
     @Override

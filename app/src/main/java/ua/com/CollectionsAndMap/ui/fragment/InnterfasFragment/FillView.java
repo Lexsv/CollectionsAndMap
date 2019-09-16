@@ -7,7 +7,6 @@ import ua.com.CollectionsAndMap.ui.presentation.FlagList;
 import ua.com.CollectionsAndMap.ui.presentation.FlagMap;
 
 public interface FillView {
-    default void fillResult(List<Integer> list, FlagList flag){};
-    default void fillResult(Map<Byte, Byte> map, FlagMap flag){};
-    Map<Integer, String> getSaveData();
+    default void fillResult(List<Integer> list, FlagList flag){}
+    default void fillResult(Map<Byte, Byte> map, FlagMap flag){}
 }
