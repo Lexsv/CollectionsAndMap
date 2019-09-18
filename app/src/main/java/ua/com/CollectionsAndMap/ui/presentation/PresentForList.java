@@ -3,33 +3,24 @@ package ua.com.CollectionsAndMap.ui.presentation;
 import java.util.List;
 import java.util.Map;
 
-import ua.com.CollectionsAndMap.data.DataSave;
-import ua.com.CollectionsAndMap.data.DataSharedPreferences;
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
 import ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.FillView;
-import ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.SaveDataSharedPreference;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
+import ua.com.CollectionsAndMap.ui.presentation.flag.FlagList;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 
 
-public class PresentForList implements MainContract.Presenter, SaveDataSharedPreference {
+public class PresentForList extends BasePresenter {
 
     private FillView fillView;
     private int queue = 0;
     private int amountElements;
-    private DataSave listSave;
-    private DataSharedPreferences preferences;
-    private MainContract.View hidProgress;
-
 
     public PresentForList(MainActivity activity, TabCollection tabCollection) {
+        super(activity);
         this.fillView =  tabCollection;
-        this.hidProgress = activity;
-        this.listSave = DataSave.getDataSave();
-        this.preferences = DataSharedPreferences.getDataSharedPref();
     }
 
 
@@ -40,7 +31,12 @@ public class PresentForList implements MainContract.Presenter, SaveDataSharedPre
         startNext();
     }
 
+    @Override
+    public Map<Integer, String> getData() {
+        return preferences.getDataList();
+    }
 
+    @Override
     public  void startNext() {
 
         if (queue == 0) {
@@ -54,17 +50,16 @@ public class PresentForList implements MainContract.Presenter, SaveDataSharedPre
             new ArrayListModel(amountElements, this).start();
         }
         if (queue < 0) {
-            hidProgress.hidProgress();
-
-            //listSave.setDataList(fillView.getSaveData());
+            hidProgress();
         }
         queue--;
     }
 
-    public Map<Integer, String> getData() {
-        return preferences.getDataList();
-                //listSave.getDataList();
+    @Override
+    public void saveData(Map<Integer, String> data) {
+        preferences.setDataList(data);
     }
+
 
     public  void callbackFromListModel(List<Integer> list, FlagList flag) {
        if (flag == FlagList.ARREY){fillView.fillResult(list,flag);}
@@ -73,8 +68,4 @@ public class PresentForList implements MainContract.Presenter, SaveDataSharedPre
     }
 
 
-    @Override
-    public void saveData(Map<Integer, String> data) {
-        preferences.setDataList(data);
-    }
 }

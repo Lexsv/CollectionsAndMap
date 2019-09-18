@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ua.com.CollectionsAndMap.ui.presentation.FlagList;
+import ua.com.CollectionsAndMap.ui.presentation.flag.FlagList;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
 public class CopyOnWriteModel{

@@ -1,23 +1,15 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -25,21 +17,18 @@ import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 
-import ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.SaveDataSharedPreference;
-import ua.com.CollectionsAndMap.ui.presentation.FlagMap;
+import ua.com.CollectionsAndMap.ui.presentation.flag.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
 
-public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.FillView {
+public class TabMap extends BaseFragmen {
 
-    private Unbinder unbinder;
     private Map<Integer, String> saveData = new HashMap<>();
     private static PresentForMap present;
-    private MainActivity activity;
-    private SaveDataSharedPreference saveDataInterfas;
+
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -54,25 +43,17 @@ public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.frag
     @BindView(R.id.hashMap_remove)
     TextView hashMapRemove;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.activity = (MainActivity)context;
-    }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.map, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        present = new PresentForMap(activity,this);
-        saveDataInterfas = present;
-        return view;
+    protected int getLayout() {
+        return R.layout.map;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        present = new PresentForMap((MainActivity)getContext(),this);
         onRecycle(savedInstanceState);
     }
 
@@ -159,16 +140,11 @@ public class TabMap extends Fragment implements ua.com.CollectionsAndMap.ui.frag
         return present;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        saveDataInterfas.saveData(saveData);
+        present.saveData(saveData);
 
     }
 

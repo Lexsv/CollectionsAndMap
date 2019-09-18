@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ua.com.CollectionsAndMap.ui.presentation.FlagMap;
+import ua.com.CollectionsAndMap.ui.presentation.flag.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 public class TreeMapModel {

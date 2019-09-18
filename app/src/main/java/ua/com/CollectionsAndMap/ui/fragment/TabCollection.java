@@ -2,22 +2,15 @@ package ua.com.CollectionsAndMap.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -25,18 +18,16 @@ import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
 import ua.com.CollectionsAndMap.ui.MainActivity;
 
-import ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.SaveDataSharedPreference;
-import ua.com.CollectionsAndMap.ui.presentation.FlagList;
+import ua.com.CollectionsAndMap.ui.presentation.flag.FlagList;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
 import static java.lang.String.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
 
-public class TabCollection extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.FillView {
-    private Unbinder unbinder;
+public class TabCollection extends BaseFragmen {
+
     private  Map<Integer, String> saveData = new HashMap<>();
     private static PresentForList present;
-    private SaveDataSharedPreference saveDataInterfas;
 
 
     @BindView(R.id.arrayList_addBagin)
@@ -83,19 +74,16 @@ public class TabCollection extends Fragment implements ua.com.CollectionsAndMap.
     TextView copyOnWriteRemoveEnd;
 
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.collection, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        present = new PresentForList((MainActivity) getContext(), this);
-        saveDataInterfas = present;
-        return view;
+    protected int getLayout() {
+        return R.layout.collection;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        present = new PresentForList((MainActivity) getContext() ,this);
         onRecycle(savedInstanceState);
     }
 
@@ -285,12 +273,6 @@ public class TabCollection extends Fragment implements ua.com.CollectionsAndMap.
         return present;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
 
     public void onRecycle(Bundle savedInstanceState) {
         if (savedInstanceState != null && present.getData() != null) {
@@ -368,7 +350,7 @@ public class TabCollection extends Fragment implements ua.com.CollectionsAndMap.
     @Override
     public void onDestroy() {
         super.onDestroy();
-        saveDataInterfas.saveData(saveData);
+        present.saveData(saveData);
 
     }
 }

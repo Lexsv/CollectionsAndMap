@@ -11,10 +11,10 @@ import java.util.Map;
 
 import ua.com.CollectionsAndMap.domain.utils.ProvidContext;
 
-public final class DataSharedPreferences implements DataSaveSharedPreferences {
+public final class DataSharedPreferences {
 
     private static DataSharedPreferences dataSharedPreferences;
-    private  SharedPreferences preferences;
+    private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson gson;
     private static String LIST = "LIST";
@@ -34,25 +34,24 @@ public final class DataSharedPreferences implements DataSaveSharedPreferences {
         }else {return dataSharedPreferences;}
     }
 
-    @Override
     public Map<Integer, String> getDataList() {
         Type type = new TypeToken<Map<Integer, String>>(){}.getType();
         return gson.fromJson(preferences.getString(LIST, null),type);
     }
 
-    @Override
+
     public void setDataList(Map<Integer, String> dataList) {
         editor.putString(LIST , gson.toJson(dataList));
         editor.commit();
     }
 
-    @Override
+
     public Map<Integer, String> getDataMap() {
         Type type = new TypeToken<Map<Integer, String>>(){}.getType();
         return gson.fromJson(preferences.getString(MAP, null),type);
     }
 
-    @Override
+
     public void setDataMap(Map<Integer, String> dataMap) {
         editor.putString(MAP , gson.toJson(dataMap));
         editor.commit();
