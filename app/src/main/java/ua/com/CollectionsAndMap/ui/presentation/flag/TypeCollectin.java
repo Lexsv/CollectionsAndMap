@@ -1,8 +1,10 @@
 package ua.com.CollectionsAndMap.ui.presentation.flag;
 
-public enum FlagList {
+public enum TypeCollectin {
         ARREY,
         LINKED,
-        COPYONWRITE
+        COPYONWRITE,
+        HASH,
+        TREE
 
 }

@@ -10,7 +10,7 @@ import io.reactivex.Flowable;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ua.com.CollectionsAndMap.ui.presentation.flag.FlagList;
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
 public class ArrayListModel {
@@ -29,7 +29,7 @@ public class ArrayListModel {
                  .observeOn(AndroidSchedulers.mainThread())
                  .subscribe((list) -> {
             System.out.println("*******************ArrayList Fill******************* ");
-            present.callbackFromListModel(list, FlagList.ARREY);
+            present.callbackFromListModel(list, TypeCollectin.ARREY);
             present.startNext();
         });
     }

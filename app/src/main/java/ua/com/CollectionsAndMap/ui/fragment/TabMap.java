@@ -15,9 +15,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.utils.FillView;
-import ua.com.CollectionsAndMap.ui.MainActivity;
 
-import ua.com.CollectionsAndMap.ui.presentation.flag.FlagMap;
+
+import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
 import static java.lang.String.*;
@@ -26,7 +27,6 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
 public class TabMap extends BaseFragmen {
 
-    private Map<Integer, String> saveData = new HashMap<>();
     private static PresentForMap present;
 
 
@@ -44,7 +44,6 @@ public class TabMap extends BaseFragmen {
     TextView hashMapRemove;
 
 
-
     @Override
     protected int getLayout() {
         return R.layout.map;
@@ -53,22 +52,40 @@ public class TabMap extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        present = new PresentForMap((MainActivity)getContext(),this);
+        present = new PresentForMap(mainActivity, this);
         onRecycle(savedInstanceState);
     }
 
     public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState !=null && present.getData() != null){
-            saveData = present.getData();
-            for (Integer integer : saveData.keySet()) {
-                if (treeMapAdd.getId() == integer){treeMapAdd.setText(saveData.get(integer));}
-                if (treeMapSearchKey.getId() == integer){treeMapSearchKey.setText(saveData.get(integer));}
-                if (treeMapRemov.getId() == integer){treeMapRemov.setText(saveData.get(integer));}
-                if (hashMapAdd.getId() == integer){hashMapAdd.setText(saveData.get(integer));}
-                if (hashMapSearchKey.getId() == integer){hashMapSearchKey.setText(saveData.get(integer));}
-                if (hashMapRemove.getId() == integer){hashMapRemove.setText(saveData.get(integer));}
+        if (savedInstanceState != null ) {
+            Map<ActionFill, String> treeMap = present.getData(TypeCollectin.TREE);
+            Map<ActionFill, String> hashMap = present.getData(TypeCollectin.HASH);
 
+            for (ActionFill actionFill : treeMap.keySet()) {
+                if (ActionFill.ADDMAP == actionFill) {
+                    treeMapAdd.setText(treeMap.get(actionFill));
+                }
+                if (ActionFill.SEARCHMAP == actionFill) {
+                    treeMapSearchKey.setText(treeMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEMAP == actionFill) {
+                    treeMapRemov.setText(treeMap.get(actionFill));
+                }
             }
+
+            for (ActionFill actionFill : hashMap.keySet()) {
+                if (ActionFill.ADDMAP == actionFill) {
+                    hashMapAdd.setText(hashMap.get(actionFill));
+                }
+                if (ActionFill.SEARCHMAP == actionFill) {
+                    hashMapSearchKey.setText(hashMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEMAP == actionFill) {
+                    hashMapRemove.setText(hashMap.get(actionFill));
+                }
+            }
+
+
         }
 
     }
@@ -76,76 +93,46 @@ public class TabMap extends BaseFragmen {
 
     @SuppressLint("CheckResult")
     @Override
-    public void fillResult(Map<Byte, Byte> list, FlagMap flag) {
+    public void fillResult(String s, TypeCollectin flagList, ActionFill flagAction) {
 
-        if (flag == FlagMap.HASH) {
-            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        treeMapAdd.setText(s);
-                        saveData.put(R.id.treeMap_add, s);
-                    }));
+        if (flagList == TypeCollectin.TREE) {
 
-            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        treeMapSearchKey.setText(s);
-                        saveData.put(R.id.treeMap_SearchKey, s);
-                    }));
-            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        treeMapRemov.setText(s);
-                        saveData.put(R.id.treeMap_remove, s);
-                    }));
+            if (flagAction == ActionFill.ADDMAP) {
+                treeMapAdd.setText(s);
+            }
+            if (flagAction == ActionFill.SEARCHMAP) {
+                treeMapSearchKey.setText(s);
+            }
+            if (flagAction == ActionFill.REMOVEMAP) {
+                treeMapRemov.setText(s);
+            }
         }
-        if (flag == FlagMap.TREE){
-            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        hashMapAdd.setText(s);
-                        saveData.put(R.id.hashMap_add, s);
-                    }));
 
-            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        hashMapSearchKey.setText(s);
-                        saveData.put(R.id.hashMap_SearchKey, s);
-                    }));
-            Single.fromCallable(() -> speedMap(list, FillView.ActionFill.ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        hashMapRemove.setText(s);
-                        saveData.put(R.id.hashMap_remove, s);
-                    }));
+        if (flagList == TypeCollectin.HASH) {
+
+            if (flagAction == ActionFill.ADDMAP) {
+                hashMapAdd.setText(s);
+            }
+
+            if (flagAction == ActionFill.SEARCHMAP) {
+                hashMapSearchKey.setText(s);
+            }
+            if (flagAction == ActionFill.REMOVEMAP) {
+                hashMapRemove.setText(s);
+            }
         }
 
     }
 
 
-    public static PresentForMap getPresent(){
+    public static PresentForMap getPresent() {
         return present;
     }
 
-
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        present.saveData(saveData);
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        present.saveData();
     }
 
 }

@@ -6,27 +6,21 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.domain.utils.FillView;
-import ua.com.CollectionsAndMap.ui.MainActivity;
 
-import ua.com.CollectionsAndMap.ui.presentation.flag.FlagList;
+
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
-import static java.lang.String.*;
-import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
+import static ua.com.CollectionsAndMap.domain.utils.FillView.*;
 
 public class TabCollection extends BaseFragmen {
 
-    private  Map<Integer, String> saveData = new HashMap<>();
     private static PresentForList present;
 
 
@@ -74,7 +68,6 @@ public class TabCollection extends BaseFragmen {
     TextView copyOnWriteRemoveEnd;
 
 
-
     @Override
     protected int getLayout() {
         return R.layout.collection;
@@ -83,188 +76,110 @@ public class TabCollection extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        present = new PresentForList((MainActivity) getContext() ,this);
+        present = new PresentForList(mainActivity, this);
         onRecycle(savedInstanceState);
     }
 
     @SuppressLint("CheckResult")
     @Override
-    public  void fillResult(List<Integer> list, FlagList flag) {
-        if (flag == FlagList.ARREY) {
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListAddBegin.setText(s);
-                        saveData.put(R.id.arrayList_addBagin, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListAddMiddle.setText(s);
-                        saveData.put(R.id.arrayList_addMiddle, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListAddEnd.setText(s);
-                        saveData.put(R.id.arrayList_addEnd, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListSearch.setText(s);
-                        saveData.put(R.id.arrayList_search, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListRemoveBegin.setText(s);
-                        saveData.put(R.id.arrayList_removeBagin, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListRemoveMiddle.setText(s);
-                        saveData.put(R.id.arrayList_ramoveMidlle, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        arrayListRemoveEnd.setText(s);
-                        saveData.put(R.id.arrayList_removeEnd, s);
-                    }));
+    public void fillResult(String s, TypeCollectin flagList, ActionFill flagAction) {
+
+        if (flagList == TypeCollectin.ARREY) {
+
+            if (flagAction == ActionFill.ADDBEGIN) {
+                arrayListAddBegin.setText(s);
+            }
+
+            if (flagAction == ActionFill.ADDMIDDL) {
+                arrayListAddMiddle.setText(s);
+            }
+            if (flagAction == ActionFill.ADDEND) {
+                arrayListAddEnd.setText(s);
+            }
+
+            if (flagAction == ActionFill.SEARCHLIST) {
+                arrayListSearch.setText(s);
+            }
+
+            if (flagAction == ActionFill.REMOVEBEGIN) {
+                arrayListRemoveBegin.setText(s);
+            }
+
+            if (flagAction == ActionFill.REMOVEMIDDL) {
+                arrayListRemoveMiddle.setText(s);
+            }
+
+            if (flagAction == ActionFill.REMOVEND) {
+                arrayListRemoveEnd.setText(s);
+            }
         }
 
-        if (flag == FlagList.LINKED) {
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListAddBegin.setText(s);
-                        saveData.put(R.id.linkedList_addBagin, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListAddMiddle.setText(s);
-                        saveData.put(R.id.linkedList_addMiddle, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListAddEnd.setText(s);
-                        saveData.put(R.id.linkedList_addEnd, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListSearch.setText(s);
-                        saveData.put(R.id.linkedList_search, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListRemoveBegin.setText(s);
-                        saveData.put(R.id.linkedList_removeBagin, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListRemoveMiddle.setText(s);
-                        saveData.put(R.id.linkedList_ramoveMidlle, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        linkedListRemoveEnd.setText(s);
-                        saveData.put(R.id.linkedList_removeEnd, s);
-                    }));
+        if (flagList == TypeCollectin.LINKED) {
+
+            if (flagAction == ActionFill.ADDBEGIN) {
+                linkedListAddBegin.setText(s);
+            }
+
+            if (flagAction == ActionFill.ADDMIDDL) {
+                linkedListAddMiddle.setText(s);
+            }
+            if (flagAction == ActionFill.ADDEND) {
+                linkedListAddEnd.setText(s);
+            }
+
+            if (flagAction == ActionFill.SEARCHLIST) {
+                linkedListSearch.setText(s);
+            }
+
+            if (flagAction == ActionFill.REMOVEBEGIN) {
+                linkedListRemoveBegin.setText(s);
+            }
+
+            if (flagAction == ActionFill.REMOVEMIDDL) {
+                linkedListRemoveMiddle.setText(s);
+            }
+
+            if (flagAction == ActionFill.REMOVEND) {
+                linkedListRemoveEnd.setText(s);
+            }
         }
 
-        if (flag == FlagList.COPYONWRITE) {
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteAddBegin.setText(s);
-                        saveData.put(R.id.copyOn_write_addBagin, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteAddMiddle.setText(s);
-                        saveData.put(R.id.copyOn_write_addMiddle, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteAddEnd.setText(s);
-                        saveData.put(R.id.copyOn_write_addEnd, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.SEARCHLIST))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteSearch.setText(s);
-                        saveData.put(R.id.copyOn_write_search, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteRemoveBegin.setText(s);
-                        saveData.put(R.id.copyOn_write_removeBagin, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteRemoveMiddle.setText(s);
-                        saveData.put(R.id.copyOn_write_ramoveMidlle, s);
-                    }));
-            Single.fromCallable(() -> speedList(list, FillView.ActionFill.REMOVEND))
-                    .map((m) -> valueOf(m))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((s -> {
-                        copyOnWriteRemoveEnd.setText(s);
-                        saveData.put(R.id.copyOn_write_removeEnd, s);
-                    }));
+        if (flagList == TypeCollectin.COPYONWRITE) {
+
+            if (flagAction == ActionFill.ADDBEGIN) {
+                copyOnWriteAddBegin.setText(s);
+            }
+
+
+            if (flagAction == ActionFill.ADDMIDDL) {
+                copyOnWriteAddMiddle.setText(s);
+            }
+            if (flagAction == ActionFill.ADDEND) {
+                copyOnWriteAddEnd.setText(s);
+            }
+
+
+            if (flagAction == ActionFill.SEARCHLIST) {
+                copyOnWriteSearch.setText(s);
+            }
+
+
+            if (flagAction == ActionFill.REMOVEBEGIN) {
+                copyOnWriteRemoveBegin.setText(s);
+            }
+
+
+            if (flagAction == ActionFill.REMOVEMIDDL) {
+                copyOnWriteRemoveMiddle.setText(s);
+            }
+
+
+            if (flagAction == ActionFill.REMOVEND) {
+                copyOnWriteRemoveEnd.setText(s);
+            }
+
         }
+
 
     }
 
@@ -275,82 +190,90 @@ public class TabCollection extends BaseFragmen {
 
 
     public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState != null && present.getData() != null) {
-            saveData = present.getData();
-            for (Integer integer : saveData.keySet()) {
-                if (arrayListAddBegin.getId() == integer) {
-                    arrayListAddBegin.setText(saveData.get(integer));
+        if (savedInstanceState != null) {
+            Map<ActionFill, String> arreyMap = present.getData(TypeCollectin.ARREY);
+            Map<ActionFill, String> lincMap = present.getData(TypeCollectin.LINKED);
+            Map<ActionFill, String> copyMap = present.getData(TypeCollectin.COPYONWRITE);
+            for (ActionFill actionFill : arreyMap.keySet()) {
+                if (ActionFill.ADDBEGIN == actionFill) {
+                    arrayListAddBegin.setText(arreyMap.get(actionFill));
                 }
-                if (arrayListAddMiddle.getId() == integer) {
-                    arrayListAddMiddle.setText(saveData.get(integer));
+                if (ActionFill.ADDMIDDL == actionFill) {
+                    arrayListAddMiddle.setText(arreyMap.get(actionFill));
                 }
-                if (arrayListAddEnd.getId() == integer) {
-                    arrayListAddEnd.setText(saveData.get(integer));
+                if (ActionFill.ADDEND == actionFill) {
+                    arrayListAddEnd.setText(arreyMap.get(actionFill));
                 }
-                if (arrayListSearch.getId() == integer) {
-                    arrayListSearch.setText(saveData.get(integer));
+                if (ActionFill.SEARCHLIST == actionFill) {
+                    arrayListSearch.setText(arreyMap.get(actionFill));
                 }
-                if (arrayListRemoveBegin.getId() == integer) {
-                    arrayListRemoveBegin.setText(saveData.get(integer));
+                if (ActionFill.REMOVEBEGIN == actionFill) {
+                    arrayListRemoveBegin.setText(arreyMap.get(actionFill));
                 }
-                if (arrayListRemoveMiddle.getId() == integer) {
-                    arrayListRemoveMiddle.setText(saveData.get(integer));
+                if (ActionFill.REMOVEMIDDL == actionFill) {
+                    arrayListRemoveMiddle.setText(arreyMap.get(actionFill));
                 }
-                if (arrayListRemoveEnd.getId() == integer) {
-                    arrayListRemoveEnd.setText(saveData.get(integer));
-                }
-                if (linkedListAddBegin.getId() == integer) {
-                    linkedListAddBegin.setText(saveData.get(integer));
-                }
-                if (linkedListAddMiddle.getId() == integer) {
-                    linkedListAddMiddle.setText(saveData.get(integer));
-                }
-                if (linkedListAddEnd.getId() == integer) {
-                    linkedListAddEnd.setText(saveData.get(integer));
-                }
-                if (linkedListSearch.getId() == integer) {
-                    linkedListSearch.setText(saveData.get(integer));
-                }
-                if (linkedListRemoveBegin.getId() == integer) {
-                    linkedListRemoveBegin.setText(saveData.get(integer));
-                }
-                if (linkedListRemoveMiddle.getId() == integer) {
-                    linkedListRemoveMiddle.setText(saveData.get(integer));
-                }
-                if (linkedListRemoveEnd.getId() == integer) {
-                    linkedListRemoveEnd.setText(saveData.get(integer));
-                }
-                if (copyOnWriteAddBegin.getId() == integer) {
-                    copyOnWriteAddBegin.setText(saveData.get(integer));
-                }
-                if (copyOnWriteAddMiddle.getId() == integer) {
-                    copyOnWriteAddMiddle.setText(saveData.get(integer));
-                }
-                if (copyOnWriteAddEnd.getId() == integer) {
-                    copyOnWriteAddEnd.setText(saveData.get(integer));
-                }
-                if (copyOnWriteSearch.getId() == integer) {
-                    copyOnWriteSearch.setText(saveData.get(integer));
-                }
-                if (copyOnWriteRemoveBegin.getId() == integer) {
-                    copyOnWriteRemoveBegin.setText(saveData.get(integer));
-                }
-                if (copyOnWriteRemoveMiddle.getId() == integer) {
-                    copyOnWriteRemoveMiddle.setText(saveData.get(integer));
-                }
-                if (copyOnWriteRemoveEnd.getId() == integer) {
-                    copyOnWriteRemoveEnd.setText(saveData.get(integer));
+                if (ActionFill.REMOVEND == actionFill) {
+                    arrayListRemoveEnd.setText(arreyMap.get(actionFill));
                 }
 
             }
-        }
 
+            for (ActionFill actionFill : lincMap.keySet()) {
+                if (ActionFill.ADDBEGIN == actionFill) {
+                    linkedListAddBegin.setText(lincMap.get(actionFill));
+                }
+                if (ActionFill.ADDMIDDL == actionFill) {
+                    linkedListAddMiddle.setText(lincMap.get(actionFill));
+                }
+                if (ActionFill.ADDEND == actionFill) {
+                    linkedListAddEnd.setText(lincMap.get(actionFill));
+                }
+                if (ActionFill.SEARCHLIST == actionFill) {
+                    linkedListSearch.setText(lincMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEBEGIN == actionFill) {
+                    linkedListRemoveBegin.setText(lincMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEMIDDL == actionFill) {
+                    linkedListRemoveMiddle.setText(lincMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEND == actionFill) {
+                    linkedListRemoveEnd.setText(lincMap.get(actionFill));
+                }
+            }
+
+            for (ActionFill actionFill : copyMap.keySet()) {
+                if (ActionFill.ADDBEGIN == actionFill) {
+                    copyOnWriteAddBegin.setText(copyMap.get(actionFill));
+                }
+                if (ActionFill.ADDMIDDL == actionFill) {
+                    copyOnWriteAddMiddle.setText(copyMap.get(actionFill));
+                }
+                if (ActionFill.ADDEND == actionFill) {
+                    copyOnWriteAddEnd.setText(copyMap.get(actionFill));
+                }
+                if (ActionFill.SEARCHLIST == actionFill) {
+                    copyOnWriteSearch.setText(copyMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEBEGIN == actionFill) {
+                    copyOnWriteRemoveBegin.setText(copyMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEMIDDL == actionFill) {
+                    copyOnWriteRemoveMiddle.setText(copyMap.get(actionFill));
+                }
+                if (ActionFill.REMOVEND == actionFill) {
+                    copyOnWriteRemoveEnd.setText(copyMap.get(actionFill));
+                }
+            }
+
+        }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        present.saveData(saveData);
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        present.saveData();
     }
+
 }

@@ -5,7 +5,7 @@ public interface MainContract {
         void onCalculation(int position, int amauntElemant);
     }
     interface View{
-        void shoeProgress();
+        void showProgress();
         void hidProgress();
     }
 

@@ -1,5 +1,6 @@
 package ua.com.CollectionsAndMap.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import ua.com.CollectionsAndMap.ui.MainActivity;
 
 
-public abstract class BaseFragmen extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.InnterfasFragment.FillView{
+public abstract class BaseFragmen extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView{
     private Unbinder unbinder;
+    protected MainActivity mainActivity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.mainActivity = (MainActivity) context;
+    }
 
     @Nullable
     @Override

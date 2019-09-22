@@ -7,8 +7,8 @@ import java.util.HashMap;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ua.com.CollectionsAndMap.ui.presentation.flag.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 
 public class HashMapModel {
 
@@ -34,7 +34,7 @@ public class HashMapModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************HashMap Fill******************* ");
-            present.callbackFromMapModel(list, FlagMap.HASH);
+            present.callbackFromMapModel(list, TypeCollectin.HASH);
             present.startNext();
         });
     }

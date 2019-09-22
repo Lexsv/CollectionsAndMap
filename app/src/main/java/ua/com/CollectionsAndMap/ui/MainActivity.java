@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         appComponent.inject(this);
     }
     @Override
-    public void shoeProgress() {
+    public void showProgress() {
         showProgress = new AlertDialog.Builder(this).
                 setView(R.layout.loader_view_progress)
                 .setCancelable(false)

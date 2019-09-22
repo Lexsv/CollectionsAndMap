@@ -1,17 +1,15 @@
 package ua.com.CollectionsAndMap.domain.utils;
 
 
-
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 
-
 public final class FillView {
 
-    public enum ActionFill{
+    public enum ActionFill {
         ADDBEGIN,
         ADDMIDDL,
         ADDMAP,
@@ -24,47 +22,97 @@ public final class FillView {
         REMOVEMAP
 
     }
-public static   long speedList (List<Integer> list, ActionFill flag){
-    long  startTim = System.nanoTime();
-     long  result;
-    // List
-    // ADD
-    if (flag == ActionFill.ADDBEGIN){list.add(0, 1);}
-    if (flag == ActionFill.ADDMIDDL){list.add(list.size() / 2, 1);}
-    if (flag == ActionFill.ADDEND){list.add(1);}
 
-    // List
-    // Search
-    if (flag == ActionFill.SEARCHLIST){list.get(new Random().nextInt(list.size()));}
+    public static Map<ActionFill, String> speedList(List<Integer> list, ActionFill flag) {
 
-     // List
-    // Remove Begin
-    if (flag == ActionFill.REMOVEBEGIN){list.remove(0);}
-    if (flag == ActionFill.REMOVEMIDDL){list.remove(list.size() / 2);}
-    if (flag == ActionFill.REMOVEND){list.remove(list.size() - 1);}
+        long result;
+        ActionFill keyMap = null;
+        Map<ActionFill, String> resultMap = new HashMap<>();
+        long startTim = System.nanoTime();
+        // List
+        // ADD
+        if (flag == ActionFill.ADDBEGIN) {
+            keyMap = ActionFill.ADDBEGIN;
+            list.add(0, 1);
+        }
+        if (flag == ActionFill.ADDMIDDL) {
+            keyMap = ActionFill.ADDMIDDL;
+            list.add(list.size() / 2, 1);
+        }
+        if (flag == ActionFill.ADDEND) {
+            keyMap = ActionFill.ADDEND;
+            list.add(1);
+        }
 
-    result = (System.nanoTime() - startTim)/1000;
-    return result;
-}
+        // List
+        // Search
+        if (flag == ActionFill.SEARCHLIST) {
+            keyMap = ActionFill.SEARCHLIST;
+            list.get(new Random().nextInt(list.size()));
+        }
 
-    public static   long speedMap (Map<Byte,Byte> map, ActionFill flag){
-        long  startTim = System.nanoTime();
-        long  result;
+        // List
+        // Remove Begin
+        if (flag == ActionFill.REMOVEBEGIN) {
+            keyMap = ActionFill.REMOVEBEGIN;
+            list.remove(0);
+        }
+        if (flag == ActionFill.REMOVEMIDDL) {
+            keyMap = ActionFill.REMOVEMIDDL;
+            list.remove(list.size() / 2);
+        }
+        if (flag == ActionFill.REMOVEND) {
+            keyMap = ActionFill.REMOVEND;
+            list.remove(list.size() - 1);
+        }
+
+        result = (System.nanoTime() - startTim) / 1000;
+        if (keyMap != null){
+            resultMap.put(keyMap,String.valueOf(result));
+            return resultMap;
+        }
+
+        return null;
+    }
+
+    public static Map<ActionFill, String> speedMap(Map<Byte, Byte> map, ActionFill flag) {
+
+        ActionFill keyMap = null;
+        Map<ActionFill, String> resultMap = new HashMap<>();
+
+        long startTim = System.nanoTime();
+
+        long result;
+
         Byte b = 0;
         Byte key = 1;
 
         //Map
         //ADD
-        if (flag == ActionFill.ADDMAP){map.put(key, b);}
+        if (flag == ActionFill.ADDMAP) {
+            map.put(key, b);
+            keyMap = ActionFill.ADDMAP;
+        }
         //Map
         //Search
-        if (flag == ActionFill.SEARCHMAP){map.get(key);}
+        if (flag == ActionFill.SEARCHMAP) {
+            map.get(key);
+            keyMap = ActionFill.SEARCHMAP;
+        }
         //Map
         //Remov
-        if (flag == ActionFill.REMOVEMAP){map.remove(key);}
+        if (flag == ActionFill.REMOVEMAP) {
+            map.remove(key);
+            keyMap = ActionFill.REMOVEMAP;
+        }
 
-        result = (System.nanoTime() - startTim)/1000;
-        return result;
+        result = (System.nanoTime() - startTim) / 1000;
+        if (keyMap != null){
+            resultMap.put(keyMap,String.valueOf(result));
+            return resultMap;
+        }
+
+        return null;
     }
 
 }

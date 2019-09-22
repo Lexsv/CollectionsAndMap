@@ -21,12 +21,12 @@ public  class MainPresent implements MainContract.MainPrisenter {
     @Override
     public void onCalculation(int position,int amauntElemant) {
         if (position == 0 && amauntElemant > 0) {
-            progress.shoeProgress();
+            progress.showProgress();
             MainContract.Presenter presenterForList = TabCollection.getPresent();
             presenterForList.onCalculation(amauntElemant);}
 
         if (position == 1 && amauntElemant > 0){
-            progress.shoeProgress();
+            progress.showProgress();
             MainContract.Presenter presenterForMap = TabMap.getPresent();
             presenterForMap.onCalculation(amauntElemant);
         }

@@ -7,8 +7,8 @@ import java.util.TreeMap;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ua.com.CollectionsAndMap.ui.presentation.flag.FlagMap;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 
 public class TreeMapModel {
 
@@ -35,7 +35,7 @@ public class TreeMapModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************HashMap Fill******************* ");
-            present.callbackFromMapModel(list, FlagMap.TREE);
+            present.callbackFromMapModel(list, TypeCollectin.TREE);
             present.startNext();
         });
     }
