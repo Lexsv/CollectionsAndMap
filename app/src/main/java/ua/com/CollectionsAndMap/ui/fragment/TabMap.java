@@ -18,6 +18,7 @@ import ua.com.CollectionsAndMap.domain.utils.FillView;
 
 
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
+import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 
@@ -52,7 +53,7 @@ public class TabMap extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        present = new PresentForMap(mainActivity, this);
+        present = new PresentForMap((MainActivity) getContext(), this);
         onRecycle(savedInstanceState);
     }
 

@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
+        presenter.onDestroy();
     }
 }

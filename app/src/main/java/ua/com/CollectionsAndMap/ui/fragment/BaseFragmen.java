@@ -12,18 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ua.com.CollectionsAndMap.ui.MainActivity;
+
 
 
 public abstract class BaseFragmen extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView{
     private Unbinder unbinder;
-    protected MainActivity mainActivity;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.mainActivity = (MainActivity) context;
-    }
 
     @Nullable
     @Override

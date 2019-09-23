@@ -1,7 +1,10 @@
 package ua.com.CollectionsAndMap.data;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.lifecycle.AndroidViewModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,7 +16,7 @@ import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
 import ua.com.CollectionsAndMap.domain.utils.ProvidContext;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 
-public final class DataSharedPreferences {
+public final class DataSharedPreferences  {
 
     private static DataSharedPreferences dataSharedPreferences;
     private SharedPreferences preferences;

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
 
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
 
 
+import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 
@@ -76,7 +79,7 @@ public class TabCollection extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        present = new PresentForList(mainActivity, this);
+        present = new PresentForList((MainActivity) getContext(), this);
         onRecycle(savedInstanceState);
     }
 
@@ -162,7 +165,6 @@ public class TabCollection extends BaseFragmen {
             if (flagAction == ActionFill.SEARCHLIST) {
                 copyOnWriteSearch.setText(s);
             }
-
 
             if (flagAction == ActionFill.REMOVEBEGIN) {
                 copyOnWriteRemoveBegin.setText(s);
@@ -269,6 +271,8 @@ public class TabCollection extends BaseFragmen {
 
         }
     }
+
+
 
     @Override
     public void onDestroyView() {

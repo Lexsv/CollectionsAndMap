@@ -32,4 +32,9 @@ public  class MainPresent implements MainContract.MainPrisenter {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        progress = null;
+    }
+
 }

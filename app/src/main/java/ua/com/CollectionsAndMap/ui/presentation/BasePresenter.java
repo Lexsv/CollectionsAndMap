@@ -22,6 +22,7 @@ public abstract class BasePresenter implements Presenter{
 
     void hidProgress(){ hidProgress.hidProgress();}
 
+
     public abstract Map<ActionFill, String> getData(TypeCollectin typeCollectin);
     public abstract void startNext();
     public abstract void saveData() ;

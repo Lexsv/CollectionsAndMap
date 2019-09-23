@@ -3,6 +3,7 @@ package ua.com.CollectionsAndMap.ui.presentation.interfaceContract;
 public interface MainContract {
     interface MainPrisenter {
         void onCalculation(int position, int amauntElemant);
+        void onDestroy();
     }
     interface View{
         void showProgress();
@@ -11,6 +12,7 @@ public interface MainContract {
 
     interface Presenter{
         void onCalculation(int amauntElemants);
+
     }
     
 }
