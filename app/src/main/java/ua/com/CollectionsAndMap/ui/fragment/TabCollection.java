@@ -5,27 +5,30 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.OnLifecycleEvent;
 
 
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
 
 
-import ua.com.CollectionsAndMap.ui.MainActivity;
+import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentListComponent;
+import ua.com.CollectionsAndMap.domain.dagger.component.PresentListComponent;
+import ua.com.CollectionsAndMap.domain.dagger.provid.AppModul;
+import ua.com.CollectionsAndMap.domain.dagger.modules.PresentListModul;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidTabCollection;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
+
 
 import static ua.com.CollectionsAndMap.domain.utils.FillView.*;
 
 public class TabCollection extends BaseFragmen {
-
-    private static PresentForList present;
-
+    @Inject
+    PresentForList present;
 
     @BindView(R.id.arrayList_addBagin)
     TextView arrayListAddBegin;
@@ -79,7 +82,7 @@ public class TabCollection extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        present = new PresentForList((MainActivity) getContext(), this);
+        addDaggerDepend();
         onRecycle(savedInstanceState);
     }
 
@@ -186,8 +189,13 @@ public class TabCollection extends BaseFragmen {
     }
 
 
-    public static PresentForList getPresent() {
-        return present;
+    private void addDaggerDepend() {
+        PresentListComponent presentListComponent = DaggerPresentListComponent.builder()
+                .appModul(new AppModul(getContext()))
+                .providTabCollection(new ProvidTabCollection(this))
+                .presentListModul(new PresentListModul())
+                .build();
+        presentListComponent.inject(this);
     }
 
 
@@ -271,7 +279,6 @@ public class TabCollection extends BaseFragmen {
 
         }
     }
-
 
 
     @Override

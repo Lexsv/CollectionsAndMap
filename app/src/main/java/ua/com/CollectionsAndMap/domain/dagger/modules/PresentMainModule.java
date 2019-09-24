@@ -1,18 +1,17 @@
-package ua.com.CollectionsAndMap.ui.dagger.modules;
+package ua.com.CollectionsAndMap.domain.dagger.modules;
 
 import android.content.Context;
 
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 
 @Module
-public class PresentModule {
+public class PresentMainModule {
     @Provides
     public MainPresent getMainPresent(Context context){
         return new MainPresent(context);
     }
+
 }

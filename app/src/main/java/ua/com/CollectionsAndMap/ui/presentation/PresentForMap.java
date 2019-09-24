@@ -2,9 +2,12 @@ package ua.com.CollectionsAndMap.ui.presentation;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,6 +18,7 @@ import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
 import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 import static ua.com.CollectionsAndMap.domain.utils.FillView.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDMAP;
@@ -32,9 +36,9 @@ public class PresentForMap extends BasePresenter {
     private Map<ActionFill, String> treeMap= new HashMap<>();
     private Map<ActionFill, String> hashMap= new HashMap<>();
 
-
-    public PresentForMap(MainActivity activity, TabMap tabMap) {
-        super(activity);
+    @Inject
+    public PresentForMap(Context context, TabMap tabMap) {
+        super(context);
         this.fillView = tabMap;
 
     }

@@ -13,11 +13,14 @@ import com.google.android.material.tabs.TabLayout;
 import javax.inject.Inject;
 
 import ua.com.CollectionsAndMap.R;
+
+import ua.com.CollectionsAndMap.domain.dagger.component.DaggerMainPresentComponent;
+import ua.com.CollectionsAndMap.domain.dagger.component.MainPresentComponent;
+import ua.com.CollectionsAndMap.domain.dagger.modules.PresentMainModule;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
-import ua.com.CollectionsAndMap.ui.dagger.component.AppComponent;
-import ua.com.CollectionsAndMap.ui.dagger.component.DaggerAppComponent;
-import ua.com.CollectionsAndMap.ui.dagger.modules.AppModul;
-import ua.com.CollectionsAndMap.ui.dagger.modules.PresentModule;
+
+
+import ua.com.CollectionsAndMap.domain.dagger.provid.AppModul;
 import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
 import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 
@@ -92,10 +95,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     private void addDaggerDepend() {
-        AppComponent appComponent = DaggerAppComponent.builder()
+        MainPresentComponent mainPresentComponent = DaggerMainPresentComponent.builder()
                 .appModul(new AppModul(this))
-                .presentModule(new PresentModule()).build();
-        appComponent.inject(this);
+                .presentMainModule(new PresentMainModule()).build();
+        mainPresentComponent.inject(this);
     }
     @Override
     public void showProgress() {
@@ -112,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
         presenter.onDestroy();
     }

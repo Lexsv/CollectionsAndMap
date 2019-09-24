@@ -1,8 +1,6 @@
-package ua.com.CollectionsAndMap.ui.dagger.modules;
+package ua.com.CollectionsAndMap.domain.dagger.provid;
 
 import android.content.Context;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;

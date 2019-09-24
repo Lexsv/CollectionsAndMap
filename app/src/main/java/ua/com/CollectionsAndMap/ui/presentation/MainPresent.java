@@ -2,10 +2,11 @@ package ua.com.CollectionsAndMap.ui.presentation;
 
 import android.content.Context;
 import javax.inject.Inject;
+
+import ua.com.CollectionsAndMap.domain.dagger.modules.PresentListModul;
+import ua.com.CollectionsAndMap.domain.dagger.modules.PresenterMapModul;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 import ua.com.CollectionsAndMap.ui.MainActivity;
-import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
-import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 
 
 public  class MainPresent implements MainContract.MainPrisenter {
@@ -22,12 +23,14 @@ public  class MainPresent implements MainContract.MainPrisenter {
     public void onCalculation(int position,int amauntElemant) {
         if (position == 0 && amauntElemant > 0) {
             progress.showProgress();
-            MainContract.Presenter presenterForList = TabCollection.getPresent();
-            presenterForList.onCalculation(amauntElemant);}
+
+            MainContract.Presenter presenterForList = PresentListModul.getPresentForList();
+            presenterForList.onCalculation(amauntElemant);
+        }
 
         if (position == 1 && amauntElemant > 0){
             progress.showProgress();
-            MainContract.Presenter presenterForMap = TabMap.getPresent();
+            MainContract.Presenter presenterForMap = PresenterMapModul.getPresentForMap();
             presenterForMap.onCalculation(amauntElemant);
         }
     }

@@ -1,9 +1,14 @@
 package ua.com.CollectionsAndMap.ui.presentation;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -15,6 +20,8 @@ import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
+
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDBEGIN;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDEND;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDMIDDL;
@@ -35,9 +42,9 @@ public class PresentForList extends BasePresenter {
     private Map<ActionFill, String> lincMap = new HashMap<>();
     private Map<ActionFill, String> copyMap = new HashMap<>();
 
-
-    public PresentForList(MainActivity activity, TabCollection tabCollection) {
-        super(activity);
+    @Inject
+    public PresentForList(Context context, TabCollection tabCollection) {
+        super(context);
         this.fillView = tabCollection;
     }
 

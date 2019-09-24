@@ -6,29 +6,30 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.domain.utils.FillView;
 
 
+import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentMapComponent;
+import ua.com.CollectionsAndMap.domain.dagger.component.PresentMapComponent;
+import ua.com.CollectionsAndMap.domain.dagger.modules.PresenterMapModul;
+import ua.com.CollectionsAndMap.domain.dagger.provid.AppModul;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidTabMap;
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
-import ua.com.CollectionsAndMap.ui.MainActivity;
-import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
-
-import static java.lang.String.*;
-import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 
 
 public class TabMap extends BaseFragmen {
+    @Inject
+    PresentForMap present;
 
-    private static PresentForMap present;
+    private static PresentForMap presentForMap;
 
 
     @BindView(R.id.treeMap_add)
@@ -53,8 +54,18 @@ public class TabMap extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        present = new PresentForMap((MainActivity) getContext(), this);
+        addDaggerDepend();
         onRecycle(savedInstanceState);
+    }
+
+    private void addDaggerDepend() {
+        PresentMapComponent presentMapComponent = DaggerPresentMapComponent.builder()
+                .appModul(new AppModul(getContext()))
+                .providTabMap(new ProvidTabMap(this))
+                .presenterMapModul(new PresenterMapModul())
+                .build();
+        presentMapComponent.inject(this);
+        presentForMap = present;
     }
 
     public void onRecycle(Bundle savedInstanceState) {
@@ -127,13 +138,14 @@ public class TabMap extends BaseFragmen {
 
 
     public static PresentForMap getPresent() {
-        return present;
+        return presentForMap;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         present.saveData();
+        presentForMap = null;
     }
 
 }

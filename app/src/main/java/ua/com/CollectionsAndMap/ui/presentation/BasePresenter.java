@@ -1,5 +1,7 @@
 package ua.com.CollectionsAndMap.ui.presentation;
 
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +17,8 @@ public abstract class BasePresenter implements Presenter{
     private MainContract.View hidProgress;
 
 
-    public BasePresenter(MainActivity activity) {
-        this.hidProgress =  activity;
+    public BasePresenter(Context context) {
+        this.hidProgress = (MainContract.View) context;
         this.preferences = DataSharedPreferences.getDataSharedPref();
     }
 
