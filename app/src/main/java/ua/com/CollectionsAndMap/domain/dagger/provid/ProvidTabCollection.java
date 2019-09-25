@@ -9,7 +9,7 @@ public class ProvidTabCollection {
     private TabCollection tabCollection;
 
     public ProvidTabCollection(TabCollection tabCollection) {
-        this.tabCollection = tabCollection;
+        this.tabCollection =tabCollection;
 
     }
 

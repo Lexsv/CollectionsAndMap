@@ -81,42 +81,30 @@ public class PresentForMap extends BasePresenter {
 
         if (flag == TypeCollectin.TREE) {
 
-            Observable.fromCallable(() -> speedMap(map, ADDMAP))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+           callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
                         treeMap.put(ADDMAP,stringMap.get(ADDMAP));
                         fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);}));
-            Observable.fromCallable(() -> speedMap(map, SEARCHMAP))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
                         treeMap.put(SEARCHMAP,stringMap.get(SEARCHMAP));
                         fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);}));
-            Observable.fromCallable(() -> speedMap(map, REMOVEMAP))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
                         treeMap.put(REMOVEMAP,stringMap.get(REMOVEMAP));
                         fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);}));
         }
         if (flag == TypeCollectin.HASH) {
 
-            Observable.fromCallable(() -> speedMap(map, ADDMAP))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
                         hashMap.put(ADDMAP,stringMap.get(ADDMAP));
                         fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);}));
-            Observable.fromCallable(() -> speedMap(map, SEARCHMAP))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
                         hashMap.put(SEARCHMAP,stringMap.get(SEARCHMAP));
                         fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);}));
-            Observable.fromCallable(() -> speedMap(map, REMOVEMAP))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
                         hashMap.put(REMOVEMAP,stringMap.get(REMOVEMAP));
                         fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);}));

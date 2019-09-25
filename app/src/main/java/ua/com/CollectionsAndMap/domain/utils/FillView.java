@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDBEGIN;
+
 
 public final class FillView {
 
@@ -114,5 +120,21 @@ public final class FillView {
 
         return null;
     }
+
+
+    public static Observable<Map<ActionFill, String>> callbackResaltSpeedList(List<Integer> list, ActionFill flag){
+
+        return Observable.fromCallable(() -> speedList(list, flag))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Map<ActionFill, String>> callbackResaltSpeedMap(Map<Byte, Byte> map, ActionFill flag){
+
+        return Observable.fromCallable(() -> speedMap(map, flag))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
 }

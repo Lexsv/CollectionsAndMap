@@ -9,18 +9,13 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
-import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
-import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDBEGIN;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDEND;
@@ -29,7 +24,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.REMOVEBE
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.REMOVEMIDDL;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.REMOVEND;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.SEARCHLIST;
-import static ua.com.CollectionsAndMap.domain.utils.FillView.speedList;
+import static ua.com.CollectionsAndMap.domain.utils.FillView.callbackResaltSpeedList;
 
 
 public class PresentForList extends BasePresenter {
@@ -94,53 +89,39 @@ public class PresentForList extends BasePresenter {
     @SuppressLint("CheckResult")
     public void callbackFromListModel(List<Integer> list, TypeCollectin flag) {
         if (flag == TypeCollectin.ARREY) {
-            Observable.fromCallable(() -> speedList(list, ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list,ADDBEGIN)
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
                         fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
                     }));
 
-            Observable.fromCallable(() -> speedList(list, ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDMIDDL, stringMap.get(ADDMIDDL));
                         fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
                     }));
-            Observable.fromCallable(() -> speedList(list, ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDEND, stringMap.get(ADDEND));
                         fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
                     }));
 
-            Observable.fromCallable(() -> speedList(list, SEARCHLIST))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         arreyMap.put(SEARCHLIST, stringMap.get(SEARCHLIST));
                         fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         arreyMap.put(REMOVEBEGIN, stringMap.get(REMOVEBEGIN));
                         fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                         arreyMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
                         fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         arreyMap.put(REMOVEND, stringMap.get(REMOVEND));
                         fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
@@ -148,53 +129,39 @@ public class PresentForList extends BasePresenter {
         }
 
         if (flag == TypeCollectin.LINKED) {
-            Observable.fromCallable(() -> speedList(list, ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDBEGIN)
                     .subscribe((stringMap -> {
                         lincMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
                         fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
                     }));
 
-            Observable.fromCallable(() -> speedList(list, ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         lincMap.put(ADDMIDDL, stringMap.get(ADDMIDDL));
                         fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
                     }));
-            Observable.fromCallable(() -> speedList(list, ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         lincMap.put(ADDEND, stringMap.get(ADDEND));
                         fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
                     }));
 
-            Observable.fromCallable(() -> speedList(list, SEARCHLIST))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         lincMap.put(SEARCHLIST, stringMap.get(SEARCHLIST));
                         fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         lincMap.put(REMOVEBEGIN, stringMap.get(REMOVEBEGIN));
                         fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                         lincMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
                         fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         lincMap.put(REMOVEND, stringMap.get(REMOVEND));
                         fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
@@ -202,53 +169,40 @@ public class PresentForList extends BasePresenter {
         }
 
         if (flag == TypeCollectin.COPYONWRITE) {
-            Observable.fromCallable(() -> speedList(list, ADDBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDBEGIN)
                     .subscribe((stringMap -> {
                         copyMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
                         fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
                     }));
 
-            Observable.fromCallable(() -> speedList(list, ADDMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         copyMap.put(ADDMIDDL, stringMap.get(ADDMIDDL));
                         fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
                     }));
-            Observable.fromCallable(() -> speedList(list, ADDEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         copyMap.put(ADDEND, stringMap.get(ADDEND));
                         fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
                     }));
 
-            Observable.fromCallable(() -> speedList(list, SEARCHLIST))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         copyMap.put(SEARCHLIST, stringMap.get(SEARCHLIST));
                         fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEBEGIN))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         copyMap.put(REMOVEBEGIN, stringMap.get(REMOVEBEGIN));
                         fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
                     }));
-            Observable.fromCallable(() -> speedList(list, REMOVEMIDDL))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+            callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
-                        copyMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
-                        fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
-                    }));
-            Observable.fromCallable(() -> speedList(list, REMOVEND))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+                copyMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
+                fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
+            }));
+
+            callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         copyMap.put(REMOVEND, stringMap.get(REMOVEND));
                         fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);

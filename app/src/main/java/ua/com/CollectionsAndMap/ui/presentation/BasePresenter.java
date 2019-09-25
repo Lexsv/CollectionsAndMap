@@ -2,17 +2,17 @@ package ua.com.CollectionsAndMap.ui.presentation;
 
 import android.content.Context;
 
-import java.util.HashMap;
-import java.util.Map;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 
+import java.util.Map;
 import ua.com.CollectionsAndMap.data.DataSharedPreferences;
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
-import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract.Presenter;
 
-public abstract class BasePresenter implements Presenter{
+public abstract class BasePresenter  implements Presenter{
     protected DataSharedPreferences preferences;
     private MainContract.View hidProgress;
 

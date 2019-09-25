@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import ua.com.CollectionsAndMap.R;
 
+
 import ua.com.CollectionsAndMap.domain.dagger.component.DaggerMainPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.component.MainPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentMainModule;
