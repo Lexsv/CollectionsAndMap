@@ -83,6 +83,7 @@ public class TabCollection extends BaseFragmen {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         addDaggerDepend();
+        getLifecycle().addObserver(present);
         onRecycle(savedInstanceState);
     }
 
@@ -280,11 +281,5 @@ public class TabCollection extends BaseFragmen {
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        present.saveData();
-    }
 
 }

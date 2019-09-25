@@ -29,8 +29,6 @@ public class TabMap extends BaseFragmen {
     @Inject
     PresentForMap present;
 
-    private static PresentForMap presentForMap;
-
 
     @BindView(R.id.treeMap_add)
     TextView treeMapAdd;
@@ -55,6 +53,7 @@ public class TabMap extends BaseFragmen {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         addDaggerDepend();
+        getLifecycle().addObserver(present);
         onRecycle(savedInstanceState);
     }
 
@@ -65,7 +64,6 @@ public class TabMap extends BaseFragmen {
                 .presenterMapModul(new PresenterMapModul())
                 .build();
         presentMapComponent.inject(this);
-        presentForMap = present;
     }
 
     public void onRecycle(Bundle savedInstanceState) {
@@ -137,15 +135,5 @@ public class TabMap extends BaseFragmen {
     }
 
 
-    public static PresentForMap getPresent() {
-        return presentForMap;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        present.saveData();
-        presentForMap = null;
-    }
 
 }

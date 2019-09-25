@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setContentView(R.layout.activity_main);
         initTab();
         addDaggerDepend();
+        getLifecycle().addObserver(mainPresent);
         presenter = mainPresent;
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
         faButtn.setOnClickListener(view -> addAlertDialog());
@@ -114,9 +115,4 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         showProgress.cancel();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-    }
 }

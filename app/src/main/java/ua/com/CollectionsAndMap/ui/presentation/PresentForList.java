@@ -3,6 +3,10 @@ package ua.com.CollectionsAndMap.ui.presentation;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +31,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.SEARCHLI
 import static ua.com.CollectionsAndMap.domain.utils.FillView.callbackResaltSpeedList;
 
 
-public class PresentForList extends BasePresenter {
+public class PresentForList extends BasePresenter implements LifecycleObserver {
 
     private FillView fillView;
     private int queue = 0;
@@ -57,6 +61,7 @@ public class PresentForList extends BasePresenter {
     }
 
     @Override
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void saveData() {
         if (wasCalcul) {
             preferences.setDataList(arreyMap,TypeCollectin.ARREY);

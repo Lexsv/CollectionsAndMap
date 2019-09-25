@@ -29,7 +29,7 @@ public final class FillView {
 
     }
 
-    public static Map<ActionFill, String> speedList(List<Integer> list, ActionFill flag) {
+    public static synchronized Map<ActionFill, String> speedList(List<Integer> list, ActionFill flag) {
 
         long result;
         ActionFill keyMap = null;
@@ -81,7 +81,7 @@ public final class FillView {
         return null;
     }
 
-    public static Map<ActionFill, String> speedMap(Map<Byte, Byte> map, ActionFill flag) {
+    public static synchronized Map<ActionFill, String> speedMap(Map<Byte, Byte> map, ActionFill flag) {
 
         ActionFill keyMap = null;
         Map<ActionFill, String> resultMap = new HashMap<>();

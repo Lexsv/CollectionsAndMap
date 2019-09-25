@@ -4,6 +4,10 @@ package ua.com.CollectionsAndMap.ui.presentation;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +30,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.REMOVEMA
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.SEARCHMAP;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
 
-public class PresentForMap extends BasePresenter {
+public class PresentForMap extends BasePresenter implements LifecycleObserver {
 
 
     private FillView fillView;
@@ -70,6 +74,7 @@ public class PresentForMap extends BasePresenter {
     }
 
     @Override
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void saveData() {
         if (wasCalcul) {
             preferences.setDataMap(treeMap, TypeCollectin.TREE);
