@@ -12,15 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.domain.model.MapModels.TreeMapModel;
-import ua.com.CollectionsAndMap.ui.MainActivity;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
-import ua.com.CollectionsAndMap.ui.fragment.TabMap;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
@@ -28,12 +22,12 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.*;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDMAP;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.REMOVEMAP;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.SEARCHMAP;
-import static ua.com.CollectionsAndMap.domain.utils.FillView.speedMap;
+
 
 public class PresentForMap extends BasePresenter implements LifecycleObserver {
 
 
-    private FillView fillView;
+
     private int amountElements;
     private int queue = 0;
     private boolean wasCalcul = false;
@@ -41,10 +35,8 @@ public class PresentForMap extends BasePresenter implements LifecycleObserver {
     private Map<ActionFill, String> hashMap= new HashMap<>();
 
     @Inject
-    public PresentForMap(Context context, TabMap tabMap) {
-        super(context);
-        this.fillView = tabMap;
-
+    public PresentForMap(MainContract.View view, FillView fillView) {
+        super(view,fillView);
     }
 
     @Override
@@ -116,6 +108,5 @@ public class PresentForMap extends BasePresenter implements LifecycleObserver {
         }
 
     }
-
 
 }

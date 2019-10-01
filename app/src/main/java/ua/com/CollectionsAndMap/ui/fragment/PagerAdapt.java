@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 public class PagerAdapt extends FragmentStatePagerAdapter {
 
     private int tabNumb;
-    private Fragment[] fragments = new Fragment[2];
+    private BaseFragmen[] fragments = new BaseFragmen[2];
 
     public PagerAdapt(FragmentManager fm, int tabNumb) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -17,7 +17,7 @@ public class PagerAdapt extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public BaseFragmen getItem(int position) {
 
         if (position == 0) {
            if (fragments[position] != null){return fragments[position];}

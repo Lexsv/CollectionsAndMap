@@ -4,20 +4,19 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import ua.com.CollectionsAndMap.ui.fragment.TabMap;
+
+import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
+
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 @Module
 public class PresenterMapModul {
-    private static PresentForMap presentForMap;
-    @Provides
-    public PresentForMap getpresentForMap (Context context, TabMap tabMap){
-        presentForMap = new PresentForMap(context,tabMap);
-        return presentForMap;
-    }
 
-    public static PresentForMap getPresentForMap() {
-        return presentForMap;
-    }
+    @Provides
+    public PresentForMap getpresentForMap (MainContract.View view, FillView fillView){
+        return new PresentForMap(view, fillView);}
+
+
 }
 

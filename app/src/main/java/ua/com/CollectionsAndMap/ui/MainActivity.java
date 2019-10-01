@@ -18,10 +18,11 @@ import ua.com.CollectionsAndMap.R;
 import ua.com.CollectionsAndMap.domain.dagger.component.DaggerMainPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.component.MainPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentMainModule;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
+import ua.com.CollectionsAndMap.ui.fragment.BaseFragmen;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
-import ua.com.CollectionsAndMap.domain.dagger.provid.AppModul;
 import ua.com.CollectionsAndMap.ui.fragment.PagerAdapt;
 import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 
@@ -29,7 +30,6 @@ import static java.lang.Integer.valueOf;
 
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,MainContract.View {
-
 
     private MainContract.MainPrisenter presenter;
     private ViewPager viewPager;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setPositiveButton("Посчитать", (dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
             if (!editTextInLoad.getText().toString().isEmpty()){amoutElements = (valueOf(editTextInLoad.getText().toString()));}
-            presenter.onCalculation(viewPager.getCurrentItem(), amoutElements);
+            presenter.onCalculation(amoutElements);
             dialog.cancel();
         });
         addElementAlert.create();
@@ -96,9 +96,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabReselected(TabLayout.Tab tab) {
     }
 
+
     private void addDaggerDepend() {
         MainPresentComponent mainPresentComponent = DaggerMainPresentComponent.builder()
-                .appModul(new AppModul(this))
+                .providMainContractView(new ProvidMainContractView(this))
                 .presentMainModule(new PresentMainModule()).build();
         mainPresentComponent.inject(this);
     }
@@ -113,6 +114,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void hidProgress() {
         showProgress.cancel();
+    }
+
+    @Override
+    public MainContract.Presenter getPressentr() {
+        BaseFragmen baseFragmen = pagerAdapter.getItem(viewPager.getCurrentItem());
+        return baseFragmen.getPresent();
+
     }
 
 }

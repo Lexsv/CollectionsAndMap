@@ -14,15 +14,15 @@ import butterknife.BindView;
 
 import ua.com.CollectionsAndMap.R;
 
-
-import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentMapComponent;
-import ua.com.CollectionsAndMap.domain.dagger.component.PresentMapComponent;
+import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentComponent;
+import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresenterMapModul;
-import ua.com.CollectionsAndMap.domain.dagger.provid.AppModul;
-import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidTabMap;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidFillView;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
 public class TabMap extends BaseFragmen {
@@ -58,12 +58,12 @@ public class TabMap extends BaseFragmen {
     }
 
     private void addDaggerDepend() {
-        PresentMapComponent presentMapComponent = DaggerPresentMapComponent.builder()
-                .appModul(new AppModul(getContext()))
-                .providTabMap(new ProvidTabMap(this))
+        PresentComponent presentComponent = DaggerPresentComponent.builder()
+                .providMainContractView(new ProvidMainContractView((MainContract.View) getContext()))
+                .providFillView(new ProvidFillView(this))
                 .presenterMapModul(new PresenterMapModul())
                 .build();
-        presentMapComponent.inject(this);
+        presentComponent.inject(this);
     }
 
     public void onRecycle(Bundle savedInstanceState) {
@@ -98,6 +98,11 @@ public class TabMap extends BaseFragmen {
 
         }
 
+    }
+
+    @Override
+    public MainContract.Presenter getPresent() {
+        return  present;
     }
 
 

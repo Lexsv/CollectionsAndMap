@@ -12,12 +12,20 @@ import androidx.fragment.app.Fragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
+import ua.com.CollectionsAndMap.ui.presentation.BasePresenter;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
 public abstract class BaseFragmen extends Fragment implements ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView{
     private Unbinder unbinder;
 
+    MainContract.View viewMain;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewMain = (MainContract.View )context;
+
+    }
 
     @Nullable
     @Override
@@ -30,7 +38,7 @@ public abstract class BaseFragmen extends Fragment implements ua.com.Collections
     protected abstract int getLayout();
     public  abstract void onRecycle(Bundle savedInstanceState);
 
-
+    public abstract MainContract.Presenter getPresent() ;
     @Override
     public void onDestroyView() {
         super.onDestroyView();

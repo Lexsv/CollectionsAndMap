@@ -15,13 +15,14 @@ import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
 
 
-import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentListComponent;
-import ua.com.CollectionsAndMap.domain.dagger.component.PresentListComponent;
-import ua.com.CollectionsAndMap.domain.dagger.provid.AppModul;
+import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentComponent;
+import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentListModul;
-import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidTabCollection;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidFillView;
+import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
 import static ua.com.CollectionsAndMap.domain.utils.FillView.*;
@@ -73,6 +74,10 @@ public class TabCollection extends BaseFragmen {
     @BindView(R.id.copyOn_write_removeEnd)
     TextView copyOnWriteRemoveEnd;
 
+   @Override
+    public MainContract.Presenter getPresent() {
+       return  present;
+    }
 
     @Override
     protected int getLayout() {
@@ -191,12 +196,13 @@ public class TabCollection extends BaseFragmen {
 
 
     private void addDaggerDepend() {
-        PresentListComponent presentListComponent = DaggerPresentListComponent.builder()
-                .appModul(new AppModul(getContext()))
-                .providTabCollection(new ProvidTabCollection(this))
+        PresentComponent presentComponent = DaggerPresentComponent.builder()
+                .providMainContractView(new ProvidMainContractView((MainContract.View) getContext()))
+                .providFillView(new ProvidFillView(this))
                 .presentListModul(new PresentListModul())
                 .build();
-        presentListComponent.inject(this);
+        presentComponent.inject(this);
+
     }
 
 

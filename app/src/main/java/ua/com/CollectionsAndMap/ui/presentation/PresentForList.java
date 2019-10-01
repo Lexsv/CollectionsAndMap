@@ -17,9 +17,9 @@ import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
-import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
+import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDBEGIN;
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.ADDEND;
@@ -33,8 +33,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.callbackResaltSpeed
 
 public class PresentForList extends BasePresenter implements LifecycleObserver {
 
-    private FillView fillView;
-    private int queue = 0;
+    private volatile int queue = 0;
     private int amountElements;
     private boolean wasCalcul = false;
     private Map<ActionFill, String> arreyMap = new HashMap<>();
@@ -42,14 +41,12 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
     private Map<ActionFill, String> copyMap = new HashMap<>();
 
     @Inject
-    public PresentForList(Context context, TabCollection tabCollection) {
-        super(context);
-        this.fillView = tabCollection;
+    public PresentForList(MainContract.View view, FillView fillView) {
+        super(view,fillView);
+
     }
-
-
     @Override
-    public void onCalculation(int amauntElemants) {
+    public synchronized void  onCalculation(int amauntElemants) {
         this.amountElements = amauntElemants;
         queue = 2;
         startNext();
@@ -71,7 +68,7 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
     }
 
     @Override
-    public void startNext() {
+    public synchronized void startNext() {
 
         if (queue == 0) {
             new CopyOnWriteModel(amountElements, this).start();
