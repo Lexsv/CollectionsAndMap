@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+
 import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.domain.model.MapModels.TreeMapModel;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
@@ -28,37 +29,32 @@ public class PresentForMap extends BasePresenter implements LifecycleObserver {
 
 
 
-    private int amountElements;
-    private int queue = 0;
+    private int queue = 6;
     private boolean wasCalcul = false;
-    private Map<ActionFill, String> treeMap= new HashMap<>();
-    private Map<ActionFill, String> hashMap= new HashMap<>();
+    private Map<ActionFill, String> treeMap = new HashMap<>();
+    private Map<ActionFill, String> hashMap = new HashMap<>();
 
     @Inject
     public PresentForMap(MainContract.View view, FillView fillView) {
-        super(view,fillView);
+        super(view, fillView);
+    }
+
+    @Override
+    public void finishCalcul() {
+        queue--;
+        if (queue == 0) {
+            hidProgress();
+            wasCalcul = !wasCalcul;
+            queue = 6;
+        }
     }
 
     @Override
     public void onCalculation(int amauntElemants) {
-        this.amountElements = amauntElemants;
-        queue = 1;
-        startNext();
+        new TreeMapModel(amauntElemants, this).start();
+        new HashMapModel(amauntElemants, this).start();
     }
 
-    public void startNext() {
-        if (queue == 0) {
-            new TreeMapModel(amountElements, this).start();
-        }
-        if (queue == 1) {
-            new HashMapModel(amountElements, this).start();
-        }
-        if (queue < 0) {
-            hidProgress();
-        }
-        queue--;
-        wasCalcul = !wasCalcul;
-    }
 
     @Override
     public Map<ActionFill, String> getData(TypeCollectin typeCollectin) {
@@ -73,38 +69,51 @@ public class PresentForMap extends BasePresenter implements LifecycleObserver {
             preferences.setDataMap(hashMap, TypeCollectin.HASH);
         }
     }
+
     @SuppressLint("CheckResult")
     public void callbackFromMapModel(Map<Byte, Byte> map, TypeCollectin flag) {
 
         if (flag == TypeCollectin.TREE) {
 
-           callbackResaltSpeedMap(map, ADDMAP)
+            callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
-                        treeMap.put(ADDMAP,stringMap.get(ADDMAP));
-                        fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);}));
+                        treeMap.put(ADDMAP, stringMap.get(ADDMAP));
+                        fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);
+                        finishCalcul();
+                    }));
             callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
-                        treeMap.put(SEARCHMAP,stringMap.get(SEARCHMAP));
-                        fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);}));
+                        treeMap.put(SEARCHMAP, stringMap.get(SEARCHMAP));
+                        fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);
+                        finishCalcul();
+                    }));
             callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
-                        treeMap.put(REMOVEMAP,stringMap.get(REMOVEMAP));
-                        fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);}));
+                        treeMap.put(REMOVEMAP, stringMap.get(REMOVEMAP));
+                        fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);
+                        finishCalcul();
+                    }));
         }
         if (flag == TypeCollectin.HASH) {
 
             callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
-                        hashMap.put(ADDMAP,stringMap.get(ADDMAP));
-                        fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);}));
+                        hashMap.put(ADDMAP, stringMap.get(ADDMAP));
+                        fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);
+                        finishCalcul();
+                    }));
             callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
-                        hashMap.put(SEARCHMAP,stringMap.get(SEARCHMAP));
-                        fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);}));
+                        hashMap.put(SEARCHMAP, stringMap.get(SEARCHMAP));
+                        fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);
+                        finishCalcul();
+                    }));
             callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
-                        hashMap.put(REMOVEMAP,stringMap.get(REMOVEMAP));
-                        fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);}));
+                        hashMap.put(REMOVEMAP, stringMap.get(REMOVEMAP));
+                        fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);
+                        finishCalcul();
+                    }));
         }
 
     }

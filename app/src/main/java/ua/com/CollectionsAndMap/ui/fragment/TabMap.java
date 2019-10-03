@@ -67,9 +67,10 @@ public class TabMap extends BaseFragmen {
     }
 
     public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState != null ) {
-            Map<ActionFill, String> treeMap = present.getData(TypeCollectin.TREE);
-            Map<ActionFill, String> hashMap = present.getData(TypeCollectin.HASH);
+        Map<ActionFill, String> treeMap = present.getData(TypeCollectin.TREE);
+        Map<ActionFill, String> hashMap = present.getData(TypeCollectin.HASH);
+
+        if (savedInstanceState != null && treeMap != null ) {
 
             for (ActionFill actionFill : treeMap.keySet()) {
                 if (ActionFill.ADDMAP == actionFill) {

@@ -33,8 +33,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.callbackResaltSpeed
 
 public class PresentForList extends BasePresenter implements LifecycleObserver {
 
-    private volatile int queue = 0;
-    private int amountElements;
+    private volatile int queue = 21;
     private boolean wasCalcul = false;
     private Map<ActionFill, String> arreyMap = new HashMap<>();
     private Map<ActionFill, String> lincMap = new HashMap<>();
@@ -45,11 +44,23 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
         super(view,fillView);
 
     }
+
     @Override
-    public synchronized void  onCalculation(int amauntElemants) {
-        this.amountElements = amauntElemants;
-        queue = 2;
-        startNext();
+    public void finishCalcul() {
+        queue--;
+        if (queue == 0){
+            hidProgress();
+            wasCalcul = !wasCalcul;
+            queue = 21;
+        }
+
+    }
+
+    @Override
+    public  void  onCalculation(int amauntElemants) {
+        new CopyOnWriteModel(amauntElemants, this).start();
+        new LinkedListModel(amauntElemants, this).start();
+        new ArrayListModel(amauntElemants, this).start();
     }
 
     @Override
@@ -67,24 +78,6 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
         }
     }
 
-    @Override
-    public synchronized void startNext() {
-
-        if (queue == 0) {
-            new CopyOnWriteModel(amountElements, this).start();
-        }
-        if (queue == 1) {
-            new LinkedListModel(amountElements, this).start();
-        }
-        if (queue == 2) {
-            new ArrayListModel(amountElements, this).start();
-        }
-        if (queue < 0) {
-            hidProgress();
-            wasCalcul = !wasCalcul;
-        }
-        queue--;
-    }
 
 
 
@@ -95,38 +88,45 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
                         fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
+                        finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDMIDDL, stringMap.get(ADDMIDDL));
                         fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDEND, stringMap.get(ADDEND));
                         fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
+                        finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         arreyMap.put(SEARCHLIST, stringMap.get(SEARCHLIST));
                         fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         arreyMap.put(REMOVEBEGIN, stringMap.get(REMOVEBEGIN));
                         fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                         arreyMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
                         fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         arreyMap.put(REMOVEND, stringMap.get(REMOVEND));
                         fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
+                        finishCalcul();
                     }));
         }
 
@@ -135,38 +135,45 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
                     .subscribe((stringMap -> {
                         lincMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
                         fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
+                        finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         lincMap.put(ADDMIDDL, stringMap.get(ADDMIDDL));
                         fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         lincMap.put(ADDEND, stringMap.get(ADDEND));
                         fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
+                        finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         lincMap.put(SEARCHLIST, stringMap.get(SEARCHLIST));
                         fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         lincMap.put(REMOVEBEGIN, stringMap.get(REMOVEBEGIN));
                         fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                         lincMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
                         fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         lincMap.put(REMOVEND, stringMap.get(REMOVEND));
                         fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
+                        finishCalcul();
                     }));
         }
 
@@ -175,39 +182,46 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
                     .subscribe((stringMap -> {
                         copyMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
                         fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
+                        finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         copyMap.put(ADDMIDDL, stringMap.get(ADDMIDDL));
                         fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         copyMap.put(ADDEND, stringMap.get(ADDEND));
                         fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
+                        finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         copyMap.put(SEARCHLIST, stringMap.get(SEARCHLIST));
                         fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         copyMap.put(REMOVEBEGIN, stringMap.get(REMOVEBEGIN));
                         fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
+                        finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                 copyMap.put(REMOVEMIDDL, stringMap.get(REMOVEMIDDL));
                 fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
+                finishCalcul();
             }));
 
             callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         copyMap.put(REMOVEND, stringMap.get(REMOVEND));
                         fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
+                        finishCalcul();
                     }));
         }
     }

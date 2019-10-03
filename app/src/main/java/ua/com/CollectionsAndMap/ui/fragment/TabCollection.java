@@ -207,10 +207,11 @@ public class TabCollection extends BaseFragmen {
 
 
     public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            Map<ActionFill, String> arreyMap = present.getData(TypeCollectin.ARREY);
-            Map<ActionFill, String> lincMap = present.getData(TypeCollectin.LINKED);
-            Map<ActionFill, String> copyMap = present.getData(TypeCollectin.COPYONWRITE);
+        Map<ActionFill, String> arreyMap = present.getData(TypeCollectin.ARREY);
+        Map<ActionFill, String> lincMap = present.getData(TypeCollectin.LINKED);
+        Map<ActionFill, String> copyMap = present.getData(TypeCollectin.COPYONWRITE);
+
+        if (savedInstanceState != null && arreyMap !=null ) {
             for (ActionFill actionFill : arreyMap.keySet()) {
                 if (ActionFill.ADDBEGIN == actionFill) {
                     arrayListAddBegin.setText(arreyMap.get(actionFill));

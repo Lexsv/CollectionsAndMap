@@ -27,7 +27,6 @@ public class CopyOnWriteModel{
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************CopyOnWritList Fill******************* ");
             present.callbackFromListModel(list, TypeCollectin.COPYONWRITE);
-            present.startNext();
         });
     }
 }

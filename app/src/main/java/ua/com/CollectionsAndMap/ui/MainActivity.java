@@ -1,7 +1,14 @@
 package ua.com.CollectionsAndMap.ui;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private AlertDialog showProgress;
     @Inject
     MainPresent mainPresent;
+    private boolean alertDialogFinish = false;
 
 
     @Override
@@ -76,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
             if (!editTextInLoad.getText().toString().isEmpty()){amoutElements = (valueOf(editTextInLoad.getText().toString()));}
             presenter.onCalculation(amoutElements);
+            InputMethodManager clos = (InputMethodManager)this.getSystemService(INPUT_METHOD_SERVICE);
+            clos.hideSoftInputFromWindow(editTextInLoad.getWindowToken(),0);
             dialog.cancel();
         });
         addElementAlert.create();
@@ -96,6 +106,27 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabReselected(TabLayout.Tab tab) {
     }
 
+    @Override
+    public void onBackPressed() {
+        if (alertDialogFinish) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.alertDialogFinish = true;
+        Toast.makeText(this, "Нажмите два раза для выхода", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                alertDialogFinish=false;
+            }
+        }, 2000);
+    }
+
+
+
 
     private void addDaggerDepend() {
         MainPresentComponent mainPresentComponent = DaggerMainPresentComponent.builder()
@@ -105,14 +136,16 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
     @Override
     public void showProgress() {
-        showProgress = new AlertDialog.Builder(this).
-                setView(R.layout.loader_view_progress)
-                .setCancelable(false)
+        alertDialogFinish = !alertDialogFinish;
+        showProgress = new AlertDialog.Builder(this)
+                .setView(R.layout.loader_view_progress)
+                .setCancelable(true)
                 .create();
         showProgress.show();
     }
     @Override
     public void hidProgress() {
+        alertDialogFinish = !alertDialogFinish;
         showProgress.cancel();
     }
 

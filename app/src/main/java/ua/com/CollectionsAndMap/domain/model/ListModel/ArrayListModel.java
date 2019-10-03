@@ -30,7 +30,6 @@ public class ArrayListModel {
                  .subscribe((list) -> {
             System.out.println("*******************ArrayList Fill******************* ");
             present.callbackFromListModel(list, TypeCollectin.ARREY);
-            present.startNext();
         });
     }
 

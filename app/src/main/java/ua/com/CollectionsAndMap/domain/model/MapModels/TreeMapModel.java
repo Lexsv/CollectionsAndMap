@@ -36,7 +36,6 @@ public class TreeMapModel {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************HashMap Fill******************* ");
             present.callbackFromMapModel(list, TypeCollectin.TREE);
-            present.startNext();
         });
     }
 

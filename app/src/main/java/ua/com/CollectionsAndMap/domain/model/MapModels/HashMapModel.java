@@ -35,7 +35,6 @@ public class HashMapModel {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************HashMap Fill******************* ");
             present.callbackFromMapModel(list, TypeCollectin.HASH);
-            present.startNext();
         });
     }
 

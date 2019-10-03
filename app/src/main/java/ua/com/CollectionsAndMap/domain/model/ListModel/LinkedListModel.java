@@ -26,7 +26,6 @@ public class LinkedListModel {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************LinkedList Fill******************* ");
             present.callbackFromListModel(list, TypeCollectin.LINKED);
-            present.startNext();
         });
     }
 }
