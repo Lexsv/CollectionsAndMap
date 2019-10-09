@@ -6,6 +6,7 @@ public interface MainContract {
     interface MainPrisenter {
         void onCalculation(int amauntElemant);
         void onDestroy();
+        void destroyCalcuiation();
     }
     interface View{
         void showProgress();
@@ -14,7 +15,7 @@ public interface MainContract {
     }
 
     interface Presenter{
-
+        void dispose();
         void onCalculation(int amauntElemants);
 
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 
 import javax.inject.Inject;
 
+import ua.com.CollectionsAndMap.data.DataSharedPreferences;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
@@ -27,8 +28,12 @@ public  class MainPresent implements MainContract.MainPrisenter, LifecycleObserv
 
     @Override
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void onDestroy() {
-        viewMain = null;
+    public void onDestroy() { viewMain = null; }
+
+    @Override
+    public void destroyCalcuiation() {
+        viewMain.getPressentr().dispose();
+        DataSharedPreferences.getDataSharedPref().removSharedPreferences();
     }
 
 }

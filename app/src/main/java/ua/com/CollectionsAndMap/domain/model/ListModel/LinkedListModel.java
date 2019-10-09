@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
@@ -20,12 +21,13 @@ public class LinkedListModel {
         this.present = present;
     }
     @SuppressLint("CheckResult")
-    public void start() {
-        Flowable.fromCallable(() -> new LinkedList<>(Collections.nCopies(amountElements,1)))
+    public Disposable start() {
+        Disposable disposable = Flowable.fromCallable(() -> new LinkedList<>(Collections.nCopies(amountElements,1)))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe((list) -> {
             System.out.println("*******************LinkedList Fill******************* ");
             present.callbackFromListModel(list, TypeCollectin.LINKED);
         });
+        return disposable;
     }
 }

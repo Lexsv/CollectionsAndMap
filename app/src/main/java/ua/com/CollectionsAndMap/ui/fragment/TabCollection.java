@@ -6,26 +6,22 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
-
-
 import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentListModul;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidFillView;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
-import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
+import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
-
-import static ua.com.CollectionsAndMap.domain.utils.FillView.*;
+import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
 
 public class TabCollection extends BaseFragmen {
     @Inject
@@ -74,9 +70,9 @@ public class TabCollection extends BaseFragmen {
     @BindView(R.id.copyOn_write_removeEnd)
     TextView copyOnWriteRemoveEnd;
 
-   @Override
+    @Override
     public MainContract.Presenter getPresent() {
-       return  present;
+        return present;
     }
 
     @Override
@@ -211,7 +207,7 @@ public class TabCollection extends BaseFragmen {
         Map<ActionFill, String> lincMap = present.getData(TypeCollectin.LINKED);
         Map<ActionFill, String> copyMap = present.getData(TypeCollectin.COPYONWRITE);
 
-        if (savedInstanceState != null && arreyMap !=null ) {
+        if (savedInstanceState != null && arreyMap != null) {
             for (ActionFill actionFill : arreyMap.keySet()) {
                 if (ActionFill.ADDBEGIN == actionFill) {
                     arrayListAddBegin.setText(arreyMap.get(actionFill));
@@ -236,7 +232,9 @@ public class TabCollection extends BaseFragmen {
                 }
 
             }
+        }
 
+        if (savedInstanceState != null && lincMap != null) {
             for (ActionFill actionFill : lincMap.keySet()) {
                 if (ActionFill.ADDBEGIN == actionFill) {
                     linkedListAddBegin.setText(lincMap.get(actionFill));
@@ -260,7 +258,9 @@ public class TabCollection extends BaseFragmen {
                     linkedListRemoveEnd.setText(lincMap.get(actionFill));
                 }
             }
+        }
 
+        if (savedInstanceState != null && copyMap != null) {
             for (ActionFill actionFill : copyMap.keySet()) {
                 if (ActionFill.ADDBEGIN == actionFill) {
                     copyOnWriteAddBegin.setText(copyMap.get(actionFill));
@@ -284,9 +284,10 @@ public class TabCollection extends BaseFragmen {
                     copyOnWriteRemoveEnd.setText(copyMap.get(actionFill));
                 }
             }
-
         }
+
     }
-
-
 }
+
+
+

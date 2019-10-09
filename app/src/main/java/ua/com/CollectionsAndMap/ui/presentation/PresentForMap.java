@@ -25,7 +25,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.REMOVEMA
 import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill.SEARCHMAP;
 
 
-public class PresentForMap extends BasePresenter implements LifecycleObserver {
+public  class PresentForMap extends BasePresenter implements LifecycleObserver {
 
 
 
@@ -59,6 +59,12 @@ public class PresentForMap extends BasePresenter implements LifecycleObserver {
     @Override
     public Map<ActionFill, String> getData(TypeCollectin typeCollectin) {
         return preferences.getDataMap(typeCollectin);
+    }
+    @Override
+    public void dispose(){
+//        for (String d : disposableMap.keySet()){
+//            if (disposableMap.get(d) !=null){disposableMap.get(d).dispose();}
+//        }
     }
 
     @Override

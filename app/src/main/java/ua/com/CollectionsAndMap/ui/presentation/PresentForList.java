@@ -1,10 +1,10 @@
 package ua.com.CollectionsAndMap.ui.presentation;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+
 import androidx.lifecycle.OnLifecycleEvent;
 
 import java.util.HashMap;
@@ -13,6 +13,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import ua.com.CollectionsAndMap.domain.model.ListModel.ArrayListModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.CopyOnWriteModel;
 import ua.com.CollectionsAndMap.domain.model.ListModel.LinkedListModel;
@@ -38,6 +42,8 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
     private Map<ActionFill, String> arreyMap = new HashMap<>();
     private Map<ActionFill, String> lincMap = new HashMap<>();
     private Map<ActionFill, String> copyMap = new HashMap<>();
+    private Map<String,Disposable> disposableMap = new HashMap<>();
+
 
     @Inject
     public PresentForList(MainContract.View view, FillView fillView) {
@@ -58,14 +64,21 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
 
     @Override
     public  void  onCalculation(int amauntElemants) {
-        new CopyOnWriteModel(amauntElemants, this).start();
-        new LinkedListModel(amauntElemants, this).start();
-        new ArrayListModel(amauntElemants, this).start();
+        disposableMap.put("copy",new CopyOnWriteModel(amauntElemants, this).start());
+        disposableMap.put("linc",new LinkedListModel(amauntElemants, this).start());
+        disposableMap.put("array",new ArrayListModel(amauntElemants, this).start());
     }
 
     @Override
     public  Map<ActionFill, String> getData(TypeCollectin typeCollectin) {
         return preferences.getDataList(typeCollectin);
+    }
+
+    @Override
+    public void dispose(){
+        for (String d : disposableMap.keySet()){
+            if (disposableMap.get(d) !=null){disposableMap.get(d).dispose();}
+        }
     }
 
     @Override
@@ -87,8 +100,8 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
             callbackResaltSpeedList(list,ADDBEGIN)
                     .subscribe((stringMap -> {
                         arreyMap.put(ADDBEGIN, stringMap.get(ADDBEGIN));
-                        fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
-                        finishCalcul();
+
+                        fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)

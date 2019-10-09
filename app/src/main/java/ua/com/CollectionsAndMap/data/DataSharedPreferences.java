@@ -59,7 +59,6 @@ public final class DataSharedPreferences  {
         if (typeCollectin == TypeCollectin.LINKED){  editor.putString(LINKED , gson.toJson(dataList));}
         if (typeCollectin == TypeCollectin.COPYONWRITE){ editor.putString(COPYONWRITE , gson.toJson(dataList));}
         editor.commit();
-
     }
 
 
@@ -76,6 +75,12 @@ public final class DataSharedPreferences  {
         if (typeCollectin == TypeCollectin.HASH){  editor.putString(HASH , gson.toJson(dataMap));}
         editor.commit();
     }
-
+    public void  removSharedPreferences(){
+        editor.putString(ARRLIST, null);
+        editor.putString(LINKED , null);
+        editor.putString(COPYONWRITE , null);
+        editor.putString(TREE, null);
+        editor.putString(HASH , null);
+    }
 
 }

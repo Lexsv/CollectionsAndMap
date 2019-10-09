@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -36,7 +37,7 @@ import ua.com.CollectionsAndMap.ui.presentation.MainPresent;
 import static java.lang.Integer.valueOf;
 
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,MainContract.View {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, MainContract.View {
 
     private MainContract.MainPrisenter presenter;
     private ViewPager viewPager;
@@ -82,10 +83,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addElementAlert.setIcon(R.drawable.database);
         addElementAlert.setPositiveButton("Посчитать", (dialog, which) -> {
             EditText editTextInLoad = ((AlertDialog) dialog).findViewById(R.id.loaderView_amount_elements);
-            if (!editTextInLoad.getText().toString().isEmpty()){amoutElements = (valueOf(editTextInLoad.getText().toString()));}
+            if (!editTextInLoad.getText().toString().isEmpty()) {
+                amoutElements = (valueOf(editTextInLoad.getText().toString()));
+            }
             presenter.onCalculation(amoutElements);
-            InputMethodManager clos = (InputMethodManager)this.getSystemService(INPUT_METHOD_SERVICE);
-            clos.hideSoftInputFromWindow(editTextInLoad.getWindowToken(),0);
+            InputMethodManager clos = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
+            clos.hideSoftInputFromWindow(editTextInLoad.getWindowToken(), 0);
             dialog.cancel();
         });
         addElementAlert.create();
@@ -106,27 +109,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabReselected(TabLayout.Tab tab) {
     }
 
-    @Override
-    public void onBackPressed() {
-        if (alertDialogFinish) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.alertDialogFinish = true;
-        Toast.makeText(this, "Нажмите два раза для выхода", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                alertDialogFinish=false;
-            }
-        }, 2000);
-    }
-
-
-
 
     private void addDaggerDepend() {
         MainPresentComponent mainPresentComponent = DaggerMainPresentComponent.builder()
@@ -134,18 +116,38 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 .presentMainModule(new PresentMainModule()).build();
         mainPresentComponent.inject(this);
     }
+
     @Override
     public void showProgress() {
-        alertDialogFinish = !alertDialogFinish;
         showProgress = new AlertDialog.Builder(this)
                 .setView(R.layout.loader_view_progress)
                 .setCancelable(true)
+                .setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                        if (i == KeyEvent.KEYCODE_BACK &&
+                                keyEvent.getAction() == KeyEvent.ACTION_UP &&
+                                !keyEvent.isCanceled()) {
+                            if (alertDialogFinish) {
+                                presenter.destroyCalcuiation();
+                                showProgress.cancel();
+                                return false;
+                            }
+                            alertDialogFinish = true;
+                            Toast.makeText(getApplicationContext(), "Нажмите два раза для выхода", Toast.LENGTH_SHORT).show();
+
+                            new Handler().postDelayed(() -> alertDialogFinish = false, 2000);
+
+                        }
+                        return true;
+                    }
+                })
                 .create();
         showProgress.show();
     }
+
     @Override
     public void hidProgress() {
-        alertDialogFinish = !alertDialogFinish;
         showProgress.cancel();
     }
 
@@ -153,7 +155,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public MainContract.Presenter getPressentr() {
         BaseFragmen baseFragmen = pagerAdapter.getItem(viewPager.getCurrentItem());
         return baseFragmen.getPresent();
-
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainPresent = null;
+    }
 }
