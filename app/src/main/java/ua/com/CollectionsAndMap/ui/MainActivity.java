@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                                 keyEvent.getAction() == KeyEvent.ACTION_UP &&
                                 !keyEvent.isCanceled()) {
                             if (alertDialogFinish) {
-                                presenter.destroyCalcuiation();
                                 showProgress.cancel();
                                 return false;
                             }

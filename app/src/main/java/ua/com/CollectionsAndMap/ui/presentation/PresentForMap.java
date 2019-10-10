@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import ua.com.CollectionsAndMap.data.StatData;
+import ua.com.CollectionsAndMap.data.TypeRow;
 import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.domain.model.MapModels.TreeMapModel;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
@@ -31,8 +33,6 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
 
     private int queue = 6;
     private boolean wasCalcul = false;
-    private Map<ActionFill, String> treeMap = new HashMap<>();
-    private Map<ActionFill, String> hashMap = new HashMap<>();
 
     @Inject
     public PresentForMap(MainContract.View view, FillView fillView) {
@@ -56,25 +56,8 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
     }
 
 
-    @Override
-    public Map<ActionFill, String> getData(TypeCollectin typeCollectin) {
-        return preferences.getDataMap(typeCollectin);
-    }
-    @Override
-    public void dispose(){
-//        for (String d : disposableMap.keySet()){
-//            if (disposableMap.get(d) !=null){disposableMap.get(d).dispose();}
-//        }
-    }
 
-    @Override
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void saveData() {
-        if (wasCalcul) {
-            preferences.setDataMap(treeMap, TypeCollectin.TREE);
-            preferences.setDataMap(hashMap, TypeCollectin.HASH);
-        }
-    }
+
 
     @SuppressLint("CheckResult")
     public void callbackFromMapModel(Map<Byte, Byte> map, TypeCollectin flag) {
@@ -83,19 +66,19 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
 
             callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
-                        treeMap.put(ADDMAP, stringMap.get(ADDMAP));
+                        StatData.getLiveData().setStatData(stringMap.get(ADDMAP),TypeRow.TREEMAPADD);
                         fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
-                        treeMap.put(SEARCHMAP, stringMap.get(SEARCHMAP));
+                        StatData.getLiveData().setStatData(stringMap.get(SEARCHMAP),TypeRow.TREEMAPSEARCHKEY);
                         fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
-                        treeMap.put(REMOVEMAP, stringMap.get(REMOVEMAP));
+                        StatData.getLiveData().setStatData(stringMap.get(REMOVEMAP),TypeRow.TREEMAPREMOV);
                         fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);
                         finishCalcul();
                     }));
@@ -104,19 +87,19 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
 
             callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
-                        hashMap.put(ADDMAP, stringMap.get(ADDMAP));
+                        StatData.getLiveData().setStatData(stringMap.get(ADDMAP),TypeRow.HASHMAPADD);
                         fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
-                        hashMap.put(SEARCHMAP, stringMap.get(SEARCHMAP));
+                        StatData.getLiveData().setStatData(stringMap.get(SEARCHMAP),TypeRow.HASHMAPSEARCHKEY);
                         fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
-                        hashMap.put(REMOVEMAP, stringMap.get(REMOVEMAP));
+                        StatData.getLiveData().setStatData(stringMap.get(REMOVEMAP),TypeRow.HASHMAPREMOVE);
                         fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);
                         finishCalcul();
                     }));

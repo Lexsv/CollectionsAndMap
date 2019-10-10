@@ -12,6 +12,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
+import ua.com.CollectionsAndMap.data.StatData;
+import ua.com.CollectionsAndMap.data.TypeRow;
 import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentListModul;
@@ -203,90 +205,31 @@ public class TabCollection extends BaseFragmen {
 
 
     public void onRecycle(Bundle savedInstanceState) {
-        Map<ActionFill, String> arreyMap = present.getData(TypeCollectin.ARREY);
-        Map<ActionFill, String> lincMap = present.getData(TypeCollectin.LINKED);
-        Map<ActionFill, String> copyMap = present.getData(TypeCollectin.COPYONWRITE);
-
-        if (savedInstanceState != null && arreyMap != null) {
-            for (ActionFill actionFill : arreyMap.keySet()) {
-                if (ActionFill.ADDBEGIN == actionFill) {
-                    arrayListAddBegin.setText(arreyMap.get(actionFill));
-                }
-                if (ActionFill.ADDMIDDL == actionFill) {
-                    arrayListAddMiddle.setText(arreyMap.get(actionFill));
-                }
-                if (ActionFill.ADDEND == actionFill) {
-                    arrayListAddEnd.setText(arreyMap.get(actionFill));
-                }
-                if (ActionFill.SEARCHLIST == actionFill) {
-                    arrayListSearch.setText(arreyMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEBEGIN == actionFill) {
-                    arrayListRemoveBegin.setText(arreyMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEMIDDL == actionFill) {
-                    arrayListRemoveMiddle.setText(arreyMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEND == actionFill) {
-                    arrayListRemoveEnd.setText(arreyMap.get(actionFill));
-                }
-
-            }
+        if (savedInstanceState != null) {
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTADDBEGIN).observe(this,(s -> {arrayListAddBegin.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTADDMIDDLE).observe(this,(s -> {arrayListAddMiddle.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTADDEND).observe(this,(s -> {arrayListAddEnd.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTSEARCH).observe(this,(s -> {arrayListSearch.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEBEGIN).observe(this,(s -> {arrayListRemoveBegin.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEMIDDLE).observe(this,(s -> {arrayListRemoveMiddle.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEEND).observe(this,(s -> {arrayListRemoveEnd.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTADDBEGIN).observe(this,(s -> {linkedListAddBegin.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTADDMIDDLE).observe(this,(s -> {linkedListAddMiddle.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTADDEND).observe(this,(s -> {linkedListAddEnd.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTSEARCH).observe(this,(s -> {linkedListSearch.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEBEGIN).observe(this,(s -> {linkedListRemoveBegin.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEMIDDLE).observe(this,(s -> {linkedListRemoveMiddle.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEEND).observe(this,(s -> {linkedListRemoveEnd.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITEADDBEGIN).observe(this,(s -> {copyOnWriteAddBegin.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITEADDMIDDLE).observe(this,(s -> {copyOnWriteAddMiddle.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITEADDEND).observe(this,(s -> {copyOnWriteAddEnd.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITESEARCH).observe(this,(s -> {copyOnWriteSearch.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEBEGIN).observe(this,(s -> {copyOnWriteRemoveBegin.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEMIDDLE).observe(this,(s -> {copyOnWriteRemoveMiddle.setText(s);}));
+            StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEEND).observe(this,(s -> {copyOnWriteRemoveEnd.setText(s);}));
         }
 
-        if (savedInstanceState != null && lincMap != null) {
-            for (ActionFill actionFill : lincMap.keySet()) {
-                if (ActionFill.ADDBEGIN == actionFill) {
-                    linkedListAddBegin.setText(lincMap.get(actionFill));
-                }
-                if (ActionFill.ADDMIDDL == actionFill) {
-                    linkedListAddMiddle.setText(lincMap.get(actionFill));
-                }
-                if (ActionFill.ADDEND == actionFill) {
-                    linkedListAddEnd.setText(lincMap.get(actionFill));
-                }
-                if (ActionFill.SEARCHLIST == actionFill) {
-                    linkedListSearch.setText(lincMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEBEGIN == actionFill) {
-                    linkedListRemoveBegin.setText(lincMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEMIDDL == actionFill) {
-                    linkedListRemoveMiddle.setText(lincMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEND == actionFill) {
-                    linkedListRemoveEnd.setText(lincMap.get(actionFill));
-                }
-            }
-        }
-
-        if (savedInstanceState != null && copyMap != null) {
-            for (ActionFill actionFill : copyMap.keySet()) {
-                if (ActionFill.ADDBEGIN == actionFill) {
-                    copyOnWriteAddBegin.setText(copyMap.get(actionFill));
-                }
-                if (ActionFill.ADDMIDDL == actionFill) {
-                    copyOnWriteAddMiddle.setText(copyMap.get(actionFill));
-                }
-                if (ActionFill.ADDEND == actionFill) {
-                    copyOnWriteAddEnd.setText(copyMap.get(actionFill));
-                }
-                if (ActionFill.SEARCHLIST == actionFill) {
-                    copyOnWriteSearch.setText(copyMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEBEGIN == actionFill) {
-                    copyOnWriteRemoveBegin.setText(copyMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEMIDDL == actionFill) {
-                    copyOnWriteRemoveMiddle.setText(copyMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEND == actionFill) {
-                    copyOnWriteRemoveEnd.setText(copyMap.get(actionFill));
-                }
-            }
-        }
-
-    }
+  }
 }
 
 

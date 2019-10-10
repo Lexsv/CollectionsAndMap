@@ -14,6 +14,8 @@ import butterknife.BindView;
 
 import ua.com.CollectionsAndMap.R;
 
+import ua.com.CollectionsAndMap.data.StatData;
+import ua.com.CollectionsAndMap.data.TypeRow;
 import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresenterMapModul;
@@ -67,36 +69,13 @@ public class TabMap extends BaseFragmen {
     }
 
     public void onRecycle(Bundle savedInstanceState) {
-        Map<ActionFill, String> treeMap = present.getData(TypeCollectin.TREE);
-        Map<ActionFill, String> hashMap = present.getData(TypeCollectin.HASH);
-
-        if (savedInstanceState != null && treeMap != null ) {
-
-            for (ActionFill actionFill : treeMap.keySet()) {
-                if (ActionFill.ADDMAP == actionFill) {
-                    treeMapAdd.setText(treeMap.get(actionFill));
-                }
-                if (ActionFill.SEARCHMAP == actionFill) {
-                    treeMapSearchKey.setText(treeMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEMAP == actionFill) {
-                    treeMapRemov.setText(treeMap.get(actionFill));
-                }
-            }
-
-            for (ActionFill actionFill : hashMap.keySet()) {
-                if (ActionFill.ADDMAP == actionFill) {
-                    hashMapAdd.setText(hashMap.get(actionFill));
-                }
-                if (ActionFill.SEARCHMAP == actionFill) {
-                    hashMapSearchKey.setText(hashMap.get(actionFill));
-                }
-                if (ActionFill.REMOVEMAP == actionFill) {
-                    hashMapRemove.setText(hashMap.get(actionFill));
-                }
-            }
-
-
+        if (savedInstanceState != null ) {
+            StatData.getLiveData().getData(TypeRow.TREEMAPADD).observe(this, s -> {treeMapAdd.setText(s);});
+            StatData.getLiveData().getData(TypeRow.TREEMAPSEARCHKEY).observe(this, s -> {treeMapSearchKey.setText(s);});
+            StatData.getLiveData().getData(TypeRow.TREEMAPREMOV).observe(this, s -> {treeMapRemov.setText(s);});
+            StatData.getLiveData().getData(TypeRow.HASHMAPADD).observe(this, s -> {hashMapAdd.setText(s);});
+            StatData.getLiveData().getData(TypeRow.HASHMAPSEARCHKEY).observe(this, s -> {hashMapSearchKey.setText(s);});
+            StatData.getLiveData().getData(TypeRow.HASHMAPREMOVE).observe(this, s -> {hashMapRemove.setText(s);});
         }
 
     }
