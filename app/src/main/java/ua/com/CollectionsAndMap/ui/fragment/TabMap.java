@@ -22,6 +22,7 @@ import ua.com.CollectionsAndMap.domain.dagger.modules.PresenterMapModul;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidFillView;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
 import ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
+import ua.com.CollectionsAndMap.ui.mainaactivity.MainViewModul;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForMap;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
@@ -54,7 +55,13 @@ public class TabMap extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        addDaggerDepend();
+        if (MainViewModul.getMainViewModul().getPresentForMap() == null) {
+            addDaggerDepend();
+        } else {
+            present = MainViewModul.getMainViewModul().getPresentForMap();
+            present.setPresentor((MainContract.View) getContext());
+            present.setFillView(this);
+        }
         getLifecycle().addObserver(present);
         onRecycle(savedInstanceState);
     }

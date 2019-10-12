@@ -14,6 +14,21 @@ public abstract class BasePresenter  implements Presenter{
 
     private MainContract.View presentor;
 
+    public void setFillView(FillView fillView) {
+        this.fillView = fillView;
+    }
+
+    public void setPresentor(MainContract.View presentor) {
+        this.presentor = presentor;
+    }
+
+    public FillView getFillView() {
+        return fillView;
+    }
+
+    public MainContract.View getPresentor() {
+        return presentor;
+    }
 
     public BasePresenter(MainContract.View view, FillView fillView) {
         this.presentor = view;

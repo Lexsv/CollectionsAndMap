@@ -18,6 +18,7 @@ import ua.com.CollectionsAndMap.data.TypeRow;
 import ua.com.CollectionsAndMap.domain.model.MapModels.HashMapModel;
 import ua.com.CollectionsAndMap.domain.model.MapModels.TreeMapModel;
 import ua.com.CollectionsAndMap.ui.fragment.innterfasFragment.FillView;
+import ua.com.CollectionsAndMap.ui.mainaactivity.MainViewModul;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
@@ -32,7 +33,7 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
 
 
     private int queue = 6;
-    private boolean wasCalcul = false;
+
 
     @Inject
     public PresentForMap(MainContract.View view, FillView fillView) {
@@ -44,7 +45,7 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
         queue--;
         if (queue == 0) {
             hidProgress();
-            wasCalcul = !wasCalcul;
+            MainViewModul.getMainViewModul().progress = !MainViewModul.getMainViewModul().progress;
             queue = 6;
         }
     }

@@ -1,4 +1,4 @@
-package ua.com.CollectionsAndMap.ui;
+package ua.com.CollectionsAndMap.ui.mainaactivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +28,7 @@ import ua.com.CollectionsAndMap.domain.dagger.component.MainPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentMainModule;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
 import ua.com.CollectionsAndMap.ui.fragment.BaseFragmen;
+import ua.com.CollectionsAndMap.ui.fragment.TabCollection;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
@@ -40,6 +41,7 @@ import static java.lang.Integer.valueOf;
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, MainContract.View {
 
     private MainContract.MainPrisenter presenter;
+    private MainContract.Presenter fPresentor;
     private ViewPager viewPager;
     private PagerAdapt pagerAdapter;
     private TabLayout tabLayout;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setContentView(R.layout.activity_main);
         initTab();
         addDaggerDepend();
+        if(MainViewModul.getMainViewModul().progress){showProgress();}
         getLifecycle().addObserver(mainPresent);
         presenter = mainPresent;
         FloatingActionButton faButtn = findViewById(R.id.mainActivity_float_button);
@@ -152,13 +155,16 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     public MainContract.Presenter getPressentr() {
-        BaseFragmen baseFragmen = pagerAdapter.getItem(viewPager.getCurrentItem());
-        return baseFragmen.getPresent();
+        if (viewPager.getCurrentItem()==0){return MainViewModul.getMainViewModul().getPresentForList();}
+        if (viewPager.getCurrentItem()==1){return MainViewModul.getMainViewModul().getPresentForMap();}
+        return null;
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mainPresent = null;
+        pagerAdapter = null;
     }
 }

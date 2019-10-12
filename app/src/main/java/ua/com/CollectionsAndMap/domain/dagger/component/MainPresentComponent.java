@@ -2,7 +2,7 @@ package ua.com.CollectionsAndMap.domain.dagger.component;
 
 import dagger.Component;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
-import ua.com.CollectionsAndMap.ui.MainActivity;
+import ua.com.CollectionsAndMap.ui.mainaactivity.MainActivity;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentMainModule;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidFillView;
 

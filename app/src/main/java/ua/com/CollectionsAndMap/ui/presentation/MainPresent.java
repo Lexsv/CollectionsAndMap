@@ -6,6 +6,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 
 import javax.inject.Inject;
 
+import ua.com.CollectionsAndMap.ui.mainaactivity.MainViewModul;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 
@@ -21,14 +22,17 @@ public  class MainPresent implements MainContract.MainPrisenter, LifecycleObserv
 
     @Override
     public void onCalculation(int amauntElemant) {
-       viewMain.showProgress();
-       viewMain.getPressentr().onCalculation(amauntElemant);
+        viewMain.showProgress();
+        MainViewModul.getMainViewModul().progress = !MainViewModul.getMainViewModul().progress;
+        viewMain.getPressentr().onCalculation(amauntElemant);
     }
 
     @Override
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() { viewMain = null; }
 
-
+    public void setViewMain(MainContract.View viewMain){
+        this.viewMain = viewMain;
+    }
 
 }

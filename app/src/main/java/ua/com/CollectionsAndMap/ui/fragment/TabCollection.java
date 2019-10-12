@@ -19,6 +19,7 @@ import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.modules.PresentListModul;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidFillView;
 import ua.com.CollectionsAndMap.domain.dagger.provid.ProvidMainContractView;
+import ua.com.CollectionsAndMap.ui.mainaactivity.MainViewModul;
 import ua.com.CollectionsAndMap.ui.presentation.PresentForList;
 import ua.com.CollectionsAndMap.ui.presentation.flag.TypeCollectin;
 import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
@@ -85,7 +86,14 @@ public class TabCollection extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        addDaggerDepend();
+
+        if (MainViewModul.getMainViewModul().getPresentForList() == null) {
+            addDaggerDepend();
+        } else {
+            present = MainViewModul.getMainViewModul().getPresentForList();
+            present.setPresentor((MainContract.View) getContext());
+            present.setFillView(this);
+        }
         getLifecycle().addObserver(present);
         onRecycle(savedInstanceState);
     }
@@ -205,7 +213,7 @@ public class TabCollection extends BaseFragmen {
 
 
     public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
+//        if (savedInstanceState != null) {
             StatData.getLiveData().getData(TypeRow.ARRAYLISTADDBEGIN).observe(this,(s -> {arrayListAddBegin.setText(s);}));
             StatData.getLiveData().getData(TypeRow.ARRAYLISTADDMIDDLE).observe(this,(s -> {arrayListAddMiddle.setText(s);}));
             StatData.getLiveData().getData(TypeRow.ARRAYLISTADDEND).observe(this,(s -> {arrayListAddEnd.setText(s);}));
@@ -227,7 +235,7 @@ public class TabCollection extends BaseFragmen {
             StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEBEGIN).observe(this,(s -> {copyOnWriteRemoveBegin.setText(s);}));
             StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEMIDDLE).observe(this,(s -> {copyOnWriteRemoveMiddle.setText(s);}));
             StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEEND).observe(this,(s -> {copyOnWriteRemoveEnd.setText(s);}));
-        }
+//        }
 
   }
 }
