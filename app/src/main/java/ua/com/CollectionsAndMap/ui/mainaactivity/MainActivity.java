@@ -131,14 +131,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         if (i == KeyEvent.KEYCODE_BACK &&
                                 keyEvent.getAction() == KeyEvent.ACTION_UP &&
                                 !keyEvent.isCanceled()) {
-                            if (alertDialogFinish) {
-                                showProgress.cancel();
-                                return false;
-                            }
-                            alertDialogFinish = true;
-                            Toast.makeText(getApplicationContext(), "Нажмите два раза для выхода", Toast.LENGTH_SHORT).show();
-
-                            new Handler().postDelayed(() -> alertDialogFinish = false, 2000);
+                            Toast.makeText(getApplicationContext(), "Дождитесь окончания прощесса", Toast.LENGTH_SHORT).show();
 
                         }
                         return true;
