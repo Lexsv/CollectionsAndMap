@@ -10,11 +10,11 @@ public interface MainContract {
     interface View{
         void showProgress();
         void hidProgress();
-        MainContract.Presenter getPressentr();
+        int getItom();
     }
 
     interface Presenter{
-
+        void fillView();
         void onCalculation(int amauntElemants);
 
     }

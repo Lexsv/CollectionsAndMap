@@ -24,7 +24,6 @@ public abstract class BaseFragmen extends Fragment implements ua.com.Collections
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         viewMain = (MainContract.View )context;
-
     }
 
     @Nullable
@@ -36,7 +35,6 @@ public abstract class BaseFragmen extends Fragment implements ua.com.Collections
     }
 
     protected abstract int getLayout();
-    public  abstract void onRecycle(Bundle savedInstanceState);
 
     public abstract MainContract.Presenter getPresent() ;
     @Override

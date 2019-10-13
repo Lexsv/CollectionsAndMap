@@ -22,9 +22,10 @@ public  class MainPresent implements MainContract.MainPrisenter, LifecycleObserv
 
     @Override
     public void onCalculation(int amauntElemant) {
+        if (viewMain.getItom() ==0){MainViewModul.getMainViewModul().getPresentForList().onCalculation(amauntElemant);}
+        if (viewMain.getItom() ==1){MainViewModul.getMainViewModul().getPresentForMap().onCalculation(amauntElemant);}
         viewMain.showProgress();
         MainViewModul.getMainViewModul().progress = !MainViewModul.getMainViewModul().progress;
-        viewMain.getPressentr().onCalculation(amauntElemant);
     }
 
     @Override

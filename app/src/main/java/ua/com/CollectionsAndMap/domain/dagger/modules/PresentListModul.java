@@ -12,14 +12,22 @@ import ua.com.CollectionsAndMap.ui.presentation.interfaceContract.MainContract;
 
 @Module
 public class PresentListModul {
-     private PresentForList presentForList;
+    private PresentForList presentForList;
+
     @Provides
-    public PresentForList getPresentForList(MainContract.View view, FillView fillView){
+    public PresentForList getPresentForList(MainContract.View view, FillView fillView) {
+        if (MainViewModul.getMainViewModul().getPresentForList() == null) {
             presentForList = new PresentForList(view, fillView);
             MainViewModul.getMainViewModul().setPresentForList(presentForList);
             return presentForList;
+        } else {
+            presentForList = MainViewModul.getMainViewModul().getPresentForList();
+            presentForList.setView(view);
+            presentForList.setFillView(fillView);
+            return presentForList;
         }
 
+    }
 
 
 }

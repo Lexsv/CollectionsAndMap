@@ -51,11 +51,20 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
     }
 
     @Override
+    public void fillView() {
+        StatData.getLiveData().getData(TypeRow.TREEMAPADD).observe(fillView.getOwn(), s -> {fillView.fillResult(s,TypeRow.TREEMAPADD);});
+        StatData.getLiveData().getData(TypeRow.TREEMAPSEARCHKEY).observe(fillView.getOwn(), s -> {fillView.fillResult(s,TypeRow.TREEMAPSEARCHKEY);});
+        StatData.getLiveData().getData(TypeRow.TREEMAPREMOV).observe(fillView.getOwn(), s -> {fillView.fillResult(s,TypeRow.TREEMAPREMOV);});
+        StatData.getLiveData().getData(TypeRow.HASHMAPADD).observe(fillView.getOwn(), s -> {fillView.fillResult(s,TypeRow.HASHMAPADD);});
+        StatData.getLiveData().getData(TypeRow.HASHMAPSEARCHKEY).observe(fillView.getOwn(), s -> {fillView.fillResult(s,TypeRow.HASHMAPSEARCHKEY);});
+        StatData.getLiveData().getData(TypeRow.HASHMAPREMOVE).observe(fillView.getOwn(), s -> {fillView.fillResult(s,TypeRow.HASHMAPREMOVE);});
+    }
+
+    @Override
     public void onCalculation(int amauntElemants) {
         new TreeMapModel(amauntElemants, this).start();
         new HashMapModel(amauntElemants, this).start();
     }
-
 
 
 
@@ -68,19 +77,16 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
             callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDMAP),TypeRow.TREEMAPADD);
-                        fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(SEARCHMAP),TypeRow.TREEMAPSEARCHKEY);
-                        fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEMAP),TypeRow.TREEMAPREMOV);
-                        fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);
                         finishCalcul();
                     }));
         }
@@ -89,19 +95,16 @@ public  class PresentForMap extends BasePresenter implements LifecycleObserver {
             callbackResaltSpeedMap(map, ADDMAP)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDMAP),TypeRow.HASHMAPADD);
-                        fillView.fillResult(stringMap.get(ADDMAP), flag, ADDMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, SEARCHMAP)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(SEARCHMAP),TypeRow.HASHMAPSEARCHKEY);
-                        fillView.fillResult(stringMap.get(SEARCHMAP), flag, SEARCHMAP);
                         finishCalcul();
                     }));
             callbackResaltSpeedMap(map, REMOVEMAP)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEMAP),TypeRow.HASHMAPREMOVE);
-                        fillView.fillResult(stringMap.get(REMOVEMAP), flag, REMOVEMAP);
                         finishCalcul();
                     }));
         }

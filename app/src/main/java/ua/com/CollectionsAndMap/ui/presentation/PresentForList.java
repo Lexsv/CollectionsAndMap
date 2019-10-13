@@ -61,6 +61,31 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
     }
 
     @Override
+    public void fillView() {
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTADDBEGIN).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTADDBEGIN);}));
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTADDMIDDLE).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTADDMIDDLE);}));
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTADDEND).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTADDEND);}));
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTSEARCH).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTSEARCH);}));
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEBEGIN).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTREMOVEBEGIN);}));
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEMIDDLE).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTREMOVEMIDDLE);}));
+        StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEEND).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.ARRAYLISTREMOVEEND);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTADDBEGIN).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTADDBEGIN);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTADDMIDDLE).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTADDMIDDLE);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTADDEND).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTADDEND);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTSEARCH).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTSEARCH);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEBEGIN).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTREMOVEBEGIN);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEMIDDLE).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTREMOVEMIDDLE);}));
+        StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEEND).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.LINKEDLISTREMOVEEND);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITEADDBEGIN).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITEADDBEGIN);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITEADDMIDDLE).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITEADDMIDDLE);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITEADDEND).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITEADDEND);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITESEARCH).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITESEARCH);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEBEGIN).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITEREMOVEBEGIN);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEMIDDLE).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITEREMOVEMIDDLE);}));
+        StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEEND).observe(fillView.getOwn(),(s -> {fillView.fillResult(s,TypeRow.COPYONWRITEREMOVEEND);}));
+    }
+
+    @Override
     public  void  onCalculation(int amauntElemants) {
         new CopyOnWriteModel(amauntElemants, this).start();
         new LinkedListModel(amauntElemants, this).start();
@@ -74,45 +99,38 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
             callbackResaltSpeedList(list,ADDBEGIN)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDBEGIN), TypeRow.ARRAYLISTADDBEGIN);
-                        //fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
                         finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDMIDDL), TypeRow.ARRAYLISTADDMIDDLE);
-                        //fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDEND), TypeRow.ARRAYLISTADDEND);
-                        //fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
                         finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(SEARCHLIST), TypeRow.ARRAYLISTSEARCH);
-                        //fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEBEGIN), TypeRow.ARRAYLISTREMOVEBEGIN);
-                        //fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEMIDDL), TypeRow.ARRAYLISTREMOVEMIDDLE);
-                        //fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEND), TypeRow.ARRAYLISTREMOVEEND);
-                        //fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
                         finishCalcul();
                     }));
         }
@@ -121,45 +139,38 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
             callbackResaltSpeedList(list, ADDBEGIN)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDBEGIN), TypeRow.LINKEDLISTADDBEGIN);
-                        //fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
                         finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDMIDDL), TypeRow.LINKEDLISTADDMIDDLE);
-                        //fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDEND), TypeRow.LINKEDLISTADDEND);
-                        //fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
                         finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(SEARCHLIST), TypeRow.LINKEDLISTSEARCH);
-                        //fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEBEGIN), TypeRow.LINKEDLISTREMOVEBEGIN);
-                        //fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEMIDDL), TypeRow.LINKEDLISTREMOVEMIDDLE);
-                        //fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEND), TypeRow.LINKEDLISTREMOVEEND);
-                        //fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
                         finishCalcul();
                     }));
         }
@@ -168,47 +179,40 @@ public class PresentForList extends BasePresenter implements LifecycleObserver {
             callbackResaltSpeedList(list, ADDBEGIN)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDBEGIN), TypeRow.COPYONWRITEADDBEGIN);
-                        //fillView.fillResult(stringMap.get(ADDBEGIN), flag, ADDBEGIN);
                         finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, ADDMIDDL)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(ADDMIDDL), TypeRow.COPYONWRITEADDMIDDLE);
-                        //fillView.fillResult(stringMap.get(ADDMIDDL), flag, ADDMIDDL);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, ADDEND)
                     .subscribe((stringMap -> {
 
                         StatData.getLiveData().setStatData(stringMap.get(ADDEND), TypeRow.COPYONWRITEADDEND);
-                        //fillView.fillResult(stringMap.get(ADDEND), flag, ADDEND);
                         finishCalcul();
                     }));
 
             callbackResaltSpeedList(list, SEARCHLIST)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(SEARCHLIST), TypeRow.COPYONWRITESEARCH);
-                        //fillView.fillResult(stringMap.get(SEARCHLIST), flag, SEARCHLIST);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEBEGIN)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEBEGIN), TypeRow.COPYONWRITEREMOVEBEGIN);
-                        //fillView.fillResult(stringMap.get(REMOVEBEGIN), flag, REMOVEBEGIN);
                         finishCalcul();
                     }));
             callbackResaltSpeedList(list, REMOVEMIDDL)
                     .subscribe((stringMap -> {
                 StatData.getLiveData().setStatData(stringMap.get(REMOVEMIDDL), TypeRow.COPYONWRITEREMOVEMIDDLE);
-                //fillView.fillResult(stringMap.get(REMOVEMIDDL), flag, REMOVEMIDDL);
                 finishCalcul();
             }));
 
             callbackResaltSpeedList(list, REMOVEND)
                     .subscribe((stringMap -> {
                         StatData.getLiveData().setStatData(stringMap.get(REMOVEND), TypeRow.COPYONWRITEREMOVEEND);
-                        //fillView.fillResult(stringMap.get(REMOVEND), flag, REMOVEND);
                         finishCalcul();
                     }));
         }

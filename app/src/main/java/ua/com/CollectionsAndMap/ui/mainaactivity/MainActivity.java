@@ -142,16 +142,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     @Override
-    public void hidProgress() {
-        showProgress.cancel();
-    }
+    public void hidProgress() {showProgress.cancel();}
 
     @Override
-    public MainContract.Presenter getPressentr() {
-        if (viewPager.getCurrentItem()==0){return MainViewModul.getMainViewModul().getPresentForList();}
-        if (viewPager.getCurrentItem()==1){return MainViewModul.getMainViewModul().getPresentForMap();}
-        return null;
-    }
+    public int getItom() {return viewPager.getCurrentItem();}
 
 
     @Override

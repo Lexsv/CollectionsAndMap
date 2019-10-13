@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-
-import java.util.Map;
+import androidx.lifecycle.LifecycleOwner;
 
 import javax.inject.Inject;
 
@@ -52,18 +51,13 @@ public class TabMap extends BaseFragmen {
         return R.layout.map;
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (MainViewModul.getMainViewModul().getPresentForMap() == null) {
-            addDaggerDepend();
-        } else {
-            present = MainViewModul.getMainViewModul().getPresentForMap();
-            present.setPresentor((MainContract.View) getContext());
-            present.setFillView(this);
-        }
+        addDaggerDepend();
         getLifecycle().addObserver(present);
-        onRecycle(savedInstanceState);
+       present.fillView();
     }
 
     private void addDaggerDepend() {
@@ -75,17 +69,6 @@ public class TabMap extends BaseFragmen {
         presentComponent.inject(this);
     }
 
-    public void onRecycle(Bundle savedInstanceState) {
-        if (savedInstanceState != null ) {
-            StatData.getLiveData().getData(TypeRow.TREEMAPADD).observe(this, s -> {treeMapAdd.setText(s);});
-            StatData.getLiveData().getData(TypeRow.TREEMAPSEARCHKEY).observe(this, s -> {treeMapSearchKey.setText(s);});
-            StatData.getLiveData().getData(TypeRow.TREEMAPREMOV).observe(this, s -> {treeMapRemov.setText(s);});
-            StatData.getLiveData().getData(TypeRow.HASHMAPADD).observe(this, s -> {hashMapAdd.setText(s);});
-            StatData.getLiveData().getData(TypeRow.HASHMAPSEARCHKEY).observe(this, s -> {hashMapSearchKey.setText(s);});
-            StatData.getLiveData().getData(TypeRow.HASHMAPREMOVE).observe(this, s -> {hashMapRemove.setText(s);});
-        }
-
-    }
 
     @Override
     public MainContract.Presenter getPresent() {
@@ -93,39 +76,37 @@ public class TabMap extends BaseFragmen {
     }
 
 
-    @SuppressLint("CheckResult")
+
     @Override
-    public void fillResult(String s, TypeCollectin flagList, ActionFill flagAction) {
+    public void fillResult(String s, TypeRow typeRow) {
 
-        if (flagList == TypeCollectin.TREE) {
 
-            if (flagAction == ActionFill.ADDMAP) {
-                treeMapAdd.setText(s);
-            }
-            if (flagAction == ActionFill.SEARCHMAP) {
-                treeMapSearchKey.setText(s);
-            }
-            if (flagAction == ActionFill.REMOVEMAP) {
-                treeMapRemov.setText(s);
-            }
+        if (typeRow == TypeRow.TREEMAPADD) {
+            treeMapAdd.setText(s);
+        }
+        if (typeRow == TypeRow.TREEMAPSEARCHKEY ) {
+            treeMapSearchKey.setText(s);
+        }
+        if (typeRow ==TypeRow.TREEMAPREMOV ) {
+            treeMapRemov.setText(s);
         }
 
-        if (flagList == TypeCollectin.HASH) {
+        if (typeRow == TypeRow.HASHMAPADD) {
+            hashMapAdd.setText(s);
+        }
 
-            if (flagAction == ActionFill.ADDMAP) {
-                hashMapAdd.setText(s);
-            }
-
-            if (flagAction == ActionFill.SEARCHMAP) {
-                hashMapSearchKey.setText(s);
-            }
-            if (flagAction == ActionFill.REMOVEMAP) {
-                hashMapRemove.setText(s);
-            }
+        if (typeRow == TypeRow.HASHMAPSEARCHKEY) {
+            hashMapSearchKey.setText(s);
+        }
+        if (typeRow == TypeRow.HASHMAPREMOVE) {
+            hashMapRemove.setText(s);
         }
 
     }
 
 
-
+    @Override
+    public LifecycleOwner getOwn() {
+        return this;
+    }
 }

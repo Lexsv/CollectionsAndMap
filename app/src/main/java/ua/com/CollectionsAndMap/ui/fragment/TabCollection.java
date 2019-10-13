@@ -4,15 +4,15 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import java.util.Map;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import ua.com.CollectionsAndMap.R;
-import ua.com.CollectionsAndMap.data.StatData;
 import ua.com.CollectionsAndMap.data.TypeRow;
 import ua.com.CollectionsAndMap.domain.dagger.component.DaggerPresentComponent;
 import ua.com.CollectionsAndMap.domain.dagger.component.PresentComponent;
@@ -29,6 +29,7 @@ import static ua.com.CollectionsAndMap.domain.utils.FillView.ActionFill;
 public class TabCollection extends BaseFragmen {
     @Inject
     PresentForList present;
+
 
     @BindView(R.id.arrayList_addBagin)
     TextView arrayListAddBegin;
@@ -86,118 +87,89 @@ public class TabCollection extends BaseFragmen {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        if (MainViewModul.getMainViewModul().getPresentForList() == null) {
-            addDaggerDepend();
-        } else {
-            present = MainViewModul.getMainViewModul().getPresentForList();
-            present.setPresentor((MainContract.View) getContext());
-            present.setFillView(this);
-        }
+        addDaggerDepend();
         getLifecycle().addObserver(present);
-        onRecycle(savedInstanceState);
+        present.fillView();
     }
-
-    @SuppressLint("CheckResult")
     @Override
-    public void fillResult(String s, TypeCollectin flagList, ActionFill flagAction) {
+     public LifecycleOwner getOwn (){return this;}
 
-        if (flagList == TypeCollectin.ARREY) {
 
-            if (flagAction == ActionFill.ADDBEGIN) {
-                arrayListAddBegin.setText(s);
-            }
-
-            if (flagAction == ActionFill.ADDMIDDL) {
-                arrayListAddMiddle.setText(s);
-            }
-            if (flagAction == ActionFill.ADDEND) {
-                arrayListAddEnd.setText(s);
-            }
-
-            if (flagAction == ActionFill.SEARCHLIST) {
-                arrayListSearch.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEBEGIN) {
-                arrayListRemoveBegin.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEMIDDL) {
-                arrayListRemoveMiddle.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEND) {
-                arrayListRemoveEnd.setText(s);
-            }
+    @Override
+    public void fillResult(String s, TypeRow typeRow) {
+        if (typeRow == TypeRow.ARRAYLISTADDBEGIN) {
+            arrayListAddBegin.setText(s);
         }
 
-        if (flagList == TypeCollectin.LINKED) {
-
-            if (flagAction == ActionFill.ADDBEGIN) {
-                linkedListAddBegin.setText(s);
-            }
-
-            if (flagAction == ActionFill.ADDMIDDL) {
-                linkedListAddMiddle.setText(s);
-            }
-            if (flagAction == ActionFill.ADDEND) {
-                linkedListAddEnd.setText(s);
-            }
-
-            if (flagAction == ActionFill.SEARCHLIST) {
-                linkedListSearch.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEBEGIN) {
-                linkedListRemoveBegin.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEMIDDL) {
-                linkedListRemoveMiddle.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEND) {
-                linkedListRemoveEnd.setText(s);
-            }
+        if (typeRow == TypeRow.ARRAYLISTADDMIDDLE) {
+            arrayListAddMiddle.setText(s);
+        }
+        if (typeRow == TypeRow.ARRAYLISTADDEND) {
+            arrayListAddEnd.setText(s);
         }
 
-        if (flagList == TypeCollectin.COPYONWRITE) {
-
-            if (flagAction == ActionFill.ADDBEGIN) {
-                copyOnWriteAddBegin.setText(s);
-            }
-
-
-            if (flagAction == ActionFill.ADDMIDDL) {
-                copyOnWriteAddMiddle.setText(s);
-            }
-            if (flagAction == ActionFill.ADDEND) {
-                copyOnWriteAddEnd.setText(s);
-            }
-
-
-            if (flagAction == ActionFill.SEARCHLIST) {
-                copyOnWriteSearch.setText(s);
-            }
-
-            if (flagAction == ActionFill.REMOVEBEGIN) {
-                copyOnWriteRemoveBegin.setText(s);
-            }
-
-
-            if (flagAction == ActionFill.REMOVEMIDDL) {
-                copyOnWriteRemoveMiddle.setText(s);
-            }
-
-
-            if (flagAction == ActionFill.REMOVEND) {
-                copyOnWriteRemoveEnd.setText(s);
-            }
-
+        if (typeRow == TypeRow.ARRAYLISTSEARCH) {
+            arrayListSearch.setText(s);
         }
 
+        if (typeRow == TypeRow.ARRAYLISTREMOVEBEGIN) {
+            arrayListRemoveBegin.setText(s);
+        }
 
+        if (typeRow == TypeRow.ARRAYLISTREMOVEMIDDLE) {
+            arrayListRemoveMiddle.setText(s);
+        }
+
+        if (typeRow == TypeRow.ARRAYLISTREMOVEEND) {
+            arrayListRemoveEnd.setText(s);
+        }
+        if (typeRow == TypeRow.LINKEDLISTADDBEGIN) {
+            linkedListAddBegin.setText(s);
+        }
+
+        if (typeRow == TypeRow.LINKEDLISTADDMIDDLE) {
+            linkedListAddMiddle.setText(s);
+        }
+        if (typeRow == TypeRow.LINKEDLISTADDEND) {
+            linkedListAddEnd.setText(s);
+        }
+
+        if (typeRow == TypeRow.LINKEDLISTSEARCH) {
+            linkedListSearch.setText(s);
+        }
+
+        if (typeRow == TypeRow.LINKEDLISTREMOVEBEGIN) {
+            linkedListRemoveBegin.setText(s);
+        }
+
+        if (typeRow == TypeRow.LINKEDLISTREMOVEMIDDLE) {
+            linkedListRemoveMiddle.setText(s);
+        }
+
+        if (typeRow == TypeRow.LINKEDLISTREMOVEEND) {
+            linkedListRemoveEnd.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITEADDBEGIN) {
+            copyOnWriteAddBegin.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITEADDMIDDLE) {
+            copyOnWriteAddMiddle.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITEADDEND) {
+            copyOnWriteAddEnd.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITESEARCH) {
+            copyOnWriteSearch.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITEREMOVEBEGIN) {
+            copyOnWriteRemoveBegin.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITEREMOVEMIDDLE) {
+            copyOnWriteRemoveMiddle.setText(s);
+        }
+        if (typeRow == TypeRow.COPYONWRITEREMOVEEND) {
+            copyOnWriteRemoveEnd.setText(s);
+        }
     }
 
 
@@ -208,34 +180,11 @@ public class TabCollection extends BaseFragmen {
                 .presentListModul(new PresentListModul())
                 .build();
         presentComponent.inject(this);
-
     }
 
 
-    public void onRecycle(Bundle savedInstanceState) {
-//        if (savedInstanceState != null) {
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTADDBEGIN).observe(this,(s -> {arrayListAddBegin.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTADDMIDDLE).observe(this,(s -> {arrayListAddMiddle.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTADDEND).observe(this,(s -> {arrayListAddEnd.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTSEARCH).observe(this,(s -> {arrayListSearch.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEBEGIN).observe(this,(s -> {arrayListRemoveBegin.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEMIDDLE).observe(this,(s -> {arrayListRemoveMiddle.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.ARRAYLISTREMOVEEND).observe(this,(s -> {arrayListRemoveEnd.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTADDBEGIN).observe(this,(s -> {linkedListAddBegin.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTADDMIDDLE).observe(this,(s -> {linkedListAddMiddle.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTADDEND).observe(this,(s -> {linkedListAddEnd.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTSEARCH).observe(this,(s -> {linkedListSearch.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEBEGIN).observe(this,(s -> {linkedListRemoveBegin.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEMIDDLE).observe(this,(s -> {linkedListRemoveMiddle.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.LINKEDLISTREMOVEEND).observe(this,(s -> {linkedListRemoveEnd.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITEADDBEGIN).observe(this,(s -> {copyOnWriteAddBegin.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITEADDMIDDLE).observe(this,(s -> {copyOnWriteAddMiddle.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITEADDEND).observe(this,(s -> {copyOnWriteAddEnd.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITESEARCH).observe(this,(s -> {copyOnWriteSearch.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEBEGIN).observe(this,(s -> {copyOnWriteRemoveBegin.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEMIDDLE).observe(this,(s -> {copyOnWriteRemoveMiddle.setText(s);}));
-            StatData.getLiveData().getData(TypeRow.COPYONWRITEREMOVEEND).observe(this,(s -> {copyOnWriteRemoveEnd.setText(s);}));
-//        }
+    public void onRecycle() {
+
 
   }
 }
