@@ -1,4 +1,4 @@
-package ua.com.CollectionsAndMap;
+package ua.com.CollectionsAndMap.domain;
 
 public enum CollOrMap {
     ARREY,

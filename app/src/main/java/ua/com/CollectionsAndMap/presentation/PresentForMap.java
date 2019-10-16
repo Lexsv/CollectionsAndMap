@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
-import ua.com.CollectionsAndMap.CollOrMap;
+import ua.com.CollectionsAndMap.domain.CollOrMap;
 import ua.com.CollectionsAndMap.domain.MainViewModul;
 import ua.com.CollectionsAndMap.domain.StatData;
 import ua.com.CollectionsAndMap.domain.TypeRow;

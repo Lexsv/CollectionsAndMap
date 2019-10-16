@@ -2,8 +2,6 @@ package ua.com.CollectionsAndMap.presentation;
 
 import android.annotation.SuppressLint;
 
-import androidx.lifecycle.LifecycleObserver;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.inject.Inject;
 
 
-import ua.com.CollectionsAndMap.CollOrMap;
+import ua.com.CollectionsAndMap.domain.CollOrMap;
 import ua.com.CollectionsAndMap.domain.MainViewModul;
 
 
