@@ -18,7 +18,7 @@ import ua.com.CollectionsAndMap.domain.TypeRow;
 import ua.com.CollectionsAndMap.dagger.modules.PresentListModul;
 import ua.com.CollectionsAndMap.dagger.provid.ProvidMainContractView;
 import ua.com.CollectionsAndMap.MainContract;
-import ua.com.CollectionsAndMap.presentation.PresentForList;
+
 
 public class TabCollection extends BaseFragmen {
 
